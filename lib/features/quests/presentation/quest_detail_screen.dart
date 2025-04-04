@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // import 'package:solo_leveling/features/quests/presentation/quest_list_screen.dart';
-import 'package:solo_leveling/features/quests/presentation/widgets/quest_card.dart';
+// import 'package:solo_leveling/features/quests/presentation/widgets/quest_card.dart';
 import '../provider/quest_provider.dart';
 import 'widgets/quest_progress.dart';
 import '../../quests/data/models/quest_model.dart';

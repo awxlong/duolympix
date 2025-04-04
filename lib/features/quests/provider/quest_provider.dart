@@ -128,12 +128,12 @@ class QuestProvider with ChangeNotifier {
     
     if (_activeQuest!.type == QuestType.running) {
       final distanceOK = _currentDistance >= _activeQuest!.targetDistance!;
-      final timeOK = elapsedTime! <= _activeQuest!.targetDuration!;
+      final timeOK = elapsedTime <= _activeQuest!.targetDuration!;
       return distanceOK && timeOK;
     }
     
     if (_activeQuest!.type == QuestType.strength) {
-      return elapsedTime! <= _activeQuest!.targetDuration!;
+      return elapsedTime <= _activeQuest!.targetDuration!;
     }
     
     return false;
