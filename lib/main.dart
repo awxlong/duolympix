@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:solo_leveling/features/mental_health/data/repositories/chat_repository.dart';
 import 'core/app_theme.dart';
+import 'features/mental_health/provider/chat_provider.dart';
 import 'features/quests/presentation/quest_list_screen.dart';
 import 'features/quests/provider/quest_provider.dart';
 import 'services/location_service.dart';
@@ -16,6 +18,12 @@ void main() {
                     locationService: LocationService(),
                     )..initialize(),
                 ),
+                ChangeNotifierProvider(
+                create: (context) => ChatProvider(
+                  ChatRepository(),
+                  Provider.of<QuestProvider>(context, listen: false),
+                ),
+              ),
                       ],
       child: const MyApp(),
     ),

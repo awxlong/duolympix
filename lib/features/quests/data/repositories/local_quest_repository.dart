@@ -24,6 +24,16 @@ class LocalQuestRepository implements QuestRepository {
       targetDuration: Duration(minutes: 3),
       xpReward: 150,
     ),
+
+    const Quest(
+      id: 'mental-health-5',
+      title: 'Mental Health',
+      type: QuestType.mentalHealth,
+      icon: Icons.psychology,
+      description: 'Chat about mental health for 5 minutes',
+      targetDuration: Duration(seconds: 3),
+      xpReward: 100,
+    ),
   ];
 
   final List<Quest> _completedQuests = [];

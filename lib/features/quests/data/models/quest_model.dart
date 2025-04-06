@@ -29,6 +29,7 @@ class Quest {
 
   bool get isTimeBased => targetDuration != null;
   bool get isDistanceBased => targetDistance != null;
+  bool get isMentalHealth => type == QuestType.mentalHealth;
   
   // Add to Quest class to handle varying quest types
   @override
