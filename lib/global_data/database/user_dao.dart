@@ -8,6 +8,10 @@ abstract class UserDao {
   @Query('SELECT * FROM User WHERE id = :id')
   Future<User?> findUserById(int id);
 
+  // Add a new method to find user by username
+  @Query('SELECT * FROM User WHERE username = :username')
+  Future<User?> findUserByUsername(String username);
+
   @Query('SELECT * FROM User WHERE email = :email')
   Future<User?> findUserByEmail(String email);
 

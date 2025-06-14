@@ -204,6 +204,26 @@ class _$UserDao extends UserDao {
   }
 
   @override
+  Future<User?> findUserByUsername(String username) async {
+    return _queryAdapter.query('SELECT * FROM User WHERE username = ?1',
+        mapper: (Map<String, Object?> row) => User(
+            id: row['id'] as int?,
+            username: row['username'] as String,
+            email: row['email'] as String,
+            age: row['age'] as int,
+            gender: row['gender'] as String?,
+            weight: row['weight'] as double?,
+            height: row['height'] as double?,
+            profilePicture: row['profilePicture'] as String?,
+            totalXp: row['totalXp'] as int,
+            level: row['level'] as int,
+            streak: row['streak'] as int,
+            totalQuestsCompleted: row['totalQuestsCompleted'] as int,
+            lastActive: _dateTimeConverter.decode(row['INTEGER'] as int)),
+        arguments: [username]);
+  }
+
+  @override
   Future<User?> findUserByEmail(String email) async {
     return _queryAdapter.query('SELECT * FROM User WHERE email = ?1',
         mapper: (Map<String, Object?> row) => User(

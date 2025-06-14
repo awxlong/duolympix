@@ -43,7 +43,6 @@ class LeaderboardState {
     );
   }
 }
-
 class LeaderboardProvider extends ChangeNotifier {
   final GetLeaderboardUseCase _getLeaderboardUseCase;
   LeaderboardState _state = LeaderboardState.initial();
@@ -58,7 +57,11 @@ class LeaderboardProvider extends ChangeNotifier {
       selectedType: type,
       error: null,
     );
-    notifyListeners();
+
+    // Use addPostFrameCallback to ensure notifyListeners is called after the build phase
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      notifyListeners();
+    });
 
     final result = await _getLeaderboardUseCase(type, limit);
     result.fold(

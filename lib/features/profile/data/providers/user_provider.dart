@@ -46,28 +46,28 @@ class UserProvider extends ChangeNotifier {
 
   UserState get state => _state;
 
-  Future<void> loadUser(String email) async {
-    _state = _state.copyWith(status: UserStatus.loading);
-    notifyListeners(); // Notify listeners of state change
-    
-    final result = await _getUserUseCase(email);
-    result.fold(
-      (failure) {
-        _state = _state.copyWith(
-          status: UserStatus.error,
-          errorMessage: failure.message,
-        );
-        notifyListeners();
-      },
-      (user) {
-        _state = _state.copyWith(
-          status: UserStatus.loaded,
-          user: user,
-        );
-        notifyListeners();
-      },
-    );
-  }
+  Future<void> loadUser(String username) async {
+  _state = _state.copyWith(status: UserStatus.loading);
+  notifyListeners();
+  
+  final result = await _getUserUseCase(username);
+  result.fold(
+    (failure) {
+      _state = _state.copyWith(
+        status: UserStatus.error,
+        errorMessage: failure.message,
+      );
+      notifyListeners();
+    },
+    (user) {
+      _state = _state.copyWith(
+        status: UserStatus.loaded,
+        user: user,
+      );
+      notifyListeners();
+    },
+  );
+}
 
   Future<void> completeQuest(Quest quest) async {
     if (_state.user == null) return;
@@ -82,7 +82,7 @@ class UserProvider extends ChangeNotifier {
         notifyListeners();
       },
       (_) async {
-        await loadUser(_state.user!.email);
+        await loadUser(_state.user!.username);
       },
     );
   }

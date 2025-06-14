@@ -10,6 +10,10 @@ class CacheFailure extends Failure {
   const CacheFailure({super.message = 'Failed to retrieve data from cache'});
 }
 
+class DatabaseFailure extends Failure {
+  const DatabaseFailure({super.message = 'Database error occurred'});
+}
+
 // Generic server failure
 class ServerFailure extends Failure {
   const ServerFailure({super.message = 'Server error occurred'});

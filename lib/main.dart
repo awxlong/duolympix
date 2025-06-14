@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solo_leveling/core/app_theme.dart';
+import 'package:solo_leveling/features/auth/presentation/screens/login_page.dart';
 import 'package:solo_leveling/features/auth/presentation/screens/splash_screen.dart';
 import 'package:solo_leveling/features/mental_health/data/repositories/chat_repository.dart';
 import 'package:solo_leveling/features/mental_health/provider/chat_provider.dart';
 import 'package:solo_leveling/features/profile/data/providers/leaderboard_provider.dart';
 import 'package:solo_leveling/features/profile/data/providers/user_provider.dart';
+import 'package:solo_leveling/features/profile/data/repositories/leaderboard_repository_impl.dart';
 import 'package:solo_leveling/features/profile/domain/repositories/leaderboard_repository.dart';
 import 'package:solo_leveling/features/profile/domain/usecases/complete_quest_usecase.dart';
 import 'package:solo_leveling/features/profile/domain/usecases/get_leaderboard_usecase.dart';
@@ -24,13 +26,18 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies(); // From injection_container.dart
   final database = await getDatabase(); // Initialize database
-  
+
   runApp(
     MultiProvider(
       providers: [
         // Database provider
         Provider<AppDatabase>.value(value: database),
-        
+
+        // Register LeaderboardRepository
+        Provider<LeaderboardRepository>(
+          create: (context) => LeaderboardRepositoryImpl(context.read<AppDatabase>()),
+        ),
+
         // Quest provider with dependencies
         ChangeNotifierProvider(
           create: (_) => QuestProvider(
@@ -38,7 +45,7 @@ void main() async {
             locationService: LocationService(),
           )..initialize(),
         ),
-        
+
         // Chat provider with dependencies
         ChangeNotifierProvider(
           create: (context) => ChatProvider(
@@ -46,7 +53,7 @@ void main() async {
             Provider.of<QuestProvider>(context, listen: false),
           ),
         ),
-        
+
         // User profile provider
         ChangeNotifierProvider<UserProvider>(
           create: (context) => UserProvider(
@@ -59,10 +66,9 @@ void main() async {
           create: (context) => LeaderboardProvider(
             GetLeaderboardUseCase(
               context.read<LeaderboardRepository>(),
-    ),
-  ),
-),
-
+            ),
+          ),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -79,12 +85,13 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.darkTheme,
       // Use SplashScreen to load user data before showing quests
       home: const SplashScreen(),
-      
+
       // Optional: Add routes for better navigation
       routes: {
         '/quests': (context) => const QuestListScreen(),
         '/profile': (context) => const ProfileScreen(),
         '/leaderboard': (context) => const LeaderboardScreen(),
+        '/login': (context) => const LoginPage(),
       },
     );
   }

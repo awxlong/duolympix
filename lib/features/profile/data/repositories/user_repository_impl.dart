@@ -18,33 +18,35 @@ class UserRepositoryImpl implements UserRepository {
 
   UserRepositoryImpl(this._database);
 
-  @override
-  Future<Either<Failure, UserEntity>> getUser(String email) async {
-    try {
-      final user = await _database.userDao.findUserByEmail(email);
-      if (user == null) return const Left(CacheFailure());
-      return Right(UserMapper.mapUserToEntity(user));
-    } catch (e) {
-      return const Left(CacheFailure());
-    }
+@override
+Future<Either<Failure, UserEntity>> getUser(String username) async {
+  try {
+    final user = await _database.userDao.findUserByUsername(username);
+    if (user == null) return const Left(DatabaseFailure(message: 'User not found'));
+    return Right(UserMapper.mapUserToEntity(user));
+  } catch (e) {
+    return Left(DatabaseFailure(message: 'Error fetching user: $e'));
   }
+}
 
-  @override
-  Future<Either<Failure, UserEntity>> updateUser(UserEntity user) async {
-    try {
-      final dbUser = UserMapper.mapEntityToUser(user);
-      await _database.userDao.updateUser(dbUser);
-      return Right(user);
-    } catch (e) {
-      return const Left(CacheFailure());
-    }
+@override
+Future<Either<Failure, UserEntity>> updateUser(UserEntity user) async {
+  try {
+    final dbUser = UserMapper.mapEntityToUser(user);
+    await _database.userDao.updateUser(dbUser);
+    print('User data updated successfully: ${dbUser.username}');
+    return Right(user);
+  } catch (e) {
+    return const Left(CacheFailure());
   }
+}
+
 
   @override
   Future<Either<Failure, void>> completeQuest(Quest quest) async {
     try {
       // Get current user
-      final user = await _database.userDao.findUserByEmail('current_user_email');
+      final user = await _database.userDao.findUserByUsername('current_user_username');
       if (user == null) return const Left(CacheFailure());
 
       // Update user's XP and stats

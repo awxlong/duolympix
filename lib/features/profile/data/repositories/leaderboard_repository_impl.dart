@@ -27,7 +27,7 @@ class LeaderboardRepositoryImpl implements LeaderboardRepository {
         case RankingType.allTime:
           results = await db.query(
             'User',
-            columns: ['id', 'username', 'totalXp', 'lastActive'],
+            columns: ['id', 'username', 'totalXp', 'INTEGER'], // Update the column name
             orderBy: 'totalXp DESC',
             limit: limit,
           );
@@ -37,7 +37,7 @@ class LeaderboardRepositoryImpl implements LeaderboardRepository {
           // Get date 7 days ago
           final weekAgo = DateTime.now().subtract(const Duration(days: 7));
           results = await db.rawQuery('''
-            SELECT u.id, u.username, u.totalXp, u.lastActive
+            SELECT u.id, u.username, u.totalXp, u.INTEGER
             FROM User u
             JOIN QuestHistory qh ON u.id = qh.userId
             WHERE qh.completionDate >= ?
@@ -51,7 +51,7 @@ class LeaderboardRepositoryImpl implements LeaderboardRepository {
           // Get date 30 days ago
           final monthAgo = DateTime.now().subtract(const Duration(days: 30));
           results = await db.rawQuery('''
-            SELECT u.id, u.username, u.totalXp, u.lastActive
+            SELECT u.id, u.username, u.totalXp, u.INTEGER
             FROM User u
             JOIN QuestHistory qh ON u.id = qh.userId
             WHERE qh.completionDate >= ?
@@ -70,7 +70,7 @@ class LeaderboardRepositoryImpl implements LeaderboardRepository {
           userId: user.username,
           score: user.totalXp,
           isCurrentUser: false, 
-          rankingType: user.level as RankingType, 
+          rankingType: type, // Fix the rankingType assignment
           updatedAt: user.lastActive, // Implement current user check here
         );
       }).toList();
