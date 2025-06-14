@@ -24,9 +24,7 @@ class QuestProgress extends StatelessWidget {
         Text(
           quest.type == QuestType.running
               ? 'Distance: ${progress.toStringAsFixed(2)}/${quest.targetDistance} mi\n'
-                'Time: ${formatDuration(quest.targetDuration! - Duration(seconds: (progress * quest.targetDuration!.inSeconds).toInt()))}'
-              : 'Time remaining: ${formatDuration(quest.targetDuration! - Duration(seconds: (progress * quest.targetDuration!.inSeconds).toInt()))}',
-              textAlign: TextAlign.center,
+              : '',
         ),
       ],
     );

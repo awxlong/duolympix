@@ -4,14 +4,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-// import 'package:solo_leveling/features/quests/presentation/quest_list_screen.dart';
-// import 'package:solo_leveling/features/quests/presentation/widgets/quest_card.dart';
-import '../../mental_health/presentation/widgets/chat_bubble.dart';
-import '../../mental_health/provider/chat_provider.dart';
-import '../provider/quest_provider.dart';
-import 'widgets/quest_progress.dart';
-import '../../quests/data/models/quest_model.dart';
-import 'widgets/timer_display.dart';
+import 'package:solo_leveling/features/mental_health/presentation/widgets/typing_indicator.dart';
+import 'mental_health/presentation/widgets/chat_bubble.dart';
+import 'mental_health/provider/chat_provider.dart';
+import 'quests/provider/quest_provider.dart';
+import 'quests/presentation/widgets/quest_progress.dart';
+import 'quests/data/models/quest_model.dart';
+import 'quests/presentation/widgets/timer_display.dart';
 
 class QuestDetailScreen extends StatefulWidget {
   final Quest quest;
@@ -20,6 +19,7 @@ class QuestDetailScreen extends StatefulWidget {
   @override
   State<QuestDetailScreen> createState() => _QuestDetailScreenState();
 }
+
 
 class _QuestDetailScreenState extends State<QuestDetailScreen> {
   bool _showCompletion = false;
@@ -52,21 +52,23 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
     );
   }
 
+  
+  
   Widget _buildPhysicalQuestScreen(QuestProvider provider, Quest quest) {
     return Column(
       children: [
-        TimerDisplay(duration: provider.elapsedTime),
+        TimerDisplay(
+          duration: provider.elapsedTime,
+          targetDuration: quest.targetDuration,
+        ),
         const SizedBox(height: 20),
         QuestProgress(
           quest: quest,
-          progress: _calculateProgress(quest, provider),
+          progress: _calculateProgress(quest, provider, null),
         ),
         const SizedBox(height: 20),
         ElevatedButton(
-          onPressed: () async {
-            await provider.completeQuest();
-            setState(() => _showCompletion = true);
-          },
+          onPressed: () => _handleQuestCompletion(provider),
           child: const Text('Complete Quest'),
         ),
         if (provider.errorMessage != null)
@@ -77,71 +79,45 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
   }
 
   Widget _buildChatInterface(ChatProvider chatProvider, QuestProvider questProvider) {
-  return Column(
-    children: [
-      _buildChatTimer(chatProvider),
-      Expanded(
-        child: Stack(
-          children: [
-            ListView.builder(
-              reverse: true,
-              itemCount: chatProvider.messages.length,
-              itemBuilder: (context, index) {
-                final message = chatProvider.messages.reversed.toList()[index];
-                return ChatBubble(
-                  message: message.text,
-                  isUser: message.isUser,
-                );
-              },
-            ),
-            if (chatProvider.isLoading) _buildTypingIndicator(),
-          ],
+    return Column(
+      children: [
+        TimerDisplay(
+          duration: chatProvider.elapsedTime,
+          targetDuration: widget.quest.targetDuration,
         ),
-      ),
-      _buildChatInput(chatProvider),
-      if (chatProvider.isSessionComplete)
-        _buildCompletionButton(questProvider),
-    ],
-  );
-}
-
-Widget _buildTypingIndicator() {
-  return const Align(
-    alignment: Alignment.bottomLeft,
-    child: Padding(
-      padding: EdgeInsets.all(8.0),
-      child: Row(
-        children: [
-          Text('Bot is typing...'),
-          SizedBox(width: 8),
-          SizedBox(
-            width: 20,
-            height: 20,
-            child: CircularProgressIndicator(strokeWidth: 2),
+        Expanded(
+          child: Stack(
+            children: [
+              ListView.builder(
+                reverse: true,
+                itemCount: chatProvider.messages.length,
+                itemBuilder: (context, index) {
+                  final message = chatProvider.messages.reversed.toList()[index];
+                  return ChatBubble(
+                    message: message.text,
+                    isUser: message.isUser,
+                  );
+                },
+              ),
+              if (chatProvider.isLoading) _buildTypingIndicator(),
+            ],
           ),
-        ],
-      ),
-    ),
-  );
-}
-
-
-  Widget _buildChatTimer(ChatProvider provider) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            'Elapsed: ${provider.elapsedTime.inMinutes}m '
-            '${provider.elapsedTime.inSeconds.remainder(60)}s'
-          ),
-          if (provider.isSessionComplete)
-            const Icon(Icons.check_circle, color: Colors.green),
-        ],
-      ),
+        ),
+        _buildChatInput(chatProvider),
+        ElevatedButton(
+          onPressed: chatProvider.isSessionComplete 
+              ? () => _handleQuestCompletion(questProvider) 
+              : null,
+          child: const Text('Complete Quest'),
+        ),
+      ],
     );
   }
+
+  Widget _buildTypingIndicator() {
+    return const TypingIndicator();
+  }
+
 
   Widget _buildChatInput(ChatProvider provider) {
     final provider = Provider.of<ChatProvider>(context, listen: false);
@@ -175,34 +151,17 @@ Widget _buildTypingIndicator() {
     provider.sendMessage(text);
   }
 
-  double _calculateProgress(Quest quest, QuestProvider provider) {
+  double _calculateProgress(Quest quest, QuestProvider provider, ChatProvider? chatProvider) {
     if (quest.type == QuestType.running) {
       final distanceProgress = provider.currentDistance / quest.targetDistance!;
-      final timeProgress = provider.elapsedTime.inSeconds / 
-                          quest.targetDuration!.inSeconds;
+      final timeProgress = provider.elapsedTime.inSeconds / quest.targetDuration!.inSeconds;
       return (distanceProgress + timeProgress) / 2;
+    } else if (quest.type == QuestType.mentalHealth) {
+      return chatProvider!.elapsedTime.inSeconds / quest.targetDuration!.inSeconds;
     }
     return provider.elapsedTime.inSeconds / quest.targetDuration!.inSeconds;
   }
 
-  Widget _buildCompletionButton(QuestProvider provider) {
-  return Padding(
-    padding: const EdgeInsets.only(top: 16.0),
-    child: ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.green,
-        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-      ),
-      onPressed: () {
-        if (!provider.completedQuests.contains(widget.quest)) {
-          provider.completeQuest();
-        }
-        setState(() => _showCompletion = true);
-      },
-      child: const Text('Complete Quest', style: TextStyle(fontSize: 18)),
-    ),
-  );
-}
 
   Widget _buildCompletionScreen(Quest quest) {
     return Column(
@@ -221,4 +180,9 @@ Widget _buildTypingIndicator() {
     );
   }
   
+  Future<void> _handleQuestCompletion(QuestProvider provider) async {
+    await provider.completeQuest();
+    setState(() => _showCompletion = true);
+  }
+
 }

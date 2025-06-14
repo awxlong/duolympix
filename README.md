@@ -1,6 +1,13 @@
 # Project Zenith
 App for gamifying life
 
+## Features
+### Mental health chatbot
+You need to download and install ollama and host it. For this app, we used a quantized deepseek-r1 prompt-engineered as a CBT therapist. 
+```
+ollama serve
+ollama run deepseek-r1:8b # be sure to write the right URL for hosting it. 
+```
 ## Getting Started with Flutter
 
 This project is a starting point for a Flutter application.

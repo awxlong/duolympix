@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ChatRepository {
-  static const String _baseUrl = 'http://10.0.2.2:11434';
+  static const String _baseUrl = 'http://10.0.2.2:11434'; // 'http://10.0.2.2:11434' for android emulator
+  // static const String _baseUrl = 'http://localhost:11434'; // For iOS simulator
+  // static const String _baseUrl = 'http://<your-local-ip>:11434'; // For physical device
   final String _model = 'deepseek-r1:8b';
   // Add this constant
   static const String _systemPrompt = """

@@ -21,8 +21,18 @@ class LocalQuestRepository implements QuestRepository {
       type: QuestType.strength,
       icon: Icons.fitness_center,
       description: 'Complete 50 pushups in 3 minutes',
-      targetDuration: Duration(minutes: 3),
+      targetDuration: Duration(seconds: 3),
       xpReward: 150,
+    ),
+
+    const Quest(
+      id: 'pullups-50',
+      title: 'Power Training',
+      type: QuestType.strength,
+      icon: Icons.fitness_center,
+      description: 'Complete 50 pullups in 3 seconds',
+      targetDuration: Duration(seconds: 3),
+      xpReward: 120,
     ),
 
     const Quest(

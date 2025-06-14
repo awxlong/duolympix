@@ -3,12 +3,11 @@
 //
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:solo_leveling/features/quests/presentation/quest_detail_screen.dart';
-import '../../mental_health/presentation/chat_screen.dart';
-import '../../mental_health/provider/chat_provider.dart';
-import '../data/models/quest_model.dart';
-import '../provider/quest_provider.dart';
-import 'widgets/quest_card.dart';
+import 'package:solo_leveling/features/quest_detail_screen.dart';
+import 'mental_health/provider/chat_provider.dart';
+import 'quests/data/models/quest_model.dart';
+import 'quests/provider/quest_provider.dart';
+import 'quests/presentation/widgets/quest_card.dart';
 
 class QuestListScreen extends StatelessWidget {
   const QuestListScreen({super.key});
