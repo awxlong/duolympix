@@ -43,39 +43,40 @@ Future<Either<Failure, UserEntity>> updateUser(UserEntity user) async {
 
 
   @override
-  Future<Either<Failure, void>> completeQuest(Quest quest) async {
-    try {
-      // Get current user
-      final user = await _database.userDao.findUserByUsername('current_user_username');
-      if (user == null) return const Left(CacheFailure());
+Future<Either<Failure, void>> completeQuest(Quest quest) async {
+  try {
+    // Get current user
+    final user = await _database.userDao.findUserByUsername('current_username');
+    if (user == null) return const Left(CacheFailure());
 
-      // Update user's XP and stats
-      final updatedUser = user.copyWith(
-        totalXp: user.totalXp + quest.xpReward,
-        level: _calculateLevel(user.totalXp + quest.xpReward),
-        totalQuestsCompleted: user.totalQuestsCompleted + 1,
-        lastActive: DateTime.now(),
-        streak: _updateStreak(user.streak, user.lastActive),
-      );
+    // Update user's XP and stats
+    final updatedUser = user.copyWith(
+      totalXp: user.totalXp + quest.xpReward,
+      level: _calculateLevel(user.totalXp + quest.xpReward),
+      totalQuestsCompleted: user.totalQuestsCompleted + 1,
+      lastActive: DateTime.now(),
+      streak: _updateStreak(user.streak, user.lastActive),
+    );
 
-      // Save updated user
-      await _database.userDao.updateUser(updatedUser);
+    // Save updated user
+    await _database.userDao.updateUser(updatedUser);
 
-      // Log quest completion
-      final questHistory = QuestHistory(
-        userId: updatedUser.id!,
-        questId: quest.id,
-        completionDate: DateTime.now(),
-        xpEarned: quest.xpReward,
-        durationInSeconds: quest.targetDuration?.inSeconds,
-      );
-      await _database.questHistoryDao.insertQuestHistory(questHistory);
+    // Log quest completion
+    final questHistory = QuestHistory(
+      userId: updatedUser.id!,
+      questId: quest.id,
+      completionDate: DateTime.now(),
+      xpEarned: quest.xpReward,
+      durationInSeconds: quest.targetDuration?.inSeconds,
+    );
+    await _database.questHistoryDao.insertQuestHistory(questHistory);
 
-      return const Right(null);
-    } catch (e) {
-      return const Left(CacheFailure());
-    }
+    return const Right(null);
+  } catch (e) {
+    return const Left(CacheFailure());
   }
+}
+
 
   // Helper methods
   int _calculateLevel(int xp) {

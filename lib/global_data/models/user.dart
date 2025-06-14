@@ -72,24 +72,24 @@ class User {
     );
   }
 
-  // Add fromJson factory method
   factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      id: json['id'],
-      username: json['username'],
-      email: json['email'],
-      age: json['age'],
-      gender: json['gender'],
-      weight: json['weight']?.toDouble(),
-      height: json['height']?.toDouble(),
-      profilePicture: json['profilePicture'],
-      totalXp: json['totalXp'] ?? 0,
-      level: json['level'] ?? 1,
-      streak: json['streak'] ?? 0,
-      totalQuestsCompleted: json['totalQuestsCompleted'] ?? 0,
-      lastActive: DateTime.fromMillisecondsSinceEpoch(json['lastActive']),
-    );
-  }
+  return User(
+    id: json['id'],
+    username: json['username'] as String, // Ensure username is a String
+    email: json['email'] as String? ?? '',
+    age: json['age'] as int? ?? 0,
+    gender: json['gender'] as String? ?? '',
+    weight: json['weight']?.toDouble(),
+    height: json['height']?.toDouble(),
+    profilePicture: json['profilePicture'] as String? ?? '',
+    totalXp: json['totalXp'] as int? ?? 0,
+    level: json['level'] as int? ?? 1,
+    streak: json['streak'] as int? ?? 0,
+    totalQuestsCompleted: json['totalQuestsCompleted'] as int? ?? 0,
+    lastActive: DateTime.fromMillisecondsSinceEpoch(json['INTEGER'] as int),
+  );
+}
+
 
   // Optional: Add toJson method
   Map<String, dynamic> toJson() {

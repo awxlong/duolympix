@@ -7,7 +7,6 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Get the UserProvider using Provider.of
     final userProvider = Provider.of<UserProvider>(context);
     final userState = userProvider.state;
 
@@ -46,10 +45,13 @@ class ProfileScreen extends StatelessWidget {
             Text('Level: ${user.level}', style: const TextStyle(fontSize: 18)),
             const SizedBox(height: 10),
             Text('XP: ${user.totalXp}', style: const TextStyle(fontSize: 18)),
+            const SizedBox(height: 10),
+            Text('Streak: ${user.streak}', style: const TextStyle(fontSize: 18)),
+            const SizedBox(height: 10),
+            Text('Total Quests Completed: ${user.totalQuestsCompleted}', style: const TextStyle(fontSize: 18)),
             const SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
-                // Navigate to leaderboard
                 Navigator.of(context).pushNamed('/leaderboard');
               },
               child: const Text('View Leaderboard'),

@@ -57,6 +57,7 @@ class _QuestListScreenState extends State<QuestListScreen> {
             label: 'Login',
           )
         ],
+        type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.purple[800],
         onTap: _onItemTapped,

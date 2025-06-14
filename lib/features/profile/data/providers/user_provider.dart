@@ -70,22 +70,24 @@ class UserProvider extends ChangeNotifier {
 }
 
   Future<void> completeQuest(Quest quest) async {
-    if (_state.user == null) return;
-    
-    final result = await _completeQuestUseCase(quest);
-    result.fold(
-      (failure) {
-        _state = _state.copyWith(
-          status: UserStatus.error,
-          errorMessage: failure.message,
-        );
-        notifyListeners();
-      },
-      (_) async {
-        await loadUser(_state.user!.username);
-      },
-    );
-  }
+  if (_state.user == null) return;
+
+  final result = await _completeQuestUseCase(quest);
+  result.fold(
+    (failure) {
+      _state = _state.copyWith(
+        status: UserStatus.error,
+        errorMessage: failure.message,
+      );
+      notifyListeners();
+    },
+    (_) async {
+      await loadUser(_state.user!.username);
+      notifyListeners(); // Notify listeners to update the UI
+    },
+  );
+}
+
 
   // Add this method to dispose resources
   @override
