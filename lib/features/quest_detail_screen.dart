@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solo_leveling/features/mental_health/presentation/widgets/typing_indicator.dart';
+import 'package:solo_leveling/features/profile/data/providers/user_provider.dart';
 import 'mental_health/presentation/widgets/chat_bubble.dart';
 import 'mental_health/provider/chat_provider.dart';
 import 'quests/provider/quest_provider.dart';
@@ -182,6 +183,12 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
   
   Future<void> _handleQuestCompletion(QuestProvider provider) async {
     await provider.completeQuest();
+
+    // 获取 UserProvider 实例
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    // 调用 UserProvider 的 completeQuest 方法
+    await userProvider.completeQuest(widget.quest);
+
     setState(() => _showCompletion = true);
   }
 

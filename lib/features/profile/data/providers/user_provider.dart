@@ -72,7 +72,7 @@ class UserProvider extends ChangeNotifier {
   Future<void> completeQuest(Quest quest) async {
   if (_state.user == null) return;
 
-  final result = await _completeQuestUseCase(quest);
+  final result = await _completeQuestUseCase(quest, _state.user!.username);
   result.fold(
     (failure) {
       _state = _state.copyWith(

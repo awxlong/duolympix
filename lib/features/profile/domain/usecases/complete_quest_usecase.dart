@@ -11,7 +11,7 @@ class CompleteQuestUseCase {
 
   CompleteQuestUseCase(this._repository);
 
-  Future<Either<Failure, void>> call(Quest quest) {
-    return _repository.completeQuest(quest);
+  Future<Either<Failure, void>> call(Quest quest, String username) {
+    return _repository.completeQuest(quest, username);
   }
 }

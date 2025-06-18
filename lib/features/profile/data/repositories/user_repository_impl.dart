@@ -34,7 +34,7 @@ Future<Either<Failure, UserEntity>> updateUser(UserEntity user) async {
   try {
     final dbUser = UserMapper.mapEntityToUser(user);
     await _database.userDao.updateUser(dbUser);
-    print('User data updated successfully: ${dbUser.username}');
+    // print('User data updated successfully: ${dbUser.username}');
     return Right(user);
   } catch (e) {
     return const Left(CacheFailure());
@@ -42,11 +42,11 @@ Future<Either<Failure, UserEntity>> updateUser(UserEntity user) async {
 }
 
 
-  @override
-Future<Either<Failure, void>> completeQuest(Quest quest) async {
+@override
+Future<Either<Failure, void>> completeQuest(Quest quest, String username) async {
   try {
     // Get current user
-    final user = await _database.userDao.findUserByUsername('current_username');
+    final user = await _database.userDao.findUserByUsername(username);
     if (user == null) return const Left(CacheFailure());
 
     // Update user's XP and stats

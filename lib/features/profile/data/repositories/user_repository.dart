@@ -9,6 +9,6 @@ abstract class UserRepository {
 
   Future<Either<Failure, UserEntity>> getUser(String email);
   Future<Either<Failure, UserEntity>> updateUser(UserEntity user);
-  Future<Either<Failure, void>> completeQuest(Quest quest);
+  Future<Either<Failure, void>> completeQuest(Quest quest, String username);
   Future<Either<Failure, void>> updateLeaderboard();
 }
