@@ -1,5 +1,6 @@
 // lib/features/profile/data/providers/user_provider.dart
 import 'package:flutter/material.dart';
+import 'package:solo_leveling/features/profile/data/repositories/user_repository.dart';
 import '../../domain/entities/user_entity.dart';
 import '../../domain/usecases/get_user_usecase.dart';
 import '../../domain/usecases/complete_quest_usecase.dart';
@@ -40,9 +41,10 @@ class UserState {
 class UserProvider extends ChangeNotifier {
   final GetUserUseCase _getUserUseCase;
   final CompleteQuestUseCase _completeQuestUseCase;
+  final UserRepository _userRepository; // Add this field
   UserState _state = UserState.initial();
 
-  UserProvider(this._getUserUseCase, this._completeQuestUseCase);
+  UserProvider(this._getUserUseCase, this._completeQuestUseCase, this._userRepository);
 
   UserState get state => _state;
 
@@ -87,7 +89,26 @@ class UserProvider extends ChangeNotifier {
     },
   );
 }
+// Add the updateUser method
+  Future<void> updateUser(UserEntity user) async {
+    _state = _state.copyWith(status: UserStatus.loading);
+    notifyListeners();
 
+    final result = await _userRepository.updateUser(user);
+    result.fold(
+      (failure) {
+        _state = _state.copyWith(
+          status: UserStatus.error,
+          errorMessage: failure.message,
+        );
+        notifyListeners();
+      },
+      (_) async {
+        await loadUser(user.username);
+        notifyListeners();
+      },
+    );
+  }
 
   // Add this method to dispose resources
   @override

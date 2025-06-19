@@ -1,6 +1,8 @@
 // lib/features/profile/domain/entities/user_entity.dart (Domain Entity)
 import 'package:equatable/equatable.dart';
 import 'package:floor/floor.dart';
+import 'package:solo_leveling/features/profile/data/mappers/user_mapper.dart';
+import 'package:solo_leveling/features/shopping/data/models/product_model.dart';
 import 'package:solo_leveling/global_data/converters/date_time_converter.dart';
 // import '../../../../global_data/models/enums.dart';
 
@@ -36,6 +38,12 @@ class UserEntity extends Equatable {
     this.totalQuestsCompleted = 0,
     required this.lastActive,
   });
+
+  UserEntity purchaseProduct(Product product) {
+    final user = UserMapper.mapEntityToUser(this);
+    final updatedUser = user.purchaseProduct(product);
+    return UserMapper.mapUserToEntity(updatedUser);
+  }
 
   @override
   List<Object?> get props => [

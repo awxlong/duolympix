@@ -1,6 +1,7 @@
 // lib/global_data/models/user.dart (Database Entity)
 
 import 'package:floor/floor.dart';
+import 'package:solo_leveling/features/shopping/data/models/product_model.dart';
 import 'package:solo_leveling/global_data/converters/date_time_converter.dart';
 
 @entity
@@ -108,5 +109,13 @@ class User {
       'totalQuestsCompleted': totalQuestsCompleted,
       'lastActive': lastActive.millisecondsSinceEpoch,
     };
+  }
+
+  // Method to purchase a product
+  User purchaseProduct(Product product) {
+    if (totalXp >= product.xpCost) {
+      return copyWith(totalXp: totalXp - product.xpCost);
+    }
+    return this;
   }
 }

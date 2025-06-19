@@ -2,9 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solo_leveling/features/auth/presentation/screens/login_page.dart';
-import 'package:solo_leveling/features/profile/presentation/screens/leaderboard_screen.dart';
+// import 'package:solo_leveling/features/profile/presentation/screens/leaderboard_screen.dart';
 import 'package:solo_leveling/features/profile/presentation/screens/profile_screen.dart';
 import 'package:solo_leveling/features/quest_detail_screen.dart';
+import 'package:solo_leveling/features/shopping/presentation/screens/shopping_screen.dart';
 import 'mental_health/provider/chat_provider.dart';
 import 'quests/data/models/quest_model.dart';
 import 'quests/provider/quest_provider.dart';
@@ -23,7 +24,8 @@ class _QuestListScreenState extends State<QuestListScreen> {
   static const List<Widget> _widgetOptions = <Widget>[
     QuestListContent(),
     ProfileScreen(),
-    LeaderboardScreen(),
+    // LeaderboardScreen(),
+    ShoppingScreen(),
     LoginPage(),
   ];
 
@@ -49,8 +51,8 @@ class _QuestListScreenState extends State<QuestListScreen> {
             label: 'Profile',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.leaderboard),
-            label: 'Leaderboard',
+            icon: Icon(Icons.shopping_cart),
+            label: 'Shopping',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.login),

@@ -8,6 +8,7 @@ import 'package:solo_leveling/features/mental_health/provider/chat_provider.dart
 import 'package:solo_leveling/features/profile/data/providers/leaderboard_provider.dart';
 import 'package:solo_leveling/features/profile/data/providers/user_provider.dart';
 import 'package:solo_leveling/features/profile/data/repositories/leaderboard_repository_impl.dart';
+import 'package:solo_leveling/features/profile/data/repositories/user_repository_impl.dart';
 import 'package:solo_leveling/features/profile/domain/repositories/leaderboard_repository.dart';
 import 'package:solo_leveling/features/profile/domain/usecases/complete_quest_usecase.dart';
 import 'package:solo_leveling/features/profile/domain/usecases/get_leaderboard_usecase.dart';
@@ -59,6 +60,7 @@ void main() async {
           create: (context) => UserProvider(
             getIt<GetUserUseCase>(),
             getIt<CompleteQuestUseCase>(),
+            UserRepositoryImpl(context.read<AppDatabase>())
           ),
         ),
 
