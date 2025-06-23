@@ -11,6 +11,10 @@
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:solo_leveling/core/injection/database_module.dart' as _i371;
+import 'package:solo_leveling/features/community/data/repositories/community_repository.dart'
+    as _i449;
+import 'package:solo_leveling/features/community/data/repositories/community_repository_impl.dart'
+    as _i84;
 import 'package:solo_leveling/features/profile/data/repositories/leaderboard_repository_impl.dart'
     as _i458;
 import 'package:solo_leveling/features/profile/data/repositories/user_repository.dart'
@@ -26,6 +30,11 @@ import 'package:solo_leveling/features/profile/domain/usecases/get_leaderboard_u
 import 'package:solo_leveling/features/profile/domain/usecases/get_user_usecase.dart'
     as _i1004;
 import 'package:solo_leveling/global_data/database/app_database.dart' as _i77;
+import 'package:solo_leveling/global_data/database/colleague_relation_dao.dart'
+    as _i465;
+import 'package:solo_leveling/global_data/database/comment_dao.dart' as _i157;
+import 'package:solo_leveling/global_data/database/xp_investment_dao.dart'
+    as _i535;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -51,6 +60,13 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i1004.GetUserUseCase(gh<_i397.UserRepository>()));
     gh.factory<_i586.CompleteQuestUseCase>(
         () => _i586.CompleteQuestUseCase(gh<_i397.UserRepository>()));
+    gh.lazySingleton<_i449.CommunityRepository>(
+        () => _i84.CommunityRepositoryImpl(
+              gh<_i465.ColleagueRelationDao>(),
+              gh<_i535.XpInvestmentDao>(),
+              gh<_i397.UserRepository>(),
+              gh<_i157.CommentDao>(),
+            ));
     gh.factory<_i947.GetLeaderboardUseCase>(
         () => _i947.GetLeaderboardUseCase(gh<_i701.LeaderboardRepository>()));
     return this;

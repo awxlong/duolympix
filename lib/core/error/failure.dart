@@ -33,3 +33,9 @@ class NetworkFailure extends Failure {
 class ValidationFailure extends Failure {
   const ValidationFailure({super.message = 'Input validation failed'});
 }
+
+// Insufficient XP 
+class InsufficientXpFailure extends Failure {
+  const InsufficientXpFailure({super.message = 'Insufficient XP'});
+}
+

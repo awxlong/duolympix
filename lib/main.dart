@@ -3,11 +3,15 @@ import 'package:provider/provider.dart';
 import 'package:solo_leveling/core/app_theme.dart';
 import 'package:solo_leveling/features/auth/presentation/screens/login_page.dart';
 import 'package:solo_leveling/features/auth/presentation/screens/splash_screen.dart';
+import 'package:solo_leveling/features/community/data/presentation/providers/community_provider.dart';
+import 'package:solo_leveling/features/community/data/repositories/community_repository.dart';
+import 'package:solo_leveling/features/community/data/repositories/community_repository_impl.dart';
 import 'package:solo_leveling/features/mental_health/data/repositories/chat_repository.dart';
 import 'package:solo_leveling/features/mental_health/provider/chat_provider.dart';
 import 'package:solo_leveling/features/profile/data/providers/leaderboard_provider.dart';
 import 'package:solo_leveling/features/profile/data/providers/user_provider.dart';
 import 'package:solo_leveling/features/profile/data/repositories/leaderboard_repository_impl.dart';
+import 'package:solo_leveling/features/profile/data/repositories/user_repository.dart';
 import 'package:solo_leveling/features/profile/data/repositories/user_repository_impl.dart';
 import 'package:solo_leveling/features/profile/domain/repositories/leaderboard_repository.dart';
 import 'package:solo_leveling/features/profile/domain/usecases/complete_quest_usecase.dart';
@@ -16,6 +20,9 @@ import 'package:solo_leveling/features/profile/domain/usecases/get_user_usecase.
 import 'package:solo_leveling/features/quest_list_screen.dart';
 import 'package:solo_leveling/features/quests/provider/quest_provider.dart';
 import 'package:solo_leveling/global_data/database/app_database.dart';
+import 'package:solo_leveling/global_data/database/colleague_relation_dao.dart';
+import 'package:solo_leveling/global_data/database/comment_dao.dart';
+import 'package:solo_leveling/global_data/database/xp_investment_dao.dart';
 import 'package:solo_leveling/injection_container.dart';
 import 'features/profile/presentation/screens/leaderboard_screen.dart';
 import 'features/profile/presentation/screens/profile_screen.dart';
@@ -37,6 +44,26 @@ void main() async {
         // Register LeaderboardRepository
         Provider<LeaderboardRepository>(
           create: (context) => LeaderboardRepositoryImpl(context.read<AppDatabase>()),
+        ),
+
+        // Register ColleagueRelationDao
+        Provider<ColleagueRelationDao>(
+          create: (context) => context.read<AppDatabase>().colleagueRelationDao,
+        ),
+
+        // Register XpInvestmentDao
+        Provider<XpInvestmentDao>(
+          create: (context) => context.read<AppDatabase>().xpInvestmentDao,
+        ),
+
+        // Register CommentDao
+        Provider<CommentDao>(
+          create: (context) => context.read<AppDatabase>().commentDao,
+        ),
+
+        // Register UserRepository
+        Provider<UserRepository>(
+          create: (context) => UserRepositoryImpl(context.read<AppDatabase>()),
         ),
 
         // Quest provider with dependencies
@@ -69,6 +96,20 @@ void main() async {
             GetLeaderboardUseCase(
               context.read<LeaderboardRepository>(),
             ),
+          ),
+        ),
+        // 社区功能Provider
+        Provider<CommunityRepository>(
+          create: (context) => CommunityRepositoryImpl(
+            context.read<ColleagueRelationDao>(),
+            context.read<XpInvestmentDao>(),
+            context.read<UserRepository>(),
+            context.read<CommentDao>(),
+          ),
+        ),
+        ChangeNotifierProvider<CommunityProvider>(
+          create: (context) => CommunityProvider(
+            context.read<CommunityRepository>(),
           ),
         ),
       ],

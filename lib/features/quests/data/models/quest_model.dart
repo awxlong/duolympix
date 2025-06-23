@@ -14,6 +14,9 @@ class Quest {
   final double? targetDistance;
   final int xpReward;
   final IconData icon;
+  final String? creatorId; // for community support
+  final bool isPublic; // for community
+  final int totalXpInvested; // track total XP invested on someone
 
   const Quest({
     required this.id,
@@ -24,6 +27,9 @@ class Quest {
     this.targetDuration,
     this.targetDistance,
     this.xpReward = 100,
+    this.creatorId,
+    this.isPublic = false, // default to private task
+    this.totalXpInvested = 0, // default to 0
   }) : assert((targetDuration != null) || (targetDistance != null), 
            'Must specify either duration or distance');
 
