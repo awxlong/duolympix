@@ -46,11 +46,13 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
     final userEntity = Provider.of<UserProvider>(context, listen: false).state.user!;
     _currentUser = UserMapper.mapEntityToUser(userEntity);
 
+    WidgetsBinding.instance.addPostFrameCallback((_) {
     if (widget.quest.isPublic) {
       _communityProvider.fetchColleaguesByQuest(widget.quest.id);
       _communityProvider.fetchInvestmentsByQuest(widget.quest.id);
       _communityProvider.fetchCommentsByQuest(widget.quest.id);
     }
+  });
   }
 
   Widget _buildCommunitySection() {
@@ -375,13 +377,15 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
   }
 
   Widget _buildChatInterface(ChatProvider chatProvider, QuestProvider questProvider) {
-    return Column(
+  return SingleChildScrollView(
+    child: Column(
       children: [
         TimerDisplay(
           duration: chatProvider.elapsedTime,
           targetDuration: widget.quest.targetDuration,
         ),
-        Expanded(
+        SizedBox(
+          height: 200, // Adjust the height as needed
           child: Stack(
             children: [
               ListView.builder(
@@ -401,14 +405,17 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
         ),
         _buildChatInput(chatProvider),
         ElevatedButton(
-          onPressed: chatProvider.isSessionComplete
-              ? () => _handleQuestCompletion(questProvider)
+          onPressed: chatProvider.isSessionComplete 
+              ? () => _handleQuestCompletion(questProvider) 
               : null,
           child: const Text('Complete Quest'),
         ),
       ],
-    );
-  }
+    ),
+  );
+}
+
+
 
   Widget _buildTypingIndicator() {
     return const TypingIndicator();

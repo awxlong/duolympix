@@ -28,7 +28,7 @@ class Quest {
     this.targetDistance,
     this.xpReward = 100,
     this.creatorId,
-    this.isPublic = false, // default to private task
+    this.isPublic = true, // default to private task
     this.totalXpInvested = 0, // default to 0
   }) : assert((targetDuration != null) || (targetDistance != null), 
            'Must specify either duration or distance');
