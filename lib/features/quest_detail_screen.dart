@@ -56,7 +56,8 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
   }
 
   Widget _buildCommunitySection() {
-    return Column(
+    return SingleChildScrollView(
+      child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Colleague section
@@ -70,7 +71,8 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
         // Comment section
         _buildCommentSection(),
       ],
-    );
+    ),
+    ); 
   }
 
   Widget _buildColleagueSection() {
@@ -353,7 +355,8 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
 
 
   Widget _buildPhysicalQuestScreen(QuestProvider provider, Quest quest) {
-    return Column(
+    return SingleChildScrollView(
+    child: Column(
       children: [
         TimerDisplay(
           duration: provider.elapsedTime,
@@ -371,10 +374,11 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
         ),
         if (provider.errorMessage != null)
           Text('Error: ${provider.errorMessage}',
-              style: const TextStyle(color: Colors.red)),
+            style: const TextStyle(color: Colors.red)),
       ],
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildChatInterface(ChatProvider chatProvider, QuestProvider questProvider) {
   return SingleChildScrollView(

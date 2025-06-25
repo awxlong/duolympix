@@ -1,4 +1,4 @@
-# Project Zenith
+# Project Zenith (Olympia, OlympAI, OlympX)
 App for gamifying life
 
 ## Features
@@ -8,6 +8,13 @@ You need to download and install ollama and host it. For this app, we used a qua
 ollama serve
 ollama run deepseek-r1:8b # be sure to write the right URL for hosting it. 
 ```
+
+### Community support
+
+### XP investment
+Inspired by the [达目标 app](http://www.yoobingo.com/)
+
+
 ## Getting Started with Flutter
 
 This project is a starting point for a Flutter application.
