@@ -17,41 +17,43 @@ class _LoginPageState extends State<LoginPage> {
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _ageController = TextEditingController();
+  final _passwordController = TextEditingController(); // Add this controller
 
   @override
   void dispose() {
     _usernameController.dispose();
     _emailController.dispose();
     _ageController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
   Future<void> _saveUser() async {
-  if (_formKey.currentState!.validate()) {
-    final user = User(
-      username: _usernameController.text,
-      email: _emailController.text,
-      age: int.parse(_ageController.text),
-      lastActive: DateTime.now(),
-    );
+    if (_formKey.currentState!.validate()) {
+      final user = User(
+        username: _usernameController.text,
+        email: _emailController.text,
+        age: int.parse(_ageController.text),
+        lastActive: DateTime.now(),
+        password: _passwordController.text, // Add this line
+      );
 
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
-    final userEntity = UserMapper.mapUserToEntity(user);
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      final userEntity = UserMapper.mapUserToEntity(user);
 
-    // Insert the user into the database
-    final database = await getDatabase();
-    await database.userDao.insertUser(user);
+      // Insert the user into the database
+      final database = await getDatabase();
+      await database.userDao.insertUser(user);
 
-    // Then load the user
-    await userProvider.loadUser(userEntity.username);
+      // Then load the user
+      await userProvider.loadUser(userEntity.username, userEntity.password);
 
-    // After saving the user, navigate to the next screen (e.g., quest list)
-    Navigator.of(context).pushReplacementNamed('/quests');
+      // After saving the user, navigate to the next screen (e.g., quest list)
+      Navigator.of(context).pushReplacementNamed('/quests');
+    }
   }
-}
 
-
-  @override
+@override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -96,7 +98,17 @@ class _LoginPageState extends State<LoginPage> {
                   return null;
                 },
               ),
-              const SizedBox(height: 20),
+              TextFormField(
+                controller: _passwordController, // Add this field
+                decoration: const InputDecoration(labelText: 'Password'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your password';
+                  }
+                  return null;
+                },
+                obscureText: true, // Hide the password
+              ),
               ElevatedButton(
                 onPressed: _saveUser,
                 child: const Text('Login'),

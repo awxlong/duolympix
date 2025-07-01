@@ -106,7 +106,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `User` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `username` TEXT NOT NULL, `email` TEXT NOT NULL, `age` INTEGER NOT NULL, `gender` TEXT, `weight` REAL, `height` REAL, `profilePicture` TEXT, `totalXp` INTEGER NOT NULL, `level` INTEGER NOT NULL, `streak` INTEGER NOT NULL, `totalQuestsCompleted` INTEGER NOT NULL, `INTEGER` INTEGER NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `User` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `username` TEXT NOT NULL, `email` TEXT NOT NULL, `age` INTEGER NOT NULL, `gender` TEXT, `weight` REAL, `height` REAL, `profilePicture` TEXT, `totalXp` INTEGER NOT NULL, `level` INTEGER NOT NULL, `streak` INTEGER NOT NULL, `totalQuestsCompleted` INTEGER NOT NULL, `password` TEXT NOT NULL, `INTEGER` INTEGER NOT NULL)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `QuestHistory` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `userId` INTEGER NOT NULL, `questId` TEXT NOT NULL, `INTEGER` INTEGER NOT NULL, `xpEarned` INTEGER NOT NULL, `durationInSeconds` INTEGER, `distance` REAL, `repetitions` INTEGER)');
         await database.execute(
@@ -180,6 +180,7 @@ class _$UserDao extends UserDao {
                   'level': item.level,
                   'streak': item.streak,
                   'totalQuestsCompleted': item.totalQuestsCompleted,
+                  'password': item.password,
                   'INTEGER': _dateTimeConverter.encode(item.lastActive)
                 }),
         _userUpdateAdapter = UpdateAdapter(
@@ -199,6 +200,7 @@ class _$UserDao extends UserDao {
                   'level': item.level,
                   'streak': item.streak,
                   'totalQuestsCompleted': item.totalQuestsCompleted,
+                  'password': item.password,
                   'INTEGER': _dateTimeConverter.encode(item.lastActive)
                 });
 
@@ -228,7 +230,8 @@ class _$UserDao extends UserDao {
             level: row['level'] as int,
             streak: row['streak'] as int,
             totalQuestsCompleted: row['totalQuestsCompleted'] as int,
-            lastActive: _dateTimeConverter.decode(row['INTEGER'] as int)),
+            lastActive: _dateTimeConverter.decode(row['INTEGER'] as int),
+            password: row['password'] as String),
         arguments: [id]);
   }
 
@@ -248,7 +251,8 @@ class _$UserDao extends UserDao {
             level: row['level'] as int,
             streak: row['streak'] as int,
             totalQuestsCompleted: row['totalQuestsCompleted'] as int,
-            lastActive: _dateTimeConverter.decode(row['INTEGER'] as int)),
+            lastActive: _dateTimeConverter.decode(row['INTEGER'] as int),
+            password: row['password'] as String),
         arguments: [username]);
   }
 
@@ -268,13 +272,14 @@ class _$UserDao extends UserDao {
             level: row['level'] as int,
             streak: row['streak'] as int,
             totalQuestsCompleted: row['totalQuestsCompleted'] as int,
-            lastActive: _dateTimeConverter.decode(row['INTEGER'] as int)),
+            lastActive: _dateTimeConverter.decode(row['INTEGER'] as int),
+            password: row['password'] as String),
         arguments: [email]);
   }
 
   @override
   Future<void> insertUser(User user) async {
-    await _userInsertionAdapter.insert(user, OnConflictStrategy.abort);
+    await _userInsertionAdapter.insert(user, OnConflictStrategy.ignore);
   }
 
   @override

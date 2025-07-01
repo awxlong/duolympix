@@ -5,6 +5,8 @@ App for gamifying life
 ### Mental health chatbot
 You need to download and install ollama and host it. For this app, we used a quantized deepseek-r1 prompt-engineered as a CBT therapist. 
 ```
+# Set _baseUrl in chat_repository.dart to your host's IP address
+export OLLAMA_HOST="0.0.0.0:11434" # enables Ollama to listen to all devices
 ollama serve
 ollama run deepseek-r1:8b # be sure to write the right URL for hosting it. 
 ```

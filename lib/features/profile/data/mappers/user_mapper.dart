@@ -18,6 +18,7 @@ class UserMapper {
       streak: user.streak,
       totalQuestsCompleted: user.totalQuestsCompleted,
       lastActive: user.lastActive,
+      password: user.password,
     );
   }
 
@@ -36,6 +37,7 @@ class UserMapper {
       streak: entity.streak,
       totalQuestsCompleted: entity.totalQuestsCompleted,
       lastActive: entity.lastActive,
+      password: entity.password,
     );
   }
 }

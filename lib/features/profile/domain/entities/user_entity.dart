@@ -22,6 +22,7 @@ class UserEntity extends Equatable {
   @ColumnInfo(name: 'INTEGER') // Store as milliseconds since epoch
   @TypeConverters([DateTimeConverter])
   final DateTime lastActive;
+  final String password;
 
   const UserEntity({
     this.id,
@@ -37,6 +38,7 @@ class UserEntity extends Equatable {
     this.streak = 0,
     this.totalQuestsCompleted = 0,
     required this.lastActive,
+    required this.password,
   });
 
   UserEntity purchaseProduct(Product product) {
@@ -59,6 +61,7 @@ class UserEntity extends Equatable {
     int? streak,
     int? totalQuestsCompleted,
     DateTime? lastActive,
+    String? password,
   }) {
     return UserEntity(
       id: id ?? this.id,
@@ -74,6 +77,7 @@ class UserEntity extends Equatable {
       streak: streak ?? this.streak,
       totalQuestsCompleted: totalQuestsCompleted ?? this.totalQuestsCompleted,
       lastActive: lastActive ?? this.lastActive,
+      password: password ?? this.password,
     );
   }
 
@@ -92,6 +96,7 @@ class UserEntity extends Equatable {
         streak,
         totalQuestsCompleted,
         lastActive,
+        password,
       ];
 }
 

@@ -15,6 +15,8 @@ import 'package:solo_leveling/features/community/data/repositories/community_rep
     as _i449;
 import 'package:solo_leveling/features/community/data/repositories/community_repository_impl.dart'
     as _i84;
+import 'package:solo_leveling/features/profile/data/providers/user_provider.dart'
+    as _i305;
 import 'package:solo_leveling/features/profile/data/repositories/leaderboard_repository_impl.dart'
     as _i458;
 import 'package:solo_leveling/features/profile/data/repositories/user_repository.dart'
@@ -56,17 +58,17 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i961.UserRepositoryImpl(gh<_i77.AppDatabase>()));
     gh.factory<_i701.LeaderboardRepository>(
         () => _i458.LeaderboardRepositoryImpl(gh<_i77.AppDatabase>()));
+    gh.factory<_i449.CommunityRepository>(() => _i84.CommunityRepositoryImpl(
+          gh<_i465.ColleagueRelationDao>(),
+          gh<_i535.XpInvestmentDao>(),
+          gh<_i397.UserRepository>(),
+          gh<_i157.CommentDao>(),
+          gh<_i305.UserProvider>(),
+        ));
     gh.factory<_i1004.GetUserUseCase>(
         () => _i1004.GetUserUseCase(gh<_i397.UserRepository>()));
     gh.factory<_i586.CompleteQuestUseCase>(
         () => _i586.CompleteQuestUseCase(gh<_i397.UserRepository>()));
-    gh.lazySingleton<_i449.CommunityRepository>(
-        () => _i84.CommunityRepositoryImpl(
-              gh<_i465.ColleagueRelationDao>(),
-              gh<_i535.XpInvestmentDao>(),
-              gh<_i397.UserRepository>(),
-              gh<_i157.CommentDao>(),
-            ));
     gh.factory<_i947.GetLeaderboardUseCase>(
         () => _i947.GetLeaderboardUseCase(gh<_i701.LeaderboardRepository>()));
     return this;

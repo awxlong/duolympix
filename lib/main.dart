@@ -105,6 +105,7 @@ void main() async {
             context.read<XpInvestmentDao>(),
             context.read<UserRepository>(),
             context.read<CommentDao>(),
+            context.read<UserProvider>(),
           ),
         ),
         ChangeNotifierProvider<CommunityProvider>(

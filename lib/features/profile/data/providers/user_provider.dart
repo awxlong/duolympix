@@ -48,11 +48,11 @@ class UserProvider extends ChangeNotifier {
 
   UserState get state => _state;
 
-  Future<void> loadUser(String username) async {
+  Future<void> loadUser(String username, String password) async {
   _state = _state.copyWith(status: UserStatus.loading);
   notifyListeners();
   
-  final result = await _getUserUseCase(username);
+  final result = await _getUserUseCase(username, password);
   result.fold(
     (failure) {
       _state = _state.copyWith(
@@ -84,7 +84,7 @@ class UserProvider extends ChangeNotifier {
       notifyListeners();
     },
     (_) async {
-      await loadUser(_state.user!.username);
+      await loadUser(_state.user!.username, _state.user!.password);
       notifyListeners(); // Notify listeners to update the UI
     },
   );
@@ -104,7 +104,7 @@ class UserProvider extends ChangeNotifier {
         notifyListeners();
       },
       (_) async {
-        await loadUser(user.username);
+        await loadUser(user.username, user.password);
         notifyListeners();
       },
     );

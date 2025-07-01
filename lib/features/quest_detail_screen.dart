@@ -19,8 +19,6 @@ import 'quests/presentation/widgets/quest_progress.dart';
 import 'quests/data/models/quest_model.dart';
 import 'quests/presentation/widgets/timer_display.dart';
 
-
-
 class QuestDetailScreen extends StatefulWidget {
   final Quest quest;
   const QuestDetailScreen({super.key, required this.quest});
@@ -47,17 +45,16 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
     _currentUser = UserMapper.mapEntityToUser(userEntity);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-    if (widget.quest.isPublic) {
-      _communityProvider.fetchColleaguesByQuest(widget.quest.id);
-      _communityProvider.fetchInvestmentsByQuest(widget.quest.id);
-      _communityProvider.fetchCommentsByQuest(widget.quest.id);
-    }
-  });
+      if (widget.quest.isPublic) {
+        _communityProvider.fetchColleaguesByQuest(widget.quest.id);
+        _communityProvider.fetchInvestmentsByQuest(widget.quest.id);
+        _communityProvider.fetchCommentsByQuest(widget.quest.id);
+      }
+    });
   }
 
   Widget _buildCommunitySection() {
-    return SingleChildScrollView(
-      child: Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Colleague section
@@ -71,8 +68,7 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
         // Comment section
         _buildCommentSection(),
       ],
-    ),
-    ); 
+    );
   }
 
   Widget _buildColleagueSection() {
@@ -353,10 +349,8 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
     );
   }
 
-
   Widget _buildPhysicalQuestScreen(QuestProvider provider, Quest quest) {
-    return SingleChildScrollView(
-    child: Column(
+    return Column(
       children: [
         TimerDisplay(
           duration: provider.elapsedTime,
@@ -376,20 +370,17 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
           Text('Error: ${provider.errorMessage}',
             style: const TextStyle(color: Colors.red)),
       ],
-    ),
-  );
-}
+    );
+  }
 
   Widget _buildChatInterface(ChatProvider chatProvider, QuestProvider questProvider) {
-  return SingleChildScrollView(
-    child: Column(
+    return Column(
       children: [
         TimerDisplay(
           duration: chatProvider.elapsedTime,
           targetDuration: widget.quest.targetDuration,
         ),
-        SizedBox(
-          height: 200, // Adjust the height as needed
+        Expanded(
           child: Stack(
             children: [
               ListView.builder(
@@ -415,11 +406,8 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
           child: const Text('Complete Quest'),
         ),
       ],
-    ),
-  );
-}
-
-
+    );
+  }
 
   Widget _buildTypingIndicator() {
     return const TypingIndicator();
@@ -510,15 +498,20 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
 
     return Scaffold(
       appBar: AppBar(title: Text(widget.quest.title)),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: _showCompletion
             ? _buildCompletionScreen(widget.quest)
             : Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  widget.quest.type == QuestType.mentalHealth
-                      ? _buildChatInterface(chatProvider!, questProvider)
-                      : _buildPhysicalQuestScreen(questProvider, widget.quest),
+                  if (widget.quest.type == QuestType.mentalHealth)
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.6,
+                      child: _buildChatInterface(chatProvider!, questProvider),
+                    )
+                  else
+                    _buildPhysicalQuestScreen(questProvider, widget.quest),
                   const SizedBox(height: 20),
                   if (widget.quest.isPublic) _buildCommunitySection(),
                 ],

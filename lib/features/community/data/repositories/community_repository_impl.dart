@@ -7,6 +7,7 @@ import 'package:solo_leveling/features/community/data/models/colleague_relation.
 import 'package:solo_leveling/features/community/data/models/comment.dart';
 import 'package:solo_leveling/features/community/data/models/xp_investment.dart';
 import 'package:solo_leveling/features/community/data/repositories/community_repository.dart';
+import 'package:solo_leveling/features/profile/data/providers/user_provider.dart';
 import 'package:solo_leveling/features/profile/data/repositories/user_repository.dart';
 import 'package:solo_leveling/global_data/database/colleague_relation_dao.dart';
 import 'package:solo_leveling/global_data/database/comment_dao.dart';
@@ -18,12 +19,14 @@ class CommunityRepositoryImpl implements CommunityRepository {
   final XpInvestmentDao _xpInvestmentDao;
   final UserRepository _userRepository; // 用于扣除用户XP
   final CommentDao _commentDao; // 
+  final UserProvider _userProvider; 
 
   CommunityRepositoryImpl(
     this._colleagueRelationDao,
     this._xpInvestmentDao,
     this._userRepository,
     this._commentDao,
+    this._userProvider,
   );
 
   // 同事功能实现
@@ -103,7 +106,7 @@ class CommunityRepositoryImpl implements CommunityRepository {
   Future<Either<Failure, int>> investXp(XpInvestment investment) async {
     try {
       // 1. 扣除投资者的XP
-      final userResult = await _userRepository.getUser(investment.investorId);
+      final userResult = await _userRepository.getUser(investment.investorId, _userProvider.state.user!.password);
       if (userResult.isLeft()) {
         return Left(userResult.fold((l) => l, (r) => throw UnimplementedError()));
       }

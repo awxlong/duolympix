@@ -7,7 +7,7 @@ import '../../../../core/error/failure.dart';
 abstract class UserRepository {
   UserRepository(database);
 
-  Future<Either<Failure, UserEntity>> getUser(String username);
+  Future<Either<Failure, UserEntity>> getUser(String username, String password);
   Future<Either<Failure, UserEntity>> updateUser(UserEntity user);
   Future<Either<Failure, void>> completeQuest(Quest quest, String username);
   Future<Either<Failure, void>> updateLeaderboard();

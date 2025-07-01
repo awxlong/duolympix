@@ -24,9 +24,9 @@ class _SplashScreenState extends State<SplashScreen> {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     final prefs = await SharedPreferences.getInstance();
     final username = prefs.getString('username');
-
-    if (username != null) {
-      await userProvider.loadUser(username);
+    final password = prefs.getString('password');
+    if (username != null && password != null) {
+      await userProvider.loadUser(username, password);
       if (mounted) {
         Navigator.of(context).pushReplacementNamed('/quests');
       }

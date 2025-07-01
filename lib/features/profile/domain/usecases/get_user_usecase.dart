@@ -11,7 +11,7 @@ class GetUserUseCase {
 
   GetUserUseCase(this._repository);
 
-  Future<Either<Failure, UserEntity>> call(String username) {
-    return _repository.getUser(username);
+  Future<Either<Failure, UserEntity>> call(String username, password) {
+    return _repository.getUser(username, password);
   }
 }

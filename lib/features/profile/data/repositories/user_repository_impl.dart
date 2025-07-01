@@ -19,15 +19,16 @@ class UserRepositoryImpl implements UserRepository {
   UserRepositoryImpl(this._database);
 
 @override
-Future<Either<Failure, UserEntity>> getUser(String username) async {
-  try {
-    final user = await _database.userDao.findUserByUsername(username);
-    if (user == null) return const Left(DatabaseFailure(message: 'User not found'));
-    return Right(UserMapper.mapUserToEntity(user));
-  } catch (e) {
-    return Left(DatabaseFailure(message: 'Error fetching user: $e'));
+  Future<Either<Failure, UserEntity>> getUser(String username, String password) async {
+    try {
+      final user = await _database.userDao.findUserByUsername(username);
+      if (user == null) return const Left(DatabaseFailure(message: 'User not found'));
+      if (user.password != password) return const Left(DatabaseFailure(message: 'Incorrect password'));
+      return Right(UserMapper.mapUserToEntity(user));
+    } catch (e) {
+      return Left(DatabaseFailure(message: 'Error fetching user: $e'));
+    }
   }
-}
 
 @override
 Future<Either<Failure, UserEntity>> updateUser(UserEntity user) async {

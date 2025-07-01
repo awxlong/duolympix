@@ -19,6 +19,7 @@ class User {
   final int level;
   final int streak;
   final int totalQuestsCompleted;
+  final String password; // to ensure uniqueness of user
   
   @ColumnInfo(name: 'INTEGER') // Store as milliseconds since epoch
   @TypeConverters([DateTimeConverter])
@@ -38,6 +39,7 @@ class User {
     this.streak = 0,
     this.totalQuestsCompleted = 0,
     required this.lastActive,
+    required this.password,
   });
 
   // Add copyWith method
@@ -55,6 +57,7 @@ class User {
     int? streak,
     int? totalQuestsCompleted,
     DateTime? lastActive,
+    String? password,
   }) {
     return User(
       id: id ?? this.id,
@@ -70,6 +73,7 @@ class User {
       streak: streak ?? this.streak,
       totalQuestsCompleted: totalQuestsCompleted ?? this.totalQuestsCompleted,
       lastActive: lastActive ?? this.lastActive,
+      password: password ?? this.password,
     );
   }
 
@@ -88,6 +92,7 @@ class User {
     streak: json['streak'] as int? ?? 0,
     totalQuestsCompleted: json['totalQuestsCompleted'] as int? ?? 0,
     lastActive: DateTime.fromMillisecondsSinceEpoch(json['INTEGER'] as int),
+    password: json['password'] as String? ?? '',
   );
 }
 
@@ -108,6 +113,7 @@ class User {
       'streak': streak,
       'totalQuestsCompleted': totalQuestsCompleted,
       'lastActive': lastActive.millisecondsSinceEpoch,
+      'password': password,
     };
   }
 
