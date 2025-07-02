@@ -9,8 +9,8 @@ import 'package:solo_leveling/global_data/converters/date_time_converter.dart';
 class UserEntity extends Equatable {
   final int? id;
   final String username;
-  final String email;
-  final int age;
+  final String? email;
+  final int? age;
   final String? gender;
   final double? weight;
   final double? height;

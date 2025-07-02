@@ -9,8 +9,8 @@ class User {
   @PrimaryKey(autoGenerate: true)
   final int? id;
   final String username;
-  final String email;
-  final int age;
+  final String? email;
+  final int? age;
   final String? gender;
   final double? weight;
   final double? height;
@@ -28,8 +28,8 @@ class User {
   User({
     this.id,
     required this.username,
-    required this.email,
-    required this.age,
+    this.email,
+    this.age,
     this.gender,
     this.weight,
     this.height,

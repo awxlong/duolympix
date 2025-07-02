@@ -15,15 +15,11 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _ageController = TextEditingController();
-  final _passwordController = TextEditingController(); // Add this controller
+  final _passwordController = TextEditingController();
 
   @override
   void dispose() {
     _usernameController.dispose();
-    _emailController.dispose();
-    _ageController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -32,10 +28,8 @@ class _LoginPageState extends State<LoginPage> {
     if (_formKey.currentState!.validate()) {
       final user = User(
         username: _usernameController.text,
-        email: _emailController.text,
-        age: int.parse(_ageController.text),
         lastActive: DateTime.now(),
-        password: _passwordController.text, // Add this line
+        password: _passwordController.text,
       );
 
       final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -49,11 +43,13 @@ class _LoginPageState extends State<LoginPage> {
       await userProvider.loadUser(userEntity.username, userEntity.password);
 
       // After saving the user, navigate to the next screen (e.g., quest list)
-      Navigator.of(context).pushReplacementNamed('/quests');
+      if (mounted) {
+        Navigator.of(context).pushReplacementNamed('/quests');
+      }
     }
   }
 
-@override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -76,30 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                 },
               ),
               TextFormField(
-                controller: _emailController,
-                decoration: const InputDecoration(labelText: 'Email'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _ageController,
-                decoration: const InputDecoration(labelText: 'Age'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your age';
-                  }
-                  if (int.tryParse(value) == null) {
-                    return 'Please enter a valid age';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _passwordController, // Add this field
+                controller: _passwordController,
                 decoration: const InputDecoration(labelText: 'Password'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -107,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                   }
                   return null;
                 },
-                obscureText: true, // Hide the password
+                obscureText: true,
               ),
               ElevatedButton(
                 onPressed: _saveUser,

@@ -56,11 +56,15 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
                         trailing: ElevatedButton(
                           onPressed: user!.totalXp >= product.xpCost
                               ? () async {
+                                  // 在异步操作之前获取 ScaffoldMessengerState
+                                  final scaffoldMessenger = ScaffoldMessenger.of(context);
                                   final updatedUser = user.purchaseProduct(product);
                                   await userProvider.updateUser(updatedUser);
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(content: Text('Product purchased successfully!')),
-                                  );
+                                  if (mounted) {
+                                    scaffoldMessenger.showSnackBar(
+                                      const SnackBar(content: Text('Product purchased successfully!')),
+                                    );
+                                  }
                                 }
                               : null,
                           child: const Text('Buy'),

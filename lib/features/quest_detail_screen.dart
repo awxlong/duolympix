@@ -473,13 +473,9 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
 
   Future<void> _handleQuestCompletion(QuestProvider provider) async {
     await provider.completeQuest();
-
-    // Get UserProvider instance
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
-    // Call UserProvider's completeQuest method
-    await userProvider.completeQuest(widget.quest);
-
-    setState(() => _showCompletion = true);
+    if (mounted) {
+      setState(() => _showCompletion = true);
+    }
   }
 
   @override
@@ -492,7 +488,9 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
 
     if (isCompleted && !_showCompletion) {
       Future.delayed(Duration.zero, () {
-        setState(() => _showCompletion = true);
+        if (mounted) {
+          setState(() => _showCompletion = true);
+        }
       });
     }
 
