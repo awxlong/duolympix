@@ -128,12 +128,20 @@ class QuestProvider with ChangeNotifier {
     
     if (_activeQuest!.type == QuestType.running) {
       final distanceOK = _currentDistance >= _activeQuest!.targetDistance!;
-      final timeOK = elapsedTime <= _activeQuest!.targetDuration!;
+      final timeOK = _activeQuest!.maxDuration != null 
+         ? elapsedTime <= _activeQuest!.maxDuration!
+          : _activeQuest!.minDuration != null 
+              ? elapsedTime >= _activeQuest!.minDuration!
+               : true;
       return distanceOK && timeOK;
     }
     
     if (_activeQuest!.type == QuestType.strength) {
-      return elapsedTime <= _activeQuest!.targetDuration!;
+      return _activeQuest!.maxDuration != null 
+         ? elapsedTime <= _activeQuest!.maxDuration!
+          : _activeQuest!.minDuration != null 
+              ? elapsedTime >= _activeQuest!.minDuration!
+               : true;
     }
     
     return false;
@@ -147,7 +155,12 @@ class QuestProvider with ChangeNotifier {
   _currentDistance = 0.0;
 }
 
-    
+  void addNewQuest(Quest quest) {
+    _availableQuests.add(quest);
+    notifyListeners();
+  }
+
+
   @override
   void dispose() {
     _resetQuest();

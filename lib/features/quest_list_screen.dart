@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:solo_leveling/features/auth/presentation/screens/login_page.dart';
 // import 'package:solo_leveling/features/profile/presentation/screens/leaderboard_screen.dart';
 import 'package:solo_leveling/features/profile/presentation/screens/profile_screen.dart';
+import 'package:solo_leveling/features/quest_design_screen.dart';
 import 'package:solo_leveling/features/quest_detail_screen.dart';
 import 'package:solo_leveling/features/shopping/presentation/screens/shopping_screen.dart';
 import 'mental_health/provider/chat_provider.dart';
@@ -38,7 +39,20 @@ class _QuestListScreenState extends State<QuestListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Solo Leveling')),
+      appBar: AppBar(
+        title: const Text('Solo Leveling'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const QuestDesignScreen()),
+              );
+            },
+          ),
+        ],
+      ),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[

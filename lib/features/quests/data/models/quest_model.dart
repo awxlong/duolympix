@@ -11,6 +11,8 @@ class Quest {
   final String description;
   final QuestType type;
   final Duration? targetDuration;
+  final Duration? minDuration; 
+  final Duration? maxDuration;
   final double? targetDistance;
   final int xpReward;
   final IconData icon;
@@ -24,14 +26,17 @@ class Quest {
     required this.type,
     required this.icon,
     this.description = '',
-    this.targetDuration,
+    Duration? targetDuration,
+    this.minDuration,
+    this.maxDuration,
     this.targetDistance,
     this.xpReward = 100,
     this.creatorId,
     this.isPublic = true, // default to private task
     this.totalXpInvested = 0, // default to 0
-  }) : assert((targetDuration != null) || (targetDistance != null), 
-           'Must specify either duration or distance');
+  }) : assert((minDuration != null || maxDuration != null) || (targetDistance != null), 
+           'Must specify either duration or distance'),
+           targetDuration = targetDuration ?? minDuration ?? maxDuration; // for timer display purposes
 
   bool get isTimeBased => targetDuration != null;
   bool get isDistanceBased => targetDistance != null;

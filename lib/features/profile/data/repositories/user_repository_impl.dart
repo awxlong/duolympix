@@ -68,7 +68,6 @@ Future<Either<Failure, void>> completeQuest(Quest quest, String username) async 
       questId: quest.id,
       completionDate: DateTime.now(),
       xpEarned: quest.xpReward,
-      durationInSeconds: quest.targetDuration?.inSeconds,
     );
     await _database.questHistoryDao.insertQuestHistory(questHistory);
 

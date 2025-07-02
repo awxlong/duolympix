@@ -445,13 +445,61 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
 
   double _calculateProgress(Quest quest, QuestProvider provider, ChatProvider? chatProvider) {
     if (quest.type == QuestType.running) {
-      final distanceProgress = provider.currentDistance / quest.targetDistance!;
-      final timeProgress = provider.elapsedTime.inSeconds / quest.targetDuration!.inSeconds;
+      final distanceProgress = provider.currentDistance / (quest.targetDistance?? 1);
+      double timeProgress = 0;
+
+      if (quest.minDuration != null && quest.maxDuration != null) {
+        if (provider.elapsedTime < quest.minDuration!) {
+          timeProgress = provider.elapsedTime.inSeconds / quest.minDuration!.inSeconds;
+        } else if (provider.elapsedTime > quest.maxDuration!) {
+          timeProgress = 1;
+        } else {
+          timeProgress = (provider.elapsedTime.inSeconds - quest.minDuration!.inSeconds) / (quest.maxDuration!.inSeconds - quest.minDuration!.inSeconds);
+        }
+      } else if (quest.minDuration != null) {
+        timeProgress = provider.elapsedTime.inSeconds / quest.minDuration!.inSeconds;
+      } else if (quest.maxDuration != null) {
+        timeProgress = provider.elapsedTime.inSeconds / quest.maxDuration!.inSeconds;
+      }
+
       return (distanceProgress + timeProgress) / 2;
     } else if (quest.type == QuestType.mentalHealth) {
-      return chatProvider!.elapsedTime.inSeconds / quest.targetDuration!.inSeconds;
+      double timeProgress = 0;
+
+      if (quest.minDuration != null && quest.maxDuration != null) {
+        if (chatProvider!.elapsedTime < quest.minDuration!) {
+          timeProgress = chatProvider.elapsedTime.inSeconds / quest.minDuration!.inSeconds;
+        } else if (chatProvider.elapsedTime > quest.maxDuration!) {
+          timeProgress = 1;
+        } else {
+          timeProgress = (chatProvider.elapsedTime.inSeconds - quest.minDuration!.inSeconds) / (quest.maxDuration!.inSeconds - quest.minDuration!.inSeconds);
+        }
+      } else if (quest.minDuration != null) {
+        timeProgress = chatProvider!.elapsedTime.inSeconds / quest.minDuration!.inSeconds;
+      } else if (quest.maxDuration != null) {
+        timeProgress = chatProvider!.elapsedTime.inSeconds / quest.maxDuration!.inSeconds;
+      }
+
+      return timeProgress;
     }
-    return provider.elapsedTime.inSeconds / quest.targetDuration!.inSeconds;
+
+    double timeProgress = 0;
+
+    if (quest.minDuration != null && quest.maxDuration != null) {
+      if (provider.elapsedTime < quest.minDuration!) {
+        timeProgress = provider.elapsedTime.inSeconds / quest.minDuration!.inSeconds;
+      } else if (provider.elapsedTime > quest.maxDuration!) {
+        timeProgress = 1;
+      } else {
+        timeProgress = (provider.elapsedTime.inSeconds - quest.minDuration!.inSeconds) / (quest.maxDuration!.inSeconds - quest.minDuration!.inSeconds);
+      }
+    } else if (quest.minDuration != null) {
+      timeProgress = provider.elapsedTime.inSeconds / quest.minDuration!.inSeconds;
+    } else if (quest.maxDuration != null) {
+      timeProgress = provider.elapsedTime.inSeconds / quest.maxDuration!.inSeconds;
+    }
+
+    return timeProgress;
   }
 
   Widget _buildCompletionScreen(Quest quest) {

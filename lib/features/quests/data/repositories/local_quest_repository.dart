@@ -12,7 +12,7 @@ class LocalQuestRepository implements QuestRepository {
     icon: Icons.directions_run,
       description: 'Run 1 mile in under 5 minutes',
       targetDistance: 1.0,
-      targetDuration: Duration(minutes: 5),
+      maxDuration: Duration(minutes: 5),
       xpReward: 200,
     ),
     const Quest(
@@ -21,7 +21,7 @@ class LocalQuestRepository implements QuestRepository {
       type: QuestType.strength,
       icon: Icons.fitness_center,
       description: 'Complete 50 pushups in 3 minutes',
-      targetDuration: Duration(seconds: 3),
+      maxDuration: Duration(seconds: 3),
       xpReward: 150,
     ),
 
@@ -31,7 +31,7 @@ class LocalQuestRepository implements QuestRepository {
       type: QuestType.strength,
       icon: Icons.fitness_center,
       description: 'Complete 50 pullups in 3 seconds',
-      targetDuration: Duration(seconds: 3),
+      maxDuration: Duration(seconds: 3),
       xpReward: 120,
     ),
 
@@ -41,7 +41,7 @@ class LocalQuestRepository implements QuestRepository {
       type: QuestType.mentalHealth,
       icon: Icons.psychology,
       description: 'Chat about mental health for 5 minutes',
-      targetDuration: Duration(seconds: 3),
+      minDuration: Duration(seconds: 3),
       xpReward: 100,
     ),
   ];
