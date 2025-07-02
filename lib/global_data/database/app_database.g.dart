@@ -480,7 +480,7 @@ class _$CommentDao extends CommentDao {
             (Comment item) => <String, Object?>{
                   'id': item.id,
                   'questId': item.questId,
-                  'userId': item.userId,
+                  'username': item.username,
                   'content': item.content,
                   'timestamp': _dateTimeConverter.encode(item.timestamp)
                 });
@@ -500,7 +500,7 @@ class _$CommentDao extends CommentDao {
         mapper: (Map<String, Object?> row) => Comment(
             id: row['id'] as int?,
             questId: row['questId'] as String,
-            userId: row['userId'] as String,
+            username: row['username'] as String,
             content: row['content'] as String,
             timestamp: _dateTimeConverter.decode(row['timestamp'] as int)),
         arguments: [questId]);

@@ -1,10 +1,10 @@
 // lib/features/profile/presentation/screens/leaderboard_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solo_leveling/features/profile/data/providers/leaderboard_provider.dart';
+import 'package:solo_leveling/features/profile/presentation/screens/user_quests_screen.dart'; // 新增导入
 import '../../../../global_data/models/enums.dart';
-import '../widgets/leaderboard_tile.dart';
-
 
 class LeaderboardScreen extends StatefulWidget {
   const LeaderboardScreen({super.key});
@@ -28,7 +28,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
   @override
   Widget build(BuildContext context) {
     final state = Provider.of<LeaderboardProvider>(context).state;
-    
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Leaderboard'),
@@ -63,7 +63,27 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                   itemCount: state.topUsers.length,
                   itemBuilder: (context, index) {
                     final entry = state.topUsers[index];
-                    return LeaderboardTile(entry: entry);
+                    return ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: Colors.blue,
+                        child: Text(
+                          entry.rank.toString(),
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      title: Text(entry.userId),
+                      subtitle: Text('XP: ${entry.score}'),
+                      trailing: entry.isCurrentUser
+                          ? const Icon(Icons.star, color: Colors.yellow)
+                          : null,
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => UserQuestsScreen(userId: entry.userId), // 跳转到用户任务详情页面
+                          ),
+                        );
+                      },
+                    );
                   },
                 ),
     );

@@ -50,4 +50,37 @@ class Quest {
 
   @override
   int get hashCode => id.hashCode;
+
+  // Add copyWith method
+  Quest copyWith({
+    String? id,
+    String? title,
+    String? description,
+    QuestType? type,
+    Duration? targetDuration,
+    Duration? minDuration,
+    Duration? maxDuration,
+    double? targetDistance,
+    int? xpReward,
+    IconData? icon,
+    String? creatorId,
+    bool? isPublic,
+    int? totalXpInvested,
+  }) {
+    return Quest(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      type: type ?? this.type,
+      targetDuration: targetDuration ?? this.targetDuration,
+      minDuration: minDuration ?? this.minDuration,
+      maxDuration: maxDuration ?? this.maxDuration,
+      targetDistance: targetDistance ?? this.targetDistance,
+      xpReward: xpReward ?? this.xpReward,
+      icon: icon ?? this.icon,
+      creatorId: creatorId ?? this.creatorId,
+      isPublic: isPublic ?? this.isPublic,
+      totalXpInvested: totalXpInvested ?? this.totalXpInvested,
+    );
+  }
 }

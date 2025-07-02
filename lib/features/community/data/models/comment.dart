@@ -10,8 +10,8 @@ class Comment {
   @ColumnInfo(name: 'questId')
   final String questId;
   
-  @ColumnInfo(name: 'userId')
-  final String userId;
+  @ColumnInfo(name: 'username')
+  final String username;
   
   @ColumnInfo(name: 'content')
   final String content;
@@ -23,7 +23,7 @@ class Comment {
   Comment({
     this.id,
     required this.questId,
-    required this.userId,
+    required this.username,
     required this.content,
     required this.timestamp,
   });

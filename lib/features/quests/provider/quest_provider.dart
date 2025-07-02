@@ -47,6 +47,11 @@ class QuestProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> loadCompletedQuests() async {
+    _completedQuests = await _repository.getCompletedQuests();
+    notifyListeners();
+  }
+
   Future<void> startQuest(Quest quest) async {
     _activeQuest = quest;
     _startTime = DateTime.now();
@@ -158,6 +163,19 @@ class QuestProvider with ChangeNotifier {
   void addNewQuest(Quest quest) {
     _availableQuests.add(quest);
     notifyListeners();
+  }
+
+  Future<List<Quest>> getCompletedQuestsByUser(String userId) async {
+    // Assuming the userId is used to filter completed quests in the repository
+    // For simplicity, we reuse the existing getCompletedQuests method here
+    // In a real - world scenario, you may need to implement filtering by userId in the repository
+    return await _repository.getCompletedQuests();
+  }
+  
+  Future<List<Quest>> getUncompletedQuestsByUser(String userId) async {
+    final allAvailableQuests = await _repository.getAvailableQuests();
+    final completedQuests = await getCompletedQuestsByUser(userId);
+    return allAvailableQuests.where((quest) => !completedQuests.any((c) => c.id == quest.id)).toList();
   }
 
 

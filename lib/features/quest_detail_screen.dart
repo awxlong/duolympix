@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solo_leveling/features/community/data/models/colleague_relation.dart';
 import 'package:solo_leveling/features/community/data/models/comment.dart';
-import 'package:solo_leveling/features/community/data/models/xp_investment.dart';
+// import 'package:solo_leveling/features/community/data/models/xp_investment.dart';
 import 'package:solo_leveling/features/community/data/presentation/providers/community_provider.dart';
 import 'package:solo_leveling/features/mental_health/presentation/widgets/typing_indicator.dart';
 import 'package:solo_leveling/features/profile/data/mappers/user_mapper.dart';
@@ -34,7 +34,7 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
   bool _showColleagueSection = false;
   final List<String> _selectedColleagues = [];
   late CommunityProvider _communityProvider;
-  final TextEditingController _xpInvestmentController = TextEditingController(text: '50');
+  // final TextEditingController _xpInvestmentController = TextEditingController(text: '50');
   late User _currentUser;
 
   @override
@@ -61,9 +61,9 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
         _buildColleagueSection(),
         const SizedBox(height: 20),
 
-        // XP investment section
-        _buildXpInvestmentSection(),
-        const SizedBox(height: 20),
+        // // XP investment section
+        // _buildXpInvestmentSection(),
+        // const SizedBox(height: 20),
 
         // Comment section
         _buildCommentSection(),
@@ -178,111 +178,111 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
     );
   }
 
-  Widget _buildXpInvestmentSection() {
-    final state = _communityProvider.state;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(
-              'XP Investment',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              'Total Investment: ${state.totalXpInvested} XP',
-              style: const TextStyle(fontSize: 16, color: Colors.green),
-            ),
-          ],
-        ),
-        const SizedBox(height: 10),
+  // Widget _buildXpInvestmentSection() {
+  //   final state = _communityProvider.state;
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Row(
+  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //         children: [
+  //           const Text(
+  //             'XP Investment',
+  //             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+  //           ),
+  //           Text(
+  //             'Total Investment: ${state.totalXpInvested} XP',
+  //             style: const TextStyle(fontSize: 16, color: Colors.green),
+  //           ),
+  //         ],
+  //       ),
+  //       const SizedBox(height: 10),
 
-        // Investment form
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('Support this quest by investing XP:'),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _xpInvestmentController,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter XP amount',
-                      border: OutlineInputBorder(),
-                      suffixText: ' XP',
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: _canInvestXp()
-                      ? () async {
-                          final xpAmount = int.tryParse(_xpInvestmentController.text);
-                          if (xpAmount == null || xpAmount <= 0) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Please enter a valid XP amount')),
-                            );
-                            return;
-                          }
+  //       // Investment form
+  //       Column(
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: [
+  //           const Text('Support this quest by investing XP:'),
+  //           const SizedBox(height: 10),
+  //           Row(
+  //             children: [
+  //               Expanded(
+  //                 child: TextField(
+  //                   controller: _xpInvestmentController,
+  //                   keyboardType: TextInputType.number,
+  //                   decoration: const InputDecoration(
+  //                     hintText: 'Enter XP amount',
+  //                     border: OutlineInputBorder(),
+  //                     suffixText: ' XP',
+  //                   ),
+  //                 ),
+  //               ),
+  //               const SizedBox(width: 10),
+  //               ElevatedButton(
+  //                 onPressed: _canInvestXp()
+  //                     ? () async {
+  //                         final xpAmount = int.tryParse(_xpInvestmentController.text);
+  //                         if (xpAmount == null || xpAmount <= 0) {
+  //                           ScaffoldMessenger.of(context).showSnackBar(
+  //                             const SnackBar(content: Text('Please enter a valid XP amount')),
+  //                           );
+  //                           return;
+  //                         }
 
-                          if (_currentUser.totalXp < xpAmount) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Insufficient XP to invest')),
-                            );
-                            return;
-                          }
+  //                         if (_currentUser.totalXp < xpAmount) {
+  //                           ScaffoldMessenger.of(context).showSnackBar(
+  //                             const SnackBar(content: Text('Insufficient XP to invest')),
+  //                           );
+  //                           return;
+  //                         }
 
-                          final investment = XpInvestment(
-                            questId: widget.quest.id,
-                            investorId: _currentUser.id.toString(),
-                            xpAmount: xpAmount,
-                            timestamp: DateTime.now(),
-                          );
-                          await _communityProvider.investXp(investment);
-                          _xpInvestmentController.text = '50';
-                        }
-                      : null,
-                  child: const Text('Invest'),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
+  //                         final investment = XpInvestment(
+  //                           questId: widget.quest.id,
+  //                           investorId: _currentUser.id.toString(),
+  //                           xpAmount: xpAmount,
+  //                           timestamp: DateTime.now(),
+  //                         );
+  //                         await _communityProvider.investXp(investment);
+  //                         _xpInvestmentController.text = '50';
+  //                       }
+  //                     : null,
+  //                 child: const Text('Invest'),
+  //               ),
+  //             ],
+  //           ),
+  //           const SizedBox(height: 10),
 
-            // Show investors
-            if (state.investments != null && state.investments!.isNotEmpty)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('Investors:'),
-                  const SizedBox(height: 10),
-                  Wrap(
-                    spacing: 8,
-                    children: state.investments!
-                       .map((investment) => _buildInvestorChip(investment))
-                       .toList(),
-                  ),
-                ],
-              )
-          ],
-        ),
-      ],
-    );
-  }
+  //           // Show investors
+  //           if (state.investments != null && state.investments!.isNotEmpty)
+  //             Column(
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: [
+  //                 const Text('Investors:'),
+  //                 const SizedBox(height: 10),
+  //                 Wrap(
+  //                   spacing: 8,
+  //                   children: state.investments!
+  //                      .map((investment) => _buildInvestorChip(investment))
+  //                      .toList(),
+  //                 ),
+  //               ],
+  //             )
+  //         ],
+  //       ),
+  //     ],
+  //   );
+  // }
 
-  Widget _buildInvestorChip(XpInvestment investment) {
-    return Chip(
-      label: Text('${investment.investorId}: ${investment.xpAmount} XP'),
-    );
-  }
+  // Widget _buildInvestorChip(XpInvestment investment) {
+  //   return Chip(
+  //     label: Text('${investment.investorId}: ${investment.xpAmount} XP'),
+  //   );
+  // }
 
-  bool _canInvestXp() {
-    final xpAmount = int.tryParse(_xpInvestmentController.text);
-    return xpAmount != null && xpAmount > 0 && _currentUser.totalXp >= xpAmount;
-  }
+  // bool _canInvestXp() {
+  //   final xpAmount = int.tryParse(_xpInvestmentController.text);
+  //   return xpAmount != null && xpAmount > 0 && _currentUser.totalXp >= xpAmount;
+  // }
 
   Widget _buildCommentSection() {
     final state = _communityProvider.state;
@@ -326,7 +326,7 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
                   : () async {
                       final comment = Comment(
                         questId: widget.quest.id,
-                        userId: _currentUser.id.toString(),
+                        username: _currentUser.username.toString(),
                         content: _commentController.text,
                         timestamp: DateTime.now(),
                       );
@@ -343,7 +343,7 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
 
   Widget _buildCommentItem(Comment comment) {
     return ListTile(
-      title: Text(comment.userId),
+      title: Text(comment.username),
       subtitle: Text(comment.content),
       trailing: Text(comment.timestamp.toString()),
     );
@@ -520,10 +520,14 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
   }
 
   Future<void> _handleQuestCompletion(QuestProvider provider) async {
+
     await provider.completeQuest();
-    if (mounted) {
-      setState(() => _showCompletion = true);
-    }
+    // Get UserProvider instance
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    // Call UserProvider's completeQuest method
+    await userProvider.completeQuest(widget.quest);
+    setState(() => _showCompletion = true);
+
   }
 
   @override
