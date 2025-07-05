@@ -14,9 +14,9 @@ class _QuestDesignScreenState extends State<QuestDesignScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   QuestType _selectedType = QuestType.running;
-  int _timeIncrement = 5;
+  final TextEditingController _timeValueController = TextEditingController(text: '5');
   bool _isUpperBound = true;
-  int _timeValue = 5;
+  final TextEditingController _distanceController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -49,25 +49,12 @@ class _QuestDesignScreenState extends State<QuestDesignScreen> {
                 );
               }).toList(),
             ),
-            Row(
-              children: [
-                const Text('Time Increment (minutes): '),
-                DropdownButton<int>(
-                  value: _timeIncrement,
-                  onChanged: (newValue) {
-                    setState(() {
-                      _timeIncrement = newValue!;
-                    });
-                  },
-                  items: [5, 10, 15].map((increment) {
-                    return DropdownMenuItem<int>(
-                      value: increment,
-                      child: Text('$increment'),
-                    );
-                  }).toList(),
-                ),
-              ],
-            ),
+            if (_selectedType == QuestType.running)
+              TextField(
+                controller: _distanceController,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(labelText: 'Miles to run'),
+              ),
             Row(
               children: [
                 const Text('Time Constraint: '),
@@ -93,25 +80,10 @@ class _QuestDesignScreenState extends State<QuestDesignScreen> {
                 const Text('At least'),
               ],
             ),
-            Row(
-              children: [
-                const Text('Time Value: '),
-                DropdownButton<int>(
-                  value: _timeValue,
-                  onChanged: (newValue) {
-                    setState(() {
-                      _timeValue = newValue!;
-                    });
-                  },
-                  items: List.generate(60 ~/ _timeIncrement, (index) => (index + 1) * _timeIncrement)
-                     .map((value) {
-                    return DropdownMenuItem<int>(
-                      value: value,
-                      child: Text('$value'),
-                    );
-                  }).toList(),
-                ),
-              ],
+            TextField(
+              controller: _timeValueController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(labelText: 'Time in minutes'),
             ),
             ElevatedButton(
               onPressed: () {
@@ -131,10 +103,14 @@ class _QuestDesignScreenState extends State<QuestDesignScreen> {
     final title = _titleController.text;
     final description = _descriptionController.text;
     final type = _selectedType;
-    final duration = Duration(minutes: _timeValue);
+    final timeValue = int.tryParse(_timeValueController.text) ?? 5;
+    final duration = Duration(minutes: timeValue);
     final minDuration = _isUpperBound ? null : duration;
     final maxDuration = _isUpperBound ? duration : null;
     final xpReward = _calculateXpReward(type, duration);
+    final distance = _selectedType == QuestType.running
+       ? double.tryParse(_distanceController.text)
+        : null;
 
     final newQuest = Quest(
       id: id,
@@ -143,6 +119,7 @@ class _QuestDesignScreenState extends State<QuestDesignScreen> {
       type: type,
       minDuration: minDuration,
       maxDuration: maxDuration,
+      targetDistance: distance,
       icon: _getIconForType(type),
       xpReward: xpReward,
     );

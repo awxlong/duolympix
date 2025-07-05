@@ -1,3 +1,16 @@
+/// Solo Leveling 应用入口文件
+/// 
+/// 这是应用的核心启动文件，负责初始化依赖注入系统、数据库连接，并配置应用的整体架构。
+/// 采用了Provider状态管理模式和依赖倒置原则，确保各组件间的松耦合和可测试性。
+/// 
+/// 主要功能包括：
+/// - 依赖注入容器的初始化
+/// - 数据库连接的建立
+/// - 状态管理提供者(Provider)的注册
+/// - 应用主题和路由的配置
+/// - 启动界面的设置
+library;
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solo_leveling/core/app_theme.dart';
@@ -28,7 +41,7 @@ import 'features/profile/presentation/screens/leaderboard_screen.dart';
 import 'features/profile/presentation/screens/profile_screen.dart';
 import 'services/location_service.dart';
 import 'features/quests/data/repositories/local_quest_repository.dart';
-
+/// 
 void main() async {
   // Initialize dependency injection and database before running the app
   WidgetsFlutterBinding.ensureInitialized();

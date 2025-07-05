@@ -106,11 +106,11 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `User` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `username` TEXT NOT NULL, `email` TEXT NOT NULL, `age` INTEGER NOT NULL, `gender` TEXT, `weight` REAL, `height` REAL, `profilePicture` TEXT, `totalXp` INTEGER NOT NULL, `level` INTEGER NOT NULL, `streak` INTEGER NOT NULL, `totalQuestsCompleted` INTEGER NOT NULL, `password` TEXT NOT NULL, `INTEGER` INTEGER NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `User` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `username` TEXT NOT NULL, `email` TEXT, `age` INTEGER, `gender` TEXT, `weight` REAL, `height` REAL, `profilePicture` TEXT, `totalXp` INTEGER NOT NULL, `level` INTEGER NOT NULL, `streak` INTEGER NOT NULL, `totalQuestsCompleted` INTEGER NOT NULL, `password` TEXT NOT NULL, `INTEGER` INTEGER NOT NULL)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `QuestHistory` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `userId` INTEGER NOT NULL, `questId` TEXT NOT NULL, `INTEGER` INTEGER NOT NULL, `xpEarned` INTEGER NOT NULL, `durationInSeconds` INTEGER, `distance` REAL, `repetitions` INTEGER)');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `comments` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `questId` TEXT NOT NULL, `userId` TEXT NOT NULL, `content` TEXT NOT NULL, `timestamp` INTEGER NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `comments` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `questId` TEXT NOT NULL, `username` TEXT NOT NULL, `content` TEXT NOT NULL, `timestamp` INTEGER NOT NULL)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `LeaderboardEntry` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `userId` TEXT NOT NULL, `rankingType` INTEGER NOT NULL, `score` INTEGER NOT NULL, `rank` INTEGER NOT NULL, `INTEGER` INTEGER NOT NULL, `isCurrentUser` INTEGER NOT NULL)');
         await database.execute(
@@ -220,8 +220,8 @@ class _$UserDao extends UserDao {
         mapper: (Map<String, Object?> row) => User(
             id: row['id'] as int?,
             username: row['username'] as String,
-            email: row['email'] as String,
-            age: row['age'] as int,
+            email: row['email'] as String?,
+            age: row['age'] as int?,
             gender: row['gender'] as String?,
             weight: row['weight'] as double?,
             height: row['height'] as double?,
@@ -241,8 +241,8 @@ class _$UserDao extends UserDao {
         mapper: (Map<String, Object?> row) => User(
             id: row['id'] as int?,
             username: row['username'] as String,
-            email: row['email'] as String,
-            age: row['age'] as int,
+            email: row['email'] as String?,
+            age: row['age'] as int?,
             gender: row['gender'] as String?,
             weight: row['weight'] as double?,
             height: row['height'] as double?,
@@ -262,8 +262,8 @@ class _$UserDao extends UserDao {
         mapper: (Map<String, Object?> row) => User(
             id: row['id'] as int?,
             username: row['username'] as String,
-            email: row['email'] as String,
-            age: row['age'] as int,
+            email: row['email'] as String?,
+            age: row['age'] as int?,
             gender: row['gender'] as String?,
             weight: row['weight'] as double?,
             height: row['height'] as double?,

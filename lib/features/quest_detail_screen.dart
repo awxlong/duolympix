@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:solo_leveling/features/community/data/models/colleague_relation.dart';
+// import 'package:solo_leveling/features/community/data/models/colleague_relation.dart';
 import 'package:solo_leveling/features/community/data/models/comment.dart';
 // import 'package:solo_leveling/features/community/data/models/xp_investment.dart';
 import 'package:solo_leveling/features/community/data/presentation/providers/community_provider.dart';
@@ -31,8 +31,8 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
   bool _showCompletion = false;
   final TextEditingController _messageController = TextEditingController();
   final TextEditingController _commentController = TextEditingController();
-  bool _showColleagueSection = false;
-  final List<String> _selectedColleagues = [];
+  // bool _showColleagueSection = false;
+  // final List<String> _selectedColleagues = [];
   late CommunityProvider _communityProvider;
   // final TextEditingController _xpInvestmentController = TextEditingController(text: '50');
   late User _currentUser;
@@ -57,9 +57,9 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Colleague section
-        _buildColleagueSection(),
-        const SizedBox(height: 20),
+        // // Colleague section
+        // _buildColleagueSection(),
+        // const SizedBox(height: 20),
 
         // // XP investment section
         // _buildXpInvestmentSection(),
@@ -71,112 +71,112 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
     );
   }
 
-  Widget _buildColleagueSection() {
-    final state = _communityProvider.state;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(
-              'Colleagues',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            if (widget.quest.creatorId == _currentUser.id.toString())
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    _showColleagueSection = !_showColleagueSection;
-                  });
-                },
-                child: Text(
-                  _showColleagueSection ? 'Collapse' : 'Add',
-                  style: const TextStyle(color: Colors.blue),
-                ),
-              )
-          ],
-        ),
-        const SizedBox(height: 10),
+  // Widget _buildColleagueSection() {
+  //   final state = _communityProvider.state;
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Row(
+  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //         children: [
+  //           const Text(
+  //             'Colleagues',
+  //             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+  //           ),
+  //           if (widget.quest.creatorId == _currentUser.id.toString())
+  //             TextButton(
+  //               onPressed: () {
+  //                 setState(() {
+  //                   _showColleagueSection = !_showColleagueSection;
+  //                 });
+  //               },
+  //               child: Text(
+  //                 _showColleagueSection ? 'Collapse' : 'Add',
+  //                 style: const TextStyle(color: Colors.blue),
+  //               ),
+  //             )
+  //         ],
+  //       ),
+  //       const SizedBox(height: 10),
 
-        // Show current colleagues
-        if (state.colleagues != null && state.colleagues!.isNotEmpty)
-          Wrap(
-            spacing: 8,
-            children: state.colleagues!
-               .map((relation) => _buildColleagueChip(relation.colleagueId))
-               .toList(),
-          ),
-        const SizedBox(height: 10),
+  //       // Show current colleagues
+  //       if (state.colleagues != null && state.colleagues!.isNotEmpty)
+  //         Wrap(
+  //           spacing: 8,
+  //           children: state.colleagues!
+  //              .map((relation) => _buildColleagueChip(relation.colleagueId))
+  //              .toList(),
+  //         ),
+  //       const SizedBox(height: 10),
 
-        // Add colleagues form
-        if (_showColleagueSection && widget.quest.creatorId == _currentUser.id.toString())
-          _buildAddColleaguesForm(),
-      ],
-    );
-  }
+  //       // Add colleagues form
+  //       if (_showColleagueSection && widget.quest.creatorId == _currentUser.id.toString())
+  //         _buildAddColleaguesForm(),
+  //     ],
+  //   );
+  // }
 
-  Widget _buildColleagueChip(String colleagueId) {
-    return Chip(
-      label: Text(colleagueId),
-    );
-  }
+  // Widget _buildColleagueChip(String colleagueId) {
+  //   return Chip(
+  //     label: Text(colleagueId),
+  //   );
+  // }
 
-  Widget _buildAddColleaguesForm() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text('Enter user ID to add colleagues:'),
-        const SizedBox(height: 10),
-        TextField(
-          onChanged: (value) {
-            if (value.isNotEmpty && !_selectedColleagues.contains(value)) {
-              _selectedColleagues.add(value);
-            }
-          },
-          decoration: const InputDecoration(
-            hintText: 'User ID',
-            border: OutlineInputBorder(),
-          ),
-        ),
-        const SizedBox(height: 10),
-        Wrap(
-          spacing: 8,
-          children: _selectedColleagues
-             .map((userId) => _buildSelectedColleagueChip(userId))
-             .toList(),
-        ),
-        const SizedBox(height: 10),
-        ElevatedButton(
-          onPressed: _selectedColleagues.isEmpty
-              ? null
-              : () async {
-                  for (final userId in _selectedColleagues) {
-                    final relation = ColleagueRelation(
-                      questId: widget.quest.id,
-                      colleagueId: userId,
-                    );
-                    await _communityProvider.addColleague(relation);
-                  }
-                  _selectedColleagues.clear();
-                  setState(() {});
-                },
-          child: const Text('Confirm Add'),
-        ),
-      ],
-    );
-  }
+  // Widget _buildAddColleaguesForm() {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       const Text('Enter user ID to add colleagues:'),
+  //       const SizedBox(height: 10),
+  //       TextField(
+  //         onChanged: (value) {
+  //           if (value.isNotEmpty && !_selectedColleagues.contains(value)) {
+  //             _selectedColleagues.add(value);
+  //           }
+  //         },
+  //         decoration: const InputDecoration(
+  //           hintText: 'User ID',
+  //           border: OutlineInputBorder(),
+  //         ),
+  //       ),
+  //       const SizedBox(height: 10),
+  //       Wrap(
+  //         spacing: 8,
+  //         children: _selectedColleagues
+  //            .map((userId) => _buildSelectedColleagueChip(userId))
+  //            .toList(),
+  //       ),
+  //       const SizedBox(height: 10),
+  //       ElevatedButton(
+  //         onPressed: _selectedColleagues.isEmpty
+  //             ? null
+  //             : () async {
+  //                 for (final userId in _selectedColleagues) {
+  //                   final relation = ColleagueRelation(
+  //                     questId: widget.quest.id,
+  //                     colleagueId: userId,
+  //                   );
+  //                   await _communityProvider.addColleague(relation);
+  //                 }
+  //                 _selectedColleagues.clear();
+  //                 setState(() {});
+  //               },
+  //         child: const Text('Confirm Add'),
+  //       ),
+  //     ],
+  //   );
+  // }
 
-  Widget _buildSelectedColleagueChip(String userId) {
-    return Chip(
-      label: Text(userId),
-      onDeleted: () {
-        setState(() {
-          _selectedColleagues.remove(userId);
-        });
-      },
-    );
-  }
+  // Widget _buildSelectedColleagueChip(String userId) {
+  //   return Chip(
+  //     label: Text(userId),
+  //     onDeleted: () {
+  //       setState(() {
+  //         _selectedColleagues.remove(userId);
+  //       });
+  //     },
+  //   );
+  // }
 
   // Widget _buildXpInvestmentSection() {
   //   final state = _communityProvider.state;
