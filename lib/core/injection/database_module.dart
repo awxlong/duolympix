@@ -8,6 +8,6 @@ abstract class DatabaseModule {
   @singleton
   @preResolve
   Future<AppDatabase> provideAppDatabase() async {
-    return $FloorAppDatabase.databaseBuilder('solo_leveling_app.db').build();
+    return $FloorAppDatabase.databaseBuilder('duolympix.db').build();
   }
 }

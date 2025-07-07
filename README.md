@@ -1,4 +1,4 @@
-# Project Zenith (Olympia, OlympAI, OlympX)
+# DuoLympiX
 App for gamifying life
 
 ## Features

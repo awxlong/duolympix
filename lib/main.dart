@@ -1,14 +1,5 @@
-/// Solo Leveling 应用入口文件
-/// 
-/// 这是应用的核心启动文件，负责初始化依赖注入系统、数据库连接，并配置应用的整体架构。
-/// 采用了Provider状态管理模式和依赖倒置原则，确保各组件间的松耦合和可测试性。
-/// 
-/// 主要功能包括：
-/// - 依赖注入容器的初始化
-/// - 数据库连接的建立
-/// - 状态管理提供者(Provider)的注册
-/// - 应用主题和路由的配置
-/// - 启动界面的设置
+/// Duolympix Application Entry File
+
 library;
 
 import 'package:flutter/material.dart';
@@ -41,53 +32,73 @@ import 'features/profile/presentation/screens/leaderboard_screen.dart';
 import 'features/profile/presentation/screens/profile_screen.dart';
 import 'services/location_service.dart';
 import 'features/quests/data/repositories/local_quest_repository.dart';
+
+/// This is the core startup function of the application, 
+/// responsible for initializing the dependency injection system, database connection, 
+/// and configuring the overall architecture of the application.
+/// It adopts the Provider state management pattern and 
+/// the dependency inversion principle to ensure loose coupling and testability among components.
 /// 
+/// Main functions include:
+/// 1. Initialization of the dependency injection container
+/// 2. Establishment of the database connection
+/// 3. Registration of state management providers (Provider)
+/// 4. Configuration of application theme and routing
+/// 5. Setup of the startup interface
 void main() async {
-  // Initialize dependency injection and database before running the app
+  // Ensure Flutter framework is initialized (required for async operations)
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Configure dependency injection container to implement inversion of control
   configureDependencies(); // From injection_container.dart
+  
+  // Initialize SQLite database and create necessary table structures
   final database = await getDatabase(); // Initialize database
 
+  // Register all dependencies and state management providers using MultiProvider
   runApp(
     MultiProvider(
       providers: [
-        // Database provider
+        /// Database layer providers
+        // Register application-level database instance (singleton via value)
         Provider<AppDatabase>.value(value: database),
 
-        // Register LeaderboardRepository
+        /// Repository layer providers
+        // Register leaderboard data repository implementation
         Provider<LeaderboardRepository>(
           create: (context) => LeaderboardRepositoryImpl(context.read<AppDatabase>()),
         ),
 
-        // Register ColleagueRelationDao
+        // Register colleague relationship data access object
         Provider<ColleagueRelationDao>(
           create: (context) => context.read<AppDatabase>().colleagueRelationDao,
         ),
 
-        // Register XpInvestmentDao
+        // Register XP investment data access object
         Provider<XpInvestmentDao>(
           create: (context) => context.read<AppDatabase>().xpInvestmentDao,
         ),
 
-        // Register CommentDao
+        // Register comment data access object
         Provider<CommentDao>(
           create: (context) => context.read<AppDatabase>().commentDao,
         ),
 
-        // Register UserRepository
+        // Register user data repository implementation
         Provider<UserRepository>(
           create: (context) => UserRepositoryImpl(context.read<AppDatabase>()),
         ),
 
-        // Quest provider with dependencies
+        /// Business logic layer providers
+        // Register quest provider - manages user quest states
         ChangeNotifierProvider(
           create: (_) => QuestProvider(
             repository: LocalQuestRepository(),
             locationService: LocationService(),
-          )..initialize(),
+          )..initialize(), // Initialize quest data on creation
         ),
 
-        // Chat provider with dependencies
+        // Register chat provider - handles mental health chat functionality
         ChangeNotifierProvider(
           create: (context) => ChatProvider(
             ChatRepository(),
@@ -95,7 +106,7 @@ void main() async {
           ),
         ),
 
-        // User profile provider
+        // Register user profile provider - manages user info and quest completion
         ChangeNotifierProvider<UserProvider>(
           create: (context) => UserProvider(
             getIt<GetUserUseCase>(),
@@ -104,6 +115,7 @@ void main() async {
           ),
         ),
 
+        // Register leaderboard provider - handles user rankings and scores
         ChangeNotifierProvider<LeaderboardProvider>(
           create: (context) => LeaderboardProvider(
             GetLeaderboardUseCase(
@@ -111,7 +123,8 @@ void main() async {
             ),
           ),
         ),
-        // 社区功能Provider
+        
+        // Register community feature providers
         Provider<CommunityRepository>(
           create: (context) => CommunityRepositoryImpl(
             context.read<ColleagueRelationDao>(),
@@ -127,28 +140,37 @@ void main() async {
           ),
         ),
       ],
-      child: const MyApp(),
+      child: const MyApp(), // Root application widget
     ),
   );
 }
 
+
+/// Root application widget
+/// 
+/// Configures global application properties:
+/// - App name
+/// - Theme configuration (uses custom dark theme)
+/// - Initial splash screen
+/// - Predefined route table
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Solo Leveling',
-      theme: AppTheme.darkTheme,
-      // Use SplashScreen to load user data before showing quests
+      title: 'DuoLympiX', // Application name
+      theme: AppTheme.darkTheme, // App theme configuration
+      
+      // Use splash screen as initial view for data loading
       home: const SplashScreen(),
 
-      // Optional: Add routes for better navigation
+      // Define application route table for navigation management
       routes: {
-        '/quests': (context) => const QuestListScreen(),
-        '/profile': (context) => const ProfileScreen(),
-        '/leaderboard': (context) => const LeaderboardScreen(),
-        '/login': (context) => const LoginPage(),
+        '/quests': (context) => const QuestListScreen(), // Quest list page
+        '/profile': (context) => const ProfileScreen(), // User profile page
+        '/leaderboard': (context) => const LeaderboardScreen(), // Leaderboard page
+        '/login': (context) => const LoginPage(), // Login page
       },
     );
   }
