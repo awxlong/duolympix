@@ -71,14 +71,18 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>Sends a message to the LLM and returns a single response</p>
+<p><code>message</code>: User's message to the therapist AI
+Returns: The AI's response as a string
+Throws: Exception if request fails or response is invalid</p>
+</section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;String&gt; sendMessage(String message) async {
-
-
   final response = await http.post(
     Uri.parse(&#39;$_baseUrl&#47;api&#47;chat&#39;),
     headers: {&#39;Content-Type&#39;: &#39;application&#47;json&#39;},

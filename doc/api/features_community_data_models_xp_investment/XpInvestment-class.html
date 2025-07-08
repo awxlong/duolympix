@@ -61,6 +61,12 @@
 </h1></div>
 
     
+<section class="desc markdown">
+  <p>Database entity for XP investments</p>
+<p>Maps to the 'xp_investments' table in the SQLite database.
+Stores information about who invested XP into which quest,
+how much XP was invested, and when the investment occurred.</p>
+</section>
 
 
     <section>
@@ -93,7 +99,7 @@
           <span class="name"><a href="../features_community_data_models_xp_investment/XpInvestment/XpInvestment.html">XpInvestment</a></span><span class="signature">({<span class="parameter" id="-param-id"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">id</span>, </span><span class="parameter" id="-param-questId"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">questId</span>, </span><span class="parameter" id="-param-investorId"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">investorId</span>, </span><span class="parameter" id="-param-xpAmount"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">xpAmount</span>, </span><span class="parameter" id="-param-timestamp"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/DateTime-class.html">DateTime</a></span> <span class="parameter-name">timestamp</span></span>})</span>
         </dt>
         <dd>
-          
+          Constructor for creating an XP investment
         </dd>
     </dl>
   </section>
@@ -122,7 +128,7 @@
 
 </dt>
 <dd>
-  
+  Auto-generated primary key for the investment record
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -134,7 +140,7 @@
 
 </dt>
 <dd>
-  
+  ID of the user who made the investment
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -146,7 +152,7 @@
 
 </dt>
 <dd>
-  
+  ID of the quest this investment is associated with
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -170,7 +176,7 @@
 
 </dt>
 <dd>
-  
+  Timestamp of when the investment was made
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -182,7 +188,7 @@
 
 </dt>
 <dd>
-  
+  Amount of XP invested
   <div class="features"><span class="feature">final</span></div>
 
 </dd>

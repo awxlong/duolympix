@@ -74,11 +74,15 @@
 
       </section>
       
+<section class="desc markdown">
+  <p>Timestamp of the user's last activity
+Stored as milliseconds since epoch using <a href="../../global_data_converters_date_time_converter/DateTimeConverter-class.html">DateTimeConverter</a></p>
+</section>
 
       
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">@ColumnInfo(name: &#39;INTEGER&#39;) &#47;&#47; Store as milliseconds since epoch
+  <pre class="language-dart"><code class="language-dart">@ColumnInfo(name: &#39;INTEGER&#39;)
 @TypeConverters([DateTimeConverter])
 final DateTime lastActive;</code></pre>
 </section>

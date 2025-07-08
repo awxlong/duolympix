@@ -61,6 +61,12 @@
 </h1></div>
 
     
+<section class="desc markdown">
+  <p>Provider for managing user state and operations</p>
+<p>Extends ChangeNotifier to broadcast state changes to listeners.
+Coordinates with use cases and repositories to handle user data
+while maintaining a consistent state flow.</p>
+</section>
 
 
     <section>
@@ -95,7 +101,7 @@
           <span class="name"><a href="../features_profile_data_providers_user_provider/UserProvider/UserProvider.html">UserProvider</a></span><span class="signature">(<span class="parameter" id="-param-_getUserUseCase"><span class="type-annotation"><a href="../features_profile_domain_usecases_get_user_usecase/GetUserUseCase-class.html">GetUserUseCase</a></span> <span class="parameter-name">_getUserUseCase</span>, </span><span class="parameter" id="-param-_completeQuestUseCase"><span class="type-annotation"><a href="../features_profile_domain_usecases_complete_quest_usecase/CompleteQuestUseCase-class.html">CompleteQuestUseCase</a></span> <span class="parameter-name">_completeQuestUseCase</span>, </span><span class="parameter" id="-param-_userRepository"><span class="type-annotation"><a href="../features_profile_data_repositories_user_repository/UserRepository-class.html">UserRepository</a></span> <span class="parameter-name">_userRepository</span></span>)</span>
         </dt>
         <dd>
-          
+          Constructor with required dependencies
         </dd>
     </dl>
   </section>
@@ -148,7 +154,7 @@
 
 </dt>
 <dd>
-  
+  Getter for the current state
   <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
@@ -182,7 +188,7 @@
 
 </dt>
 <dd>
-  
+  Marks a quest as completed for the current user
   
 
 </dd>
@@ -195,9 +201,7 @@
 
 </dt>
 <dd>
-  Discards any resources used by the object. After this is called, the
-object is not in a usable state and should be discarded (calls to
-<a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/addListener.html">addListener</a> will throw after the object is disposed).
+  Cleans up resources when provider is disposed
   <div class="features"><span class="feature">override</span></div>
 
 </dd>
@@ -210,7 +214,7 @@ object is not in a usable state and should be discarded (calls to
 
 </dt>
 <dd>
-  
+  Loads user data using credentials
   
 
 </dd>
@@ -276,7 +280,7 @@ notified when the object changes.
 
 </dt>
 <dd>
-  
+  Updates user profile data
   
 
 </dd>

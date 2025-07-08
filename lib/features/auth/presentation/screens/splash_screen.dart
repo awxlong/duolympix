@@ -46,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Solo Leveling',
+              'DuoLympiX',
               style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 20),

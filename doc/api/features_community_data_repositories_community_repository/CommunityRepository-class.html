@@ -62,6 +62,12 @@
 </h1></div>
 
     
+<section class="desc markdown">
+  <p>Abstract base class for community data operations</p>
+<p>Declares methods for managing collaborative features like colleague relationships,
+XP investments in quests, and user comments. Uses Either from the dartz package to
+explicitly handle success/failure cases, ensuring errors are propagated predictably.</p>
+</section>
 
 
     <section>
@@ -142,7 +148,7 @@
 
 </dt>
 <dd>
-  
+  Adds a colleague relationship for a quest
   
 
 </dd>
@@ -155,7 +161,7 @@
 
 </dt>
 <dd>
-  
+  Deletes all comments associated with a quest
   
 
 </dd>
@@ -168,7 +174,7 @@
 
 </dt>
 <dd>
-  
+  Retrieves all colleagues associated with a specific quest
   
 
 </dd>
@@ -181,7 +187,7 @@
 
 </dt>
 <dd>
-  
+  Retrieves all quests a specific user is associated with as a colleague
   
 
 </dd>
@@ -194,7 +200,7 @@
 
 </dt>
 <dd>
-  
+  Retrieves all comments for a specific quest
   
 
 </dd>
@@ -207,7 +213,7 @@
 
 </dt>
 <dd>
-  
+  Retrieves all XP investments for a specific quest
   
 
 </dd>
@@ -220,7 +226,7 @@
 
 </dt>
 <dd>
-  
+  Calculates the total XP invested in a specific quest
   
 
 </dd>
@@ -233,7 +239,7 @@
 
 </dt>
 <dd>
-  
+  Records an XP investment in a quest
   
 
 </dd>
@@ -259,7 +265,7 @@
 
 </dt>
 <dd>
-  
+  Posts a comment on a quest
   
 
 </dd>
@@ -272,7 +278,7 @@
 
 </dt>
 <dd>
-  
+  Removes a colleague relationship from a quest
   
 
 </dd>

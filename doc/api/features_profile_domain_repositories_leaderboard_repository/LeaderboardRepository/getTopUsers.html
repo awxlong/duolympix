@@ -72,6 +72,16 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>Retrieves top users based on ranking type and limit</p>
+<p><code>type</code>: The ranking category (e.g., all-time, weekly, monthly) from <a href="../../global_data_models_enums/RankingType.html">RankingType</a> enum
+<code>limit</code>: Maximum number of entries to return (e.g., top 10 users)</p>
+<p>Returns: A <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a> containing <a href="https://pub.dev/documentation/dartz/0.10.1/dartz/Either-class.html">Either</a>:</p>
+<ul>
+<li><a href="https://pub.dev/documentation/dartz/0.10.1/dartz/Right-class.html">Right</a>: List of <a href="../../global_data_models_leaderboard_entry/LeaderboardEntry-class.html">LeaderboardEntry</a> objects on success</li>
+<li><a href="https://pub.dev/documentation/dartz/0.10.1/dartz/Left-class.html">Left</a>: <a href="../../core_error_failure/Failure-class.html">Failure</a> instance describing the error on failure</li>
+</ul>
+</section>
 
 
     

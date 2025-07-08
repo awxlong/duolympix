@@ -61,6 +61,12 @@
 </h1></div>
 
     
+<section class="desc markdown">
+  <p>State provider for mental health chat functionality</p>
+<p>Uses ChangeNotifier to broadcast state changes to UI components.
+Handles chat session lifecycle, message exchange, and automatic quest completion
+when session duration targets are met.</p>
+</section>
 
 
     <section>
@@ -93,7 +99,7 @@
           <span class="name"><a href="../features_mental_health_provider_chat_provider/ChatProvider/ChatProvider.html">ChatProvider</a></span><span class="signature">(<span class="parameter" id="-param-_repository"><span class="type-annotation"><a href="../features_mental_health_data_repositories_chat_repository/ChatRepository-class.html">ChatRepository</a></span> <span class="parameter-name">_repository</span>, </span><span class="parameter" id="-param-_questProvider"><span class="type-annotation"><a href="../features_quests_provider_quest_provider/QuestProvider-class.html">QuestProvider</a></span> <span class="parameter-name">_questProvider</span></span>)</span>
         </dt>
         <dd>
-          
+          Constructor with required dependencies
         </dd>
     </dl>
   </section>
@@ -110,7 +116,7 @@
 
 </dt>
 <dd>
-  
+  Getter for elapsed time since session started
   <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
@@ -146,7 +152,7 @@
 
 </dt>
 <dd>
-  
+  Getter for loading state (e.g., while waiting for bot response)
   <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
@@ -158,7 +164,7 @@
 
 </dt>
 <dd>
-  
+  Getter to check if session has met the target duration
   <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
@@ -170,7 +176,7 @@
 
 </dt>
 <dd>
-  
+  Getter for the list of messages in the current session
   <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
@@ -216,9 +222,7 @@
 
 </dt>
 <dd>
-  Discards any resources used by the object. After this is called, the
-object is not in a usable state and should be discarded (calls to
-<a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/addListener.html">addListener</a> will throw after the object is disposed).
+  Cleans up resources when provider is disposed
   <div class="features"><span class="feature">override</span></div>
 
 </dd>
@@ -271,7 +275,7 @@ notified when the object changes.
 
 </dt>
 <dd>
-  
+  Sends a user message and retrieves a response
   
 
 </dd>
@@ -284,7 +288,7 @@ notified when the object changes.
 
 </dt>
 <dd>
-  
+  Initializes a new chat session tied to a mental health quest
   
 
 </dd>

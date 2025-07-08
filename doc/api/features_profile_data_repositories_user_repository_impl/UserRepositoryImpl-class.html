@@ -61,6 +61,12 @@
 </h1></div>
 
     
+<section class="desc markdown">
+  <p>Implementation of <a href="../features_profile_data_repositories_user_repository/UserRepository-class.html">UserRepository</a> using Floor database</p>
+<p>Registers as a lazy singleton through dependency injection.
+Maps between domain entities and database models,
+and handles database operations for user-related data.</p>
+</section>
 
 
     <section>
@@ -99,7 +105,7 @@
           <span class="name"><a href="../features_profile_data_repositories_user_repository_impl/UserRepositoryImpl/UserRepositoryImpl.html">UserRepositoryImpl</a></span><span class="signature">(<span class="parameter" id="-param-_database"><span class="type-annotation"><a href="../global_data_database_app_database/AppDatabase-class.html">AppDatabase</a></span> <span class="parameter-name">_database</span></span>)</span>
         </dt>
         <dd>
-          
+          Constructor with injected database dependency
         </dd>
     </dl>
   </section>
@@ -149,7 +155,7 @@
 
 </dt>
 <dd>
-  
+  Handles quest completion for a user
   <div class="features"><span class="feature">override</span></div>
 
 </dd>
@@ -162,7 +168,7 @@
 
 </dt>
 <dd>
-  
+  Retrieves a user by username and password
   <div class="features"><span class="feature">override</span></div>
 
 </dd>
@@ -201,7 +207,7 @@
 
 </dt>
 <dd>
-  
+  Updates the leaderboard based on user XP
   <div class="features"><span class="feature">override</span></div>
 
 </dd>
@@ -214,7 +220,7 @@
 
 </dt>
 <dd>
-  
+  Updates user profile data
   <div class="features"><span class="feature">override</span></div>
 
 </dd>

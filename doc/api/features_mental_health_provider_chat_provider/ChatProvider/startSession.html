@@ -71,6 +71,12 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>Initializes a new chat session tied to a mental health quest</p>
+<p>Starts timing the session, sets the target duration from the quest,
+clears previous messages, and ensures the quest is active in the quest provider.</p>
+<p><code>quest</code>: The mental health quest to associate with this session</p>
+</section>
 
 
     
@@ -78,12 +84,12 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; startSession(Quest quest) async {
   _sessionStart = DateTime.now();
-  _targetDuration = quest.targetDuration;
+  _targetDuration = quest.targetDuration; &#47;&#47; Assumes Quest has targetDuration for mental health
   _messages.clear();
   _startTimer();
   notifyListeners();
 
-  &#47;&#47; Ensure quest is properly tracked
+  &#47;&#47; Ensure the quest is actively tracked in the quest provider
   if (!_questProvider.availableQuests.contains(quest)) {
     _questProvider.startQuest(quest);
   }

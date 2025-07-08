@@ -61,6 +61,12 @@
 </h1></div>
 
     
+<section class="desc markdown">
+  <p>Provider for managing leaderboard state and operations</p>
+<p>Extends ChangeNotifier to broadcast state changes to UI components.
+Coordinates with the LeaderboardRepository via the GetLeaderboardUseCase
+to fetch leaderboard data.</p>
+</section>
 
 
     <section>
@@ -95,7 +101,7 @@
           <span class="name"><a href="../features_profile_data_providers_leaderboard_provider/LeaderboardProvider/LeaderboardProvider.html">LeaderboardProvider</a></span><span class="signature">(<span class="parameter" id="-param-_getLeaderboardUseCase"><span class="type-annotation"><a href="../features_profile_domain_usecases_get_leaderboard_usecase/GetLeaderboardUseCase-class.html">GetLeaderboardUseCase</a></span> <span class="parameter-name">_getLeaderboardUseCase</span></span>)</span>
         </dt>
         <dd>
-          
+          Constructor with required dependencies
         </dd>
     </dl>
   </section>
@@ -148,7 +154,7 @@
 
 </dt>
 <dd>
-  
+  Getter for the current state
   <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
@@ -197,7 +203,7 @@ object is not in a usable state and should be discarded (calls to
 
 </dt>
 <dd>
-  
+  Loads top users for the specified ranking type and limit
   
 
 </dd>

@@ -77,6 +77,32 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>Retrieves top users based on ranking type and limit from local database</p>
+<p>Implements the core logic for fetching and sorting users by XP:</p>
+<ul>
+<li>All-time: Sorts by total XP across all time</li>
+<li>Weekly: Sorts by XP earned in the last 7 days</li>
+<li>Monthly: Sorts by XP earned in the last 30 days</li>
+</ul>
+<p><code>type</code>: The ranking period (all-time, weekly, monthly) from <a href="../../global_data_models_enums/RankingType.html">RankingType</a>
+<code>limit</code>: Maximum number of entries to return (e.g., top 10)</p>
+<p>Returns:</p>
+<ul>
+<li><a href="https://pub.dev/documentation/dartz/0.10.1/dartz/Right-class.html">Right</a>: List of <a href="../../global_data_models_leaderboard_entry/LeaderboardEntry-class.html">LeaderboardEntry</a> sorted by rank on success</li>
+<li><a href="https://pub.dev/documentation/dartz/0.10.1/dartz/Left-class.html">Left</a>: <a href="../../core_error_failure/CacheFailure-class.html">CacheFailure</a> with error message if database operations fail</li>
+</ul>
+<p>Note for collaborators:</p>
+<ul>
+<li>Raw SQL queries are used for time-based filters (weekly/monthly) to efficiently
+join User and QuestHistory tables. Modify these queries carefully to avoid breaking
+date filtering logic.</li>
+<li>The <code>INTEGER</code> column references in queries appear to be placeholders - replace with
+actual column names (e.g., <code>timestamp</code> for QuestHistory) when schema is finalized.</li>
+<li>Rank is calculated dynamically using the result index + 1. This works for small
+limits but consider adding a window function for large datasets.</li>
+</ul>
+</section>
 
 
     
@@ -84,68 +110,73 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
 Future&lt;Either&lt;Failure, List&lt;LeaderboardEntry&gt;&gt;&gt; getTopUsers(
-RankingType type,
-int limit,
+  RankingType type,
+  int limit,
 ) async {
-try {
-  final db = _database.database;
-  late List&lt;Map&lt;String, Object?&gt;&gt; results;
+  try {
+    &#47;&#47; Get raw database access for complex queries
+    final db = _database.database;
+    late List&lt;Map&lt;String, Object?&gt;&gt; results;
 
-  &#47;&#47; Select top users based on ranking type
-  switch (type) {
-    case RankingType.allTime:
-      results = await db.query(
-        &#39;User&#39;,
-        columns: [&#39;id&#39;, &#39;username&#39;, &#39;totalXp&#39;, &#39;INTEGER&#39;],
-        orderBy: &#39;totalXp DESC&#39;,
-        limit: limit,
+    &#47;&#47; Select and sort users based on the ranking type
+    switch (type) {
+      case RankingType.allTime:
+        &#47;&#47; All-time ranking: Sort by total XP descending
+        results = await db.query(
+          &#39;User&#39;,
+          columns: [&#39;id&#39;, &#39;username&#39;, &#39;totalXp&#39;, &#39;INTEGER&#39;], &#47;&#47; &#39;INTEGER&#39;is actually the name for &#39;lastActive&#39; time column
+          orderBy: &#39;totalXp DESC&#39;,
+          limit: limit,
+        );
+        break;
+
+      case RankingType.weekly:
+        &#47;&#47; Weekly ranking: Sum XP from quests in the last 7 days
+        final weekAgo = DateTime.now().subtract(const Duration(days: 7));
+        results = await db.rawQuery(&#39;&#39;&#39;
+          SELECT u.id, u.username, u.totalXp, u.INTEGER
+          FROM User u
+          JOIN QuestHistory qh ON u.id = qh.userId
+          WHERE qh.INTEGER &gt;= ? &#47;&#47; TODO: Replace &#39;INTEGER&#39; with &#39;timestamp&#39;
+          GROUP BY u.id
+          ORDER BY SUM(qh.xpEarned) DESC
+          LIMIT ?
+        &#39;&#39;&#39;, [weekAgo.millisecondsSinceEpoch, limit]);
+        break;
+
+      case RankingType.monthly:
+        &#47;&#47; Monthly ranking: Sum XP from quests in the last 30 days
+        final monthAgo = DateTime.now().subtract(const Duration(days: 30));
+        results = await db.rawQuery(&#39;&#39;&#39;
+          SELECT u.id, u.username, u.totalXp, u.INTEGER
+          FROM User u
+          JOIN QuestHistory qh ON u.id = qh.userId
+          WHERE qh.INTEGER &gt;= ? &#47;&#47; TODO: Replace &#39;INTEGER&#39; with &#39;timestamp&#39;
+          GROUP BY u.id
+          ORDER BY SUM(qh.xpEarned) DESC
+          LIMIT ?
+        &#39;&#39;&#39;, [monthAgo.millisecondsSinceEpoch, limit]);
+        break;
+    }
+
+    &#47;&#47; Map database results to domain entities (LeaderboardEntry)
+    final entries = results.map((map) {
+      final user = User.fromJson(map);
+      return LeaderboardEntry(
+        rank: results.indexOf(map) + 1, &#47;&#47; Calculate rank from result position
+        userId: user.username,
+        score: user.totalXp,
+        isCurrentUser: false, &#47;&#47; TODO: Add logic to check if user is current logged-in user
+        rankingType: type,
+        updatedAt: user.lastActive,
       );
-      break;
+    }).toList();
 
-    case RankingType.weekly:
-      final weekAgo = DateTime.now().subtract(const Duration(days: 7));
-      results = await db.rawQuery(&#39;&#39;&#39;
-        SELECT u.id, u.username, u.totalXp, u.INTEGER
-        FROM User u
-        JOIN QuestHistory qh ON u.id = qh.userId
-        WHERE qh.INTEGER &gt;= ?
-        GROUP BY u.id
-        ORDER BY SUM(qh.xpEarned) DESC
-        LIMIT ?
-      &#39;&#39;&#39;, [weekAgo.millisecondsSinceEpoch, limit]);
-      break;
-
-    case RankingType.monthly:
-      final monthAgo = DateTime.now().subtract(const Duration(days: 30));
-      results = await db.rawQuery(&#39;&#39;&#39;
-        SELECT u.id, u.username, u.totalXp, u.INTEGER
-        FROM User u
-        JOIN QuestHistory qh ON u.id = qh.userId
-        WHERE qh.INTEGER &gt;= ?
-        GROUP BY u.id
-        ORDER BY SUM(qh.xpEarned) DESC
-        LIMIT ?
-      &#39;&#39;&#39;, [monthAgo.millisecondsSinceEpoch, limit]);
-      break;
+    return Right(entries);
+  } catch (e) {
+    &#47;&#47; Catch and wrap all database errors in a CacheFailure
+    return Left(CacheFailure(message: &#39;Error fetching leaderboard: $e&#39;));
   }
-
-  &#47;&#47; Map database results to domain entities
-  final entries = results.map((map) {
-    final user = User.fromJson(map);
-    return LeaderboardEntry(
-      rank: results.indexOf(map) + 1,
-      userId: user.username,
-      score: user.totalXp,
-      isCurrentUser: false,
-      rankingType: type,
-      updatedAt: user.lastActive,
-    );
-  }).toList();
-
-  return Right(entries);
-} catch (e) {
-  return Left(CacheFailure(message: &#39;Error fetching leaderboard: $e&#39;));
-}
 }</code></pre>
 </section>
 

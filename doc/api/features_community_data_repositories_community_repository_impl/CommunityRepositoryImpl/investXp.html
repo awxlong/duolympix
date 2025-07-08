@@ -76,39 +76,56 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>Processes an XP investment in a quest</p>
+<ol>
+<li>Verifies user has sufficient XP</li>
+<li>Deducts XP from user's total</li>
+<li>Records the investment in the database</li>
+</ol>
+<p>Returns <a href="https://pub.dev/documentation/dartz/0.10.1/dartz/Right-class.html">Right</a> with investment ID on success, appropriate <a href="../../core_error_failure/Failure-class.html">Failure</a> on error.</p>
+</section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
-  Future&lt;Either&lt;Failure, int&gt;&gt; investXp(XpInvestment investment) async {
-    try {
-      &#47;&#47; 1. 扣除投资者的XP
-      final userResult = await _userRepository.getUser(investment.investorId, _userProvider.state.user!.password);
-      if (userResult.isLeft()) {
-        return Left(userResult.fold((l) =&gt; l, (r) =&gt; throw UnimplementedError()));
-      }
+Future&lt;Either&lt;Failure, int&gt;&gt; investXp(XpInvestment investment) async {
+  try {
+    &#47;&#47; Fetch current user to verify XP balance
+    final userResult = await _userRepository.getUser(
+      investment.investorId,
+      _userProvider.state.user!.password
+    );
 
-      final user = userResult.fold((l) =&gt; throw UnimplementedError(), (r) =&gt; r);
-      if (user.totalXp &lt; investment.xpAmount) {
-        return const Left(InsufficientXpFailure());
-      }
-
-      final updatedUser = user.copyWith(totalXp: user.totalXp - investment.xpAmount);
-      final updateResult = await _userRepository.updateUser(updatedUser);
-      if (updateResult.isLeft()) {
-        return Left(updateResult.fold((l) =&gt; l, (r) =&gt; throw UnimplementedError()));
-      }
-
-      &#47;&#47; 2. 记录XP投资
-      final id = await _xpInvestmentDao.insertXpInvestment(investment);
-
-      return Right(id);
-    } catch (e) {
-      return Left(DatabaseFailure(message: e.toString()));
+    if (userResult.isLeft()) {
+      return Left(userResult.fold((l) =&gt; l, (r) =&gt; throw UnimplementedError()));
     }
-  }</code></pre>
+
+    final user = userResult.fold((l) =&gt; throw UnimplementedError(), (r) =&gt; r);
+
+    &#47;&#47; Check for sufficient XP
+    if (user.totalXp &lt; investment.xpAmount) {
+      return const Left(InsufficientXpFailure());
+    }
+
+    &#47;&#47; Deduct XP from user
+    final updatedUser = user.copyWith(totalXp: user.totalXp - investment.xpAmount);
+    final updateResult = await _userRepository.updateUser(updatedUser);
+
+    if (updateResult.isLeft()) {
+      return Left(updateResult.fold((l) =&gt; l, (r) =&gt; throw UnimplementedError()));
+    }
+
+    &#47;&#47; Record the investment
+    final id = await _xpInvestmentDao.insertXpInvestment(investment);
+
+    return Right(id);
+  } catch (e) {
+    return Left(DatabaseFailure(message: e.toString()));
+  }
+}</code></pre>
 </section>
 
 

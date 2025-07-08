@@ -71,6 +71,12 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>Fetches investments and total XP for a specific quest</p>
+<p>Updates state to loading, retrieves data via repository,
+and updates state with combined results or errors.</p>
+<p><code>questId</code>: The ID of the quest to fetch investments for</p>
+</section>
 
 
     
@@ -84,33 +90,36 @@
   final totalXpResult = await _repository.getTotalXpInvestedByQuest(questId);
 
   investmentsResult.fold(
-  (failure) {
-    _state = _state.copyWith(
-      status: CommunityStatus.error,
-      errorMessage: failure.message,
-    );
-    notifyListeners();
-  },
-  (investments) {
-    totalXpResult.fold(
-      (totalXpFailure) {
-        _state = _state.copyWith(
-          status: CommunityStatus.error,
-          errorMessage: totalXpFailure.message,
-        );
-        notifyListeners();
-      },
-      (totalXp) {
-        _state = _state.copyWith(
-          status: CommunityStatus.success,
-          investments: investments,
-          totalXpInvested: totalXp,
-        );
-        notifyListeners();
-      },
-    );
-  },
-);
+    (failure) {
+      &#47;&#47; Update state on investment fetch failure
+      _state = _state.copyWith(
+        status: CommunityStatus.error,
+        errorMessage: failure.message,
+      );
+      notifyListeners();
+    },
+    (investments) {
+      totalXpResult.fold(
+        (totalXpFailure) {
+          &#47;&#47; Update state on total XP fetch failure
+          _state = _state.copyWith(
+            status: CommunityStatus.error,
+            errorMessage: totalXpFailure.message,
+          );
+          notifyListeners();
+        },
+        (totalXp) {
+          &#47;&#47; Update state with both investments and total XP
+          _state = _state.copyWith(
+            status: CommunityStatus.success,
+            investments: investments,
+            totalXpInvested: totalXp,
+          );
+          notifyListeners();
+        },
+      );
+    },
+  );
 }</code></pre>
 </section>
 

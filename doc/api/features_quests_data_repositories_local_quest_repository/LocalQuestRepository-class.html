@@ -61,6 +61,12 @@
 </h1></div>
 
     
+<section class="desc markdown">
+  <p>Local in-memory implementation of <a href="../features_quests_data_repositories_quest_repository/QuestRepository-class.html">QuestRepository</a></p>
+<p>Stores quests in memory using lists, with no persistent storage.
+Suitable for prototyping and development, but not for production use
+where data persistence is required.</p>
+</section>
 
 
     <section>
@@ -143,7 +149,7 @@
 
 </dt>
 <dd>
-  
+  Retrieves all available (uncompleted) quests
   <div class="features"><span class="feature">override</span></div>
 
 </dd>
@@ -156,7 +162,7 @@
 
 </dt>
 <dd>
-  
+  Retrieves all completed quests
   <div class="features"><span class="feature">override</span></div>
 
 </dd>
@@ -182,7 +188,7 @@
 
 </dt>
 <dd>
-  
+  Marks a quest as completed and stores it
   <div class="features"><span class="feature">override</span></div>
 
 </dd>

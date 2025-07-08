@@ -61,6 +61,12 @@
 </h1></div>
 
     
+<section class="desc markdown">
+  <p>State provider for quest-related operations</p>
+<p>Uses ChangeNotifier to broadcast state changes to UI components.
+Integrates with <a href="../features_quests_data_repositories_quest_repository/QuestRepository-class.html">QuestRepository</a> for data persistence and
+<a href="../services_location_service/LocationService-class.html">LocationService</a> for distance tracking in running quests.</p>
+</section>
 
 
     <section>
@@ -93,7 +99,7 @@
           <span class="name"><a href="../features_quests_provider_quest_provider/QuestProvider/QuestProvider.html">QuestProvider</a></span><span class="signature">({<span class="parameter" id="-param-repository"><span>required</span> <span class="type-annotation"><a href="../features_quests_data_repositories_quest_repository/QuestRepository-class.html">QuestRepository</a></span> <span class="parameter-name">repository</span>, </span><span class="parameter" id="-param-locationService"><span>required</span> <span class="type-annotation"><a href="../services_location_service/LocationService-class.html">LocationService</a></span> <span class="parameter-name">locationService</span></span>})</span>
         </dt>
         <dd>
-          
+          Constructor with required dependencies
         </dd>
     </dl>
   </section>
@@ -110,7 +116,7 @@
 
 </dt>
 <dd>
-  
+  Getter for the currently active quest
   <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
@@ -122,7 +128,7 @@
 
 </dt>
 <dd>
-  
+  Getter for all available quests
   <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
@@ -134,7 +140,7 @@
 
 </dt>
 <dd>
-  
+  Getter for all completed quests
   <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
@@ -146,7 +152,7 @@
 
 </dt>
 <dd>
-  
+  Getter for current distance in active running quest
   <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
@@ -158,7 +164,7 @@
 
 </dt>
 <dd>
-  
+  Getter for elapsed time since active quest started
   <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
@@ -170,7 +176,7 @@
 
 </dt>
 <dd>
-  
+  Getter for error messages (e.g., location permissions)
   <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
@@ -240,7 +246,7 @@
 
 </dt>
 <dd>
-  
+  Adds a new quest to the available quests list
   
 
 </dd>
@@ -253,7 +259,7 @@
 
 </dt>
 <dd>
-  
+  Attempts to complete the current active quest
   
 
 </dd>
@@ -266,9 +272,7 @@
 
 </dt>
 <dd>
-  Discards any resources used by the object. After this is called, the
-object is not in a usable state and should be discarded (calls to
-<a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/addListener.html">addListener</a> will throw after the object is disposed).
+  Cleans up resources when provider is disposed
   <div class="features"><span class="feature">override</span></div>
 
 </dd>
@@ -281,7 +285,7 @@ object is not in a usable state and should be discarded (calls to
 
 </dt>
 <dd>
-  
+  Retrieves completed quests for a specific user
   
 
 </dd>
@@ -294,7 +298,7 @@ object is not in a usable state and should be discarded (calls to
 
 </dt>
 <dd>
-  
+  Retrieves uncompleted quests for a specific user
   
 
 </dd>
@@ -307,7 +311,7 @@ object is not in a usable state and should be discarded (calls to
 
 </dt>
 <dd>
-  
+  Initializes quest data on provider creation
   
 
 </dd>
@@ -320,7 +324,7 @@ object is not in a usable state and should be discarded (calls to
 
 </dt>
 <dd>
-  
+  Reloads completed quests from repository
   
 
 </dd>
@@ -373,7 +377,7 @@ notified when the object changes.
 
 </dt>
 <dd>
-  
+  Starts a new quest and initializes tracking
   
 
 </dd>

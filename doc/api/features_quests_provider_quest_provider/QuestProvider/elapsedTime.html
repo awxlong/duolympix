@@ -73,13 +73,16 @@
     </section>
 
     
+<section class="desc markdown">
+  <p>Getter for elapsed time since active quest started</p>
+</section>
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Duration get elapsedTime =&gt; _startTime != null
-? DateTime.now().difference(_startTime!)
-: Duration.zero;</code></pre>
+    ? DateTime.now().difference(_startTime!)
+    : Duration.zero;</code></pre>
 </section>
 
   </section>

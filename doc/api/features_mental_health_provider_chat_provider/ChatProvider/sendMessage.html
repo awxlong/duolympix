@@ -71,6 +71,12 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>Sends a user message and retrieves a response</p>
+<p>Adds the user message to the chat history, fetches a response from the repository,
+and updates the UI. Handles loading state during processing.</p>
+<p><code>message</code>: The text message sent by the user</p>
+</section>
 
 
     
@@ -81,8 +87,11 @@
     _isLoading = true;
     notifyListeners();
 
+    &#47;&#47; Add user message to history
     _messages.add(ChatMessage(text: message, isUser: true));
+    &#47;&#47; Get response from repository (could be API, local bot, etc.)
     final response = await _repository.sendMessage(message);
+    &#47;&#47; Add bot response to history
     _messages.add(ChatMessage(text: response, isUser: false));
   } finally {
     _isLoading = false;

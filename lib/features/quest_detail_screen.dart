@@ -1,12 +1,14 @@
-//
-// Dart file for displaying the detail of each quest.
-//
-
+// lib/features/quest_detail_screen.dart
+/// Quest Detail Screen
+/// 
+/// Displays detailed information and interaction options for a specific quest.
+/// Supports different quest types (physical, mental health) with appropriate
+/// interfaces, progress tracking, completion handling, and community features
+/// like comments for public quests.
+library;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-// import 'package:solo_leveling/features/community/data/models/colleague_relation.dart';
 import 'package:solo_leveling/features/community/data/models/comment.dart';
-// import 'package:solo_leveling/features/community/data/models/xp_investment.dart';
 import 'package:solo_leveling/features/community/data/presentation/providers/community_provider.dart';
 import 'package:solo_leveling/features/mental_health/presentation/widgets/typing_indicator.dart';
 import 'package:solo_leveling/features/profile/data/mappers/user_mapper.dart';
@@ -19,8 +21,15 @@ import 'quests/presentation/widgets/quest_progress.dart';
 import 'quests/data/models/quest_model.dart';
 import 'quests/presentation/widgets/timer_display.dart';
 
+/// Screen for viewing and interacting with a specific quest's details
+/// 
+/// Handles different UI layouts based on quest type (physical vs. mental health),
+/// tracks progress, manages completion, and integrates community features for
+/// public quests.
 class QuestDetailScreen extends StatefulWidget {
+  /// The quest to display details for
   final Quest quest;
+
   const QuestDetailScreen({super.key, required this.quest});
 
   @override
@@ -28,22 +37,30 @@ class QuestDetailScreen extends StatefulWidget {
 }
 
 class _QuestDetailScreenState extends State<QuestDetailScreen> {
+  /// Flag to show completion screen after quest is finished
   bool _showCompletion = false;
+  
+  /// Controller for mental health chat messages
   final TextEditingController _messageController = TextEditingController();
+  
+  /// Controller for community comments
   final TextEditingController _commentController = TextEditingController();
-  // bool _showColleagueSection = false;
-  // final List<String> _selectedColleagues = [];
+  
+  /// Provider for community features (comments, investments)
   late CommunityProvider _communityProvider;
-  // final TextEditingController _xpInvestmentController = TextEditingController(text: '50');
+  
+  /// Current user information
   late User _currentUser;
 
   @override
   void initState() {
     super.initState();
+    // Initialize community provider and current user data
     _communityProvider = Provider.of<CommunityProvider>(context, listen: false);
     final userEntity = Provider.of<UserProvider>(context, listen: false).state.user!;
     _currentUser = UserMapper.mapEntityToUser(userEntity);
 
+    // Load community data after widget initialization for public quests
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (widget.quest.isPublic) {
         _communityProvider.fetchColleaguesByQuest(widget.quest.id);
@@ -53,237 +70,33 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
     });
   }
 
+  /// Builds the community interaction section for public quests
+  /// 
+  /// Currently includes only the comment system (other community features
+  /// like colleagues and XP investment are commented out but structurally
+  /// prepared for future implementation).
   Widget _buildCommunitySection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // // Colleague section
+        // // Colleague section (future implementation)
         // _buildColleagueSection(),
         // const SizedBox(height: 20),
 
-        // // XP investment section
+        // // XP investment section (future implementation)
         // _buildXpInvestmentSection(),
         // const SizedBox(height: 20),
 
-        // Comment section
+        // Active comment section
         _buildCommentSection(),
       ],
     );
   }
 
-  // Widget _buildColleagueSection() {
-  //   final state = _communityProvider.state;
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: [
-  //       Row(
-  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //         children: [
-  //           const Text(
-  //             'Colleagues',
-  //             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-  //           ),
-  //           if (widget.quest.creatorId == _currentUser.id.toString())
-  //             TextButton(
-  //               onPressed: () {
-  //                 setState(() {
-  //                   _showColleagueSection = !_showColleagueSection;
-  //                 });
-  //               },
-  //               child: Text(
-  //                 _showColleagueSection ? 'Collapse' : 'Add',
-  //                 style: const TextStyle(color: Colors.blue),
-  //               ),
-  //             )
-  //         ],
-  //       ),
-  //       const SizedBox(height: 10),
-
-  //       // Show current colleagues
-  //       if (state.colleagues != null && state.colleagues!.isNotEmpty)
-  //         Wrap(
-  //           spacing: 8,
-  //           children: state.colleagues!
-  //              .map((relation) => _buildColleagueChip(relation.colleagueId))
-  //              .toList(),
-  //         ),
-  //       const SizedBox(height: 10),
-
-  //       // Add colleagues form
-  //       if (_showColleagueSection && widget.quest.creatorId == _currentUser.id.toString())
-  //         _buildAddColleaguesForm(),
-  //     ],
-  //   );
-  // }
-
-  // Widget _buildColleagueChip(String colleagueId) {
-  //   return Chip(
-  //     label: Text(colleagueId),
-  //   );
-  // }
-
-  // Widget _buildAddColleaguesForm() {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: [
-  //       const Text('Enter user ID to add colleagues:'),
-  //       const SizedBox(height: 10),
-  //       TextField(
-  //         onChanged: (value) {
-  //           if (value.isNotEmpty && !_selectedColleagues.contains(value)) {
-  //             _selectedColleagues.add(value);
-  //           }
-  //         },
-  //         decoration: const InputDecoration(
-  //           hintText: 'User ID',
-  //           border: OutlineInputBorder(),
-  //         ),
-  //       ),
-  //       const SizedBox(height: 10),
-  //       Wrap(
-  //         spacing: 8,
-  //         children: _selectedColleagues
-  //            .map((userId) => _buildSelectedColleagueChip(userId))
-  //            .toList(),
-  //       ),
-  //       const SizedBox(height: 10),
-  //       ElevatedButton(
-  //         onPressed: _selectedColleagues.isEmpty
-  //             ? null
-  //             : () async {
-  //                 for (final userId in _selectedColleagues) {
-  //                   final relation = ColleagueRelation(
-  //                     questId: widget.quest.id,
-  //                     colleagueId: userId,
-  //                   );
-  //                   await _communityProvider.addColleague(relation);
-  //                 }
-  //                 _selectedColleagues.clear();
-  //                 setState(() {});
-  //               },
-  //         child: const Text('Confirm Add'),
-  //       ),
-  //     ],
-  //   );
-  // }
-
-  // Widget _buildSelectedColleagueChip(String userId) {
-  //   return Chip(
-  //     label: Text(userId),
-  //     onDeleted: () {
-  //       setState(() {
-  //         _selectedColleagues.remove(userId);
-  //       });
-  //     },
-  //   );
-  // }
-
-  // Widget _buildXpInvestmentSection() {
-  //   final state = _communityProvider.state;
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: [
-  //       Row(
-  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //         children: [
-  //           const Text(
-  //             'XP Investment',
-  //             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-  //           ),
-  //           Text(
-  //             'Total Investment: ${state.totalXpInvested} XP',
-  //             style: const TextStyle(fontSize: 16, color: Colors.green),
-  //           ),
-  //         ],
-  //       ),
-  //       const SizedBox(height: 10),
-
-  //       // Investment form
-  //       Column(
-  //         crossAxisAlignment: CrossAxisAlignment.start,
-  //         children: [
-  //           const Text('Support this quest by investing XP:'),
-  //           const SizedBox(height: 10),
-  //           Row(
-  //             children: [
-  //               Expanded(
-  //                 child: TextField(
-  //                   controller: _xpInvestmentController,
-  //                   keyboardType: TextInputType.number,
-  //                   decoration: const InputDecoration(
-  //                     hintText: 'Enter XP amount',
-  //                     border: OutlineInputBorder(),
-  //                     suffixText: ' XP',
-  //                   ),
-  //                 ),
-  //               ),
-  //               const SizedBox(width: 10),
-  //               ElevatedButton(
-  //                 onPressed: _canInvestXp()
-  //                     ? () async {
-  //                         final xpAmount = int.tryParse(_xpInvestmentController.text);
-  //                         if (xpAmount == null || xpAmount <= 0) {
-  //                           ScaffoldMessenger.of(context).showSnackBar(
-  //                             const SnackBar(content: Text('Please enter a valid XP amount')),
-  //                           );
-  //                           return;
-  //                         }
-
-  //                         if (_currentUser.totalXp < xpAmount) {
-  //                           ScaffoldMessenger.of(context).showSnackBar(
-  //                             const SnackBar(content: Text('Insufficient XP to invest')),
-  //                           );
-  //                           return;
-  //                         }
-
-  //                         final investment = XpInvestment(
-  //                           questId: widget.quest.id,
-  //                           investorId: _currentUser.id.toString(),
-  //                           xpAmount: xpAmount,
-  //                           timestamp: DateTime.now(),
-  //                         );
-  //                         await _communityProvider.investXp(investment);
-  //                         _xpInvestmentController.text = '50';
-  //                       }
-  //                     : null,
-  //                 child: const Text('Invest'),
-  //               ),
-  //             ],
-  //           ),
-  //           const SizedBox(height: 10),
-
-  //           // Show investors
-  //           if (state.investments != null && state.investments!.isNotEmpty)
-  //             Column(
-  //               crossAxisAlignment: CrossAxisAlignment.start,
-  //               children: [
-  //                 const Text('Investors:'),
-  //                 const SizedBox(height: 10),
-  //                 Wrap(
-  //                   spacing: 8,
-  //                   children: state.investments!
-  //                      .map((investment) => _buildInvestorChip(investment))
-  //                      .toList(),
-  //                 ),
-  //               ],
-  //             )
-  //         ],
-  //       ),
-  //     ],
-  //   );
-  // }
-
-  // Widget _buildInvestorChip(XpInvestment investment) {
-  //   return Chip(
-  //     label: Text('${investment.investorId}: ${investment.xpAmount} XP'),
-  //   );
-  // }
-
-  // bool _canInvestXp() {
-  //   final xpAmount = int.tryParse(_xpInvestmentController.text);
-  //   return xpAmount != null && xpAmount > 0 && _currentUser.totalXp >= xpAmount;
-  // }
-
+  /// Builds the comment interface for public quests
+  /// 
+  /// Displays existing comments, a text input for new comments, and a post button.
+  /// Handles loading states and empty comment scenarios with user feedback.
   Widget _buildCommentSection() {
     final state = _communityProvider.state;
     return Column(
@@ -295,7 +108,7 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
         ),
         const SizedBox(height: 10),
 
-        // Comment list
+        // Display list of comments or empty state
         if (state.comments != null && state.comments!.isNotEmpty)
           Column(
             children: state.comments!
@@ -307,7 +120,7 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
 
         const SizedBox(height: 20),
 
-        // Post comment
+        // Comment input and post button
         Row(
           children: [
             Expanded(
@@ -324,6 +137,7 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
               onPressed: _commentController.text.isEmpty
                   ? null
                   : () async {
+                      // Create and post new comment
                       final comment = Comment(
                         questId: widget.quest.id,
                         username: _currentUser.username.toString(),
@@ -341,6 +155,9 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
     );
   }
 
+  /// Builds a single comment item for display in the comment list
+  /// 
+  /// Shows comment author, content, and timestamp.
   Widget _buildCommentItem(Comment comment) {
     return ListTile(
       title: Text(comment.username),
@@ -349,6 +166,9 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
     );
   }
 
+  /// Builds the interface for physical quests (distance/strength)
+  /// 
+  /// Includes a timer, progress indicator, completion button, and error display.
   Widget _buildPhysicalQuestScreen(QuestProvider provider, Quest quest) {
     return Column(
       children: [
@@ -373,6 +193,10 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
     );
   }
 
+  /// Builds the chat interface for mental health quests
+  /// 
+  /// Includes a timer, chat history with bubbles, typing indicator, message input,
+  /// and completion button (enabled when session is complete).
   Widget _buildChatInterface(ChatProvider chatProvider, QuestProvider questProvider) {
     return Column(
       children: [
@@ -384,7 +208,7 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
           child: Stack(
             children: [
               ListView.builder(
-                reverse: true,
+                reverse: true, // Show newest messages at the bottom
                 itemCount: chatProvider.messages.length,
                 itemBuilder: (context, index) {
                   final message = chatProvider.messages.reversed.toList()[index];
@@ -409,10 +233,14 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
     );
   }
 
+  /// Displays a typing indicator while waiting for responses
   Widget _buildTypingIndicator() {
     return const TypingIndicator();
   }
 
+  /// Builds the message input area for mental health chat
+  /// 
+  /// Includes a text field and send button, with submission handling.
   Widget _buildChatInput(ChatProvider provider) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -437,24 +265,34 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
     );
   }
 
+  /// Handles sending a message in mental health chat
+  /// 
+  /// Clears the input field after sending and ignores empty messages.
   void _sendMessage(String text, TextEditingController controller, ChatProvider provider) {
     if (text.trim().isEmpty) return;
     controller.clear();
     provider.sendMessage(text);
   }
 
+  /// Calculates quest progress based on type and parameters
+  /// 
+  /// For distance quests: combines distance and time progress
+  /// For mental health quests: uses time progress only
+  /// For other types: uses time progress based on min/max/target durations
   double _calculateProgress(Quest quest, QuestProvider provider, ChatProvider? chatProvider) {
     if (quest.type == QuestType.distance) {
-      final distanceProgress = provider.currentDistance / (quest.targetDistance?? 1);
+      final distanceProgress = provider.currentDistance / (quest.targetDistance ?? 1);
       double timeProgress = 0;
 
+      // Calculate time progress based on min/max/target durations
       if (quest.minDuration != null && quest.maxDuration != null) {
         if (provider.elapsedTime < quest.minDuration!) {
           timeProgress = provider.elapsedTime.inSeconds / quest.minDuration!.inSeconds;
         } else if (provider.elapsedTime > quest.maxDuration!) {
           timeProgress = 1;
         } else {
-          timeProgress = (provider.elapsedTime.inSeconds - quest.minDuration!.inSeconds) / (quest.maxDuration!.inSeconds - quest.minDuration!.inSeconds);
+          timeProgress = (provider.elapsedTime.inSeconds - quest.minDuration!.inSeconds) / 
+                        (quest.maxDuration!.inSeconds - quest.minDuration!.inSeconds);
         }
       } else if (quest.minDuration != null) {
         timeProgress = provider.elapsedTime.inSeconds / quest.minDuration!.inSeconds;
@@ -466,13 +304,15 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
     } else if (quest.type == QuestType.mentalHealth) {
       double timeProgress = 0;
 
+      // Calculate time progress for mental health quests
       if (quest.minDuration != null && quest.maxDuration != null) {
         if (chatProvider!.elapsedTime < quest.minDuration!) {
           timeProgress = chatProvider.elapsedTime.inSeconds / quest.minDuration!.inSeconds;
         } else if (chatProvider.elapsedTime > quest.maxDuration!) {
           timeProgress = 1;
         } else {
-          timeProgress = (chatProvider.elapsedTime.inSeconds - quest.minDuration!.inSeconds) / (quest.maxDuration!.inSeconds - quest.minDuration!.inSeconds);
+          timeProgress = (chatProvider.elapsedTime.inSeconds - quest.minDuration!.inSeconds) / 
+                        (quest.maxDuration!.inSeconds - quest.minDuration!.inSeconds);
         }
       } else if (quest.minDuration != null) {
         timeProgress = chatProvider!.elapsedTime.inSeconds / quest.minDuration!.inSeconds;
@@ -483,6 +323,7 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
       return timeProgress;
     }
 
+    // Default time progress calculation for other quest types
     double timeProgress = 0;
 
     if (quest.minDuration != null && quest.maxDuration != null) {
@@ -491,7 +332,8 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
       } else if (provider.elapsedTime > quest.maxDuration!) {
         timeProgress = 1;
       } else {
-        timeProgress = (provider.elapsedTime.inSeconds - quest.minDuration!.inSeconds) / (quest.maxDuration!.inSeconds - quest.minDuration!.inSeconds);
+        timeProgress = (provider.elapsedTime.inSeconds - quest.minDuration!.inSeconds) / 
+                      (quest.maxDuration!.inSeconds - quest.minDuration!.inSeconds);
       }
     } else if (quest.minDuration != null) {
       timeProgress = provider.elapsedTime.inSeconds / quest.minDuration!.inSeconds;
@@ -502,6 +344,9 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
     return timeProgress;
   }
 
+  /// Builds the completion screen shown after quest completion
+  /// 
+  /// Displays success icon, XP reward, and a button to return to quests list.
   Widget _buildCompletionScreen(Quest quest) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -519,17 +364,23 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
     );
   }
 
+  /// Handles quest completion process
+  /// 
+  /// Notifies quest provider to mark as completed, updates user data,
+  /// and shows the completion screen.
   Future<void> _handleQuestCompletion(QuestProvider provider) async {
-
     await provider.completeQuest();
-    // Get UserProvider instance
+    // Update user data with quest completion
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    // Call UserProvider's completeQuest method
     await userProvider.completeQuest(widget.quest);
     setState(() => _showCompletion = true);
-
   }
 
+  /// Main build method for the screen
+  /// 
+  /// Shows completion screen if quest is finished, otherwise displays
+  /// appropriate interface based on quest type and includes community
+  /// features for public quests.
   @override
   Widget build(BuildContext context) {
     final questProvider = Provider.of<QuestProvider>(context);
@@ -538,6 +389,7 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
         : null;
     final isCompleted = questProvider.completedQuests.contains(widget.quest);
 
+    // Auto-show completion screen if quest is already completed
     if (isCompleted && !_showCompletion) {
       Future.delayed(Duration.zero, () {
         if (mounted) {
@@ -555,6 +407,7 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  // Show appropriate interface based on quest type
                   if (widget.quest.type == QuestType.mentalHealth)
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.6,
@@ -563,6 +416,7 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
                   else
                     _buildPhysicalQuestScreen(questProvider, widget.quest),
                   const SizedBox(height: 20),
+                  // Show community section for public quests
                   if (widget.quest.isPublic) _buildCommunitySection(),
                 ],
               ),
@@ -570,3 +424,42 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
     );
   }
 }
+
+/// Suggested Extensions for Future Development
+/// 
+/// 1. Community Feature Expansion:
+///    - Implement colleague management section (add/remove colleagues)
+///    - Add XP investment functionality with input validation
+///    - Display colleague contributions and investment leaderboards
+///    - Add notifications for new comments or colleague joins
+/// 
+/// 2. Quest Progress Enhancements:
+///    - Add visual indicators for milestone achievements
+///    - Implement progress sharing functionality (social media)
+///    - Add detailed statistics (pace, calories for physical quests)
+///    - Support pausing/resuming timers with persistence
+/// 
+/// 3. User Experience Improvements:
+///    - Add quest instructions/guidelines section
+///    - Implement pull-to-refresh for community data
+///    - Add loading skeletons for better perceived performance
+///    - Support landscape orientation with optimized layout
+/// 
+/// 4. Accessibility Features:
+///    - Add screen reader support for progress updates
+///    - Implement adjustable text sizes for all text elements
+///    - Add high contrast mode for better visibility
+///    - Support voice input for chat/comments
+/// 
+/// 5. Error Handling & Recovery:
+///    - Add retry logic for failed community operations
+///    - Implement offline mode with data sync when online
+///    - Add confirmation dialogs for quest completion
+///    - Handle network errors gracefully with user feedback
+/// 
+/// 6. Social Integration:
+///    - Add option to invite friends to join a quest
+///    - Implement quest sharing with progress snapshots
+///    - Add real-time updates when colleagues join/complete
+///    - Support group quest completion with combined progress
+/// 

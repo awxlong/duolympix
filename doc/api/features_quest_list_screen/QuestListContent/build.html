@@ -127,6 +127,7 @@ Widget build(BuildContext context) {
       onStart: () async {
         final quest = provider.availableQuests[index];
 
+        &#47;&#47; Handle mental health quests with chat session initialization
         if (quest.type == QuestType.mentalHealth) {
           final chatProvider = context.read&lt;ChatProvider&gt;();
           await chatProvider.startSession(quest);
@@ -137,6 +138,7 @@ Widget build(BuildContext context) {
             );
           }
         } else {
+          &#47;&#47; Start regular quest tracking
           await provider.startQuest(quest);
           if (context.mounted) {
             Navigator.push(

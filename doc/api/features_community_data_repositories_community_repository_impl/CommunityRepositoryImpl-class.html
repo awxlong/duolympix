@@ -61,6 +61,12 @@
 </h1></div>
 
     
+<section class="desc markdown">
+  <p>Database-backed implementation of <a href="../features_community_data_repositories_community_repository/CommunityRepository-class.html">CommunityRepository</a></p>
+<p>Uses Floor DAOs (Data Access Objects) for local storage operations.
+Integrates with user repository for XP management during investments.
+Handles database errors and converts them to <a href="../core_error_failure/Failure-class.html">Failure</a> instances.</p>
+</section>
 
 
     <section>
@@ -99,7 +105,7 @@
           <span class="name"><a href="../features_community_data_repositories_community_repository_impl/CommunityRepositoryImpl/CommunityRepositoryImpl.html">CommunityRepositoryImpl</a></span><span class="signature">(<span class="parameter" id="-param-_colleagueRelationDao"><span class="type-annotation"><a href="../global_data_database_colleague_relation_dao/ColleagueRelationDao-class.html">ColleagueRelationDao</a></span> <span class="parameter-name">_colleagueRelationDao</span>, </span><span class="parameter" id="-param-_xpInvestmentDao"><span class="type-annotation"><a href="../global_data_database_xp_investment_dao/XpInvestmentDao-class.html">XpInvestmentDao</a></span> <span class="parameter-name">_xpInvestmentDao</span>, </span><span class="parameter" id="-param-_userRepository"><span class="type-annotation"><a href="../features_profile_data_repositories_user_repository/UserRepository-class.html">UserRepository</a></span> <span class="parameter-name">_userRepository</span>, </span><span class="parameter" id="-param-_commentDao"><span class="type-annotation"><a href="../global_data_database_comment_dao/CommentDao-class.html">CommentDao</a></span> <span class="parameter-name">_commentDao</span>, </span><span class="parameter" id="-param-_userProvider"><span class="type-annotation"><a href="../features_profile_data_providers_user_provider/UserProvider-class.html">UserProvider</a></span> <span class="parameter-name">_userProvider</span></span>)</span>
         </dt>
         <dd>
-          
+          Constructor with injected dependencies
         </dd>
     </dl>
   </section>
@@ -149,7 +155,7 @@
 
 </dt>
 <dd>
-  
+  Adds a new colleague relationship to the database
   <div class="features"><span class="feature">override</span></div>
 
 </dd>
@@ -162,7 +168,7 @@
 
 </dt>
 <dd>
-  
+  Deletes all comments associated with a quest
   <div class="features"><span class="feature">override</span></div>
 
 </dd>
@@ -175,7 +181,7 @@
 
 </dt>
 <dd>
-  
+  Retrieves all colleagues associated with a quest
   <div class="features"><span class="feature">override</span></div>
 
 </dd>
@@ -188,7 +194,7 @@
 
 </dt>
 <dd>
-  
+  Retrieves all quest relationships for a specific user
   <div class="features"><span class="feature">override</span></div>
 
 </dd>
@@ -201,7 +207,7 @@
 
 </dt>
 <dd>
-  
+  Retrieves all comments for a specific quest
   <div class="features"><span class="feature">override</span></div>
 
 </dd>
@@ -214,7 +220,7 @@
 
 </dt>
 <dd>
-  
+  Retrieves all XP investments for a specific quest
   <div class="features"><span class="feature">override</span></div>
 
 </dd>
@@ -227,7 +233,7 @@
 
 </dt>
 <dd>
-  
+  Calculates total XP invested in a specific quest
   <div class="features"><span class="feature">override</span></div>
 
 </dd>
@@ -240,7 +246,7 @@
 
 </dt>
 <dd>
-  
+  Processes an XP investment in a quest
   <div class="features"><span class="feature">override</span></div>
 
 </dd>
@@ -266,7 +272,7 @@
 
 </dt>
 <dd>
-  
+  Posts a new comment to a quest
   <div class="features"><span class="feature">override</span></div>
 
 </dd>
@@ -279,7 +285,7 @@
 
 </dt>
 <dd>
-  
+  Removes a colleague relationship from the database
   <div class="features"><span class="feature">override</span></div>
 
 </dd>

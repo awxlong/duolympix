@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solo_leveling/features/profile/data/providers/leaderboard_provider.dart';
-import 'package:solo_leveling/features/profile/presentation/screens/user_quests_screen.dart'; // 新增导入
-import '../../../../global_data/models/enums.dart';
+import 'package:solo_leveling/features/profile/presentation/screens/user_quests_screen.dart';
+import 'package:solo_leveling/global_data/models/enums.dart'; 
 
 class LeaderboardScreen extends StatefulWidget {
   const LeaderboardScreen({super.key});

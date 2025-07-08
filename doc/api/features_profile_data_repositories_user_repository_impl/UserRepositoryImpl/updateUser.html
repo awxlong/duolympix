@@ -76,6 +76,21 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>Updates user profile data</p>
+<p>Converts <a href="../../features_profile_domain_entities_user_entity/UserEntity-class.html">UserEntity</a> to database model, persists changes,
+and returns the updated entity.</p>
+<p>Returns:</p>
+<ul>
+<li><a href="https://pub.dev/documentation/dartz/0.10.1/dartz/Right-class.html">Right&lt;UserEntity&gt;</a> on successful update</li>
+<li><a href="https://pub.dev/documentation/dartz/0.10.1/dartz/Left-class.html">Left&lt;CacheFailure&gt;</a> on database error</li>
+</ul>
+<p>Future extensions:</p>
+<ul>
+<li>Add validation before updating</li>
+<li>Implement optimistic updates with conflict resolution</li>
+</ul>
+</section>
 
 
     
@@ -86,7 +101,6 @@ Future&lt;Either&lt;Failure, UserEntity&gt;&gt; updateUser(UserEntity user) asyn
   try {
     final dbUser = UserMapper.mapEntityToUser(user);
     await _database.userDao.updateUser(dbUser);
-    &#47;&#47; print(&#39;User data updated successfully: ${dbUser.username}&#39;);
     return Right(user);
   } catch (e) {
     return const Left(CacheFailure());

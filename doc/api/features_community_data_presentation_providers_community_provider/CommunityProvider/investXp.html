@@ -71,6 +71,13 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>Processes an XP investment in a quest</p>
+<p>Updates state to loading, processes investment via repository,
+and updates state with results or errors. Optimistically updates
+the local list of investments and total XP on success.</p>
+<p><code>investment</code>: The XP investment to process</p>
+</section>
 
 
     
@@ -83,6 +90,7 @@
   final result = await _repository.investXp(investment);
   result.fold(
     (failure) {
+      &#47;&#47; Update state on failure
       _state = _state.copyWith(
         status: CommunityStatus.error,
         errorMessage: failure.message,
@@ -90,8 +98,9 @@
       notifyListeners();
     },
     (id) async {
+      &#47;&#47; Optimistically update local state
       if (_state.investments != null) {
-        _state.investments!.insert(0, investment);
+        _state.investments!.insert(0, investment); &#47;&#47; Add to top of list
       }
       _state = _state.copyWith(
         status: CommunityStatus.success,

@@ -77,22 +77,36 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>Retrieves a user by username and password</p>
+<p>Returns:</p>
+<ul>
+<li><a href="https://pub.dev/documentation/dartz/0.10.1/dartz/Right-class.html">Right&lt;UserEntity&gt;</a> if user is found and password matches</li>
+<li><a href="https://pub.dev/documentation/dartz/0.10.1/dartz/Left-class.html">Left&lt;DatabaseFailure&gt;</a> if user not found or password is incorrect</li>
+</ul>
+<p>Future extensions:</p>
+<ul>
+<li>Implement password hashing (current implementation uses plain text)</li>
+<li>Add user caching mechanism</li>
+<li>Implement multi-factor authentication</li>
+</ul>
+</section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
-  Future&lt;Either&lt;Failure, UserEntity&gt;&gt; getUser(String username, String password) async {
-    try {
-      final user = await _database.userDao.findUserByUsername(username);
-      if (user == null) return const Left(DatabaseFailure(message: &#39;User not found&#39;));
-      if (user.password != password) return const Left(DatabaseFailure(message: &#39;Incorrect password&#39;));
-      return Right(UserMapper.mapUserToEntity(user));
-    } catch (e) {
-      return Left(DatabaseFailure(message: &#39;Error fetching user: $e&#39;));
-    }
-  }</code></pre>
+Future&lt;Either&lt;Failure, UserEntity&gt;&gt; getUser(String username, String password) async {
+  try {
+    final user = await _database.userDao.findUserByUsername(username);
+    if (user == null) return const Left(DatabaseFailure(message: &#39;User not found&#39;));
+    if (user.password != password) return const Left(DatabaseFailure(message: &#39;Incorrect password&#39;));
+    return Right(UserMapper.mapUserToEntity(user));
+  } catch (e) {
+    return Left(DatabaseFailure(message: &#39;Error fetching user: $e&#39;));
+  }
+}</code></pre>
 </section>
 
 

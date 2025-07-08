@@ -1,5 +1,10 @@
 // lib/features/community/data/repositories/community_repository_impl.dart
-
+/// Community Repository Implementation
+/// 
+/// Concrete implementation of [CommunityRepository] using local database DAOs
+/// for managing colleague relationships, XP investments, and quest comments.
+/// Handles data persistence, error handling, and business logic for community features.
+library;
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:solo_leveling/core/error/failure.dart';
@@ -13,14 +18,31 @@ import 'package:solo_leveling/global_data/database/colleague_relation_dao.dart';
 import 'package:solo_leveling/global_data/database/comment_dao.dart';
 import 'package:solo_leveling/global_data/database/xp_investment_dao.dart';
 
+/// Database-backed implementation of [CommunityRepository]
+/// 
+/// Uses Floor DAOs (Data Access Objects) for local storage operations.
+/// Integrates with user repository for XP management during investments.
+/// Handles database errors and converts them to [Failure] instances.
 @Injectable(as: CommunityRepository)
 class CommunityRepositoryImpl implements CommunityRepository {
+  /// DAO for colleague relationship operations
   final ColleagueRelationDao _colleagueRelationDao;
+  
+  /// DAO for XP investment operations
   final XpInvestmentDao _xpInvestmentDao;
-  final UserRepository _userRepository; // 用于扣除用户XP
-  final CommentDao _commentDao; // 
-  final UserProvider _userProvider; 
+  
+  /// Repository for user data operations (e.g., XP deduction)
+  final UserRepository _userRepository;
+  
+  /// DAO for comment operations
+  final CommentDao _commentDao;
+  
+  /// Provider for accessing current user state
+  final UserProvider _userProvider;
 
+  /// Constructor with injected dependencies
+  /// 
+  /// Dependencies are provided via dependency injection
   CommunityRepositoryImpl(
     this._colleagueRelationDao,
     this._xpInvestmentDao,
@@ -29,7 +51,14 @@ class CommunityRepositoryImpl implements CommunityRepository {
     this._userProvider,
   );
 
-  // 同事功能实现
+  // ------------------------------
+  // Colleague Relationship Implementation
+  // ------------------------------
+
+  /// Adds a new colleague relationship to the database
+  /// 
+  /// Inserts the relationship using [ColleagueRelationDao].
+  /// Returns [Right] on success, [DatabaseFailure] on error.
   @override
   Future<Either<Failure, void>> addColleague(ColleagueRelation relation) async {
     try {
@@ -40,6 +69,10 @@ class CommunityRepositoryImpl implements CommunityRepository {
     }
   }
 
+  /// Removes a colleague relationship from the database
+  /// 
+  /// Deletes the relationship using [ColleagueRelationDao].
+  /// Returns [Right] on success, [DatabaseFailure] on error.
   @override
   Future<Either<Failure, void>> removeColleague(ColleagueRelation relation) async {
     try {
@@ -50,6 +83,10 @@ class CommunityRepositoryImpl implements CommunityRepository {
     }
   }
 
+  /// Retrieves all colleagues associated with a quest
+  /// 
+  /// Fetches relationships using [ColleagueRelationDao] filtered by quest ID.
+  /// Returns [Right] with list on success, [DatabaseFailure] on error.
   @override
   Future<Either<Failure, List<ColleagueRelation>>> getColleaguesByQuest(String questId) async {
     try {
@@ -60,6 +97,10 @@ class CommunityRepositoryImpl implements CommunityRepository {
     }
   }
 
+  /// Retrieves all quest relationships for a specific user
+  /// 
+  /// Fetches relationships using [ColleagueRelationDao] filtered by user ID.
+  /// Returns [Right] with list on success, [DatabaseFailure] on error.
   @override
   Future<Either<Failure, List<ColleagueRelation>>> getColleaguesByUser(String userId) async {
     try {
@@ -69,7 +110,15 @@ class CommunityRepositoryImpl implements CommunityRepository {
       return Left(DatabaseFailure(message: e.toString()));
     }
   }
-  // 围观评论功能实现
+
+  // ------------------------------
+  // Comment Implementation
+  // ------------------------------
+
+  /// Posts a new comment to a quest
+  /// 
+  /// Inserts the comment using [CommentDao] and returns the generated ID.
+  /// Returns [Right] with ID on success, [DatabaseFailure] on error.
   @override
   Future<Either<Failure, int>> postComment(Comment comment) async {
     try {
@@ -80,6 +129,10 @@ class CommunityRepositoryImpl implements CommunityRepository {
     }
   }
 
+  /// Retrieves all comments for a specific quest
+  /// 
+  /// Fetches comments using [CommentDao] filtered by quest ID.
+  /// Returns [Right] with list on success, [DatabaseFailure] on error.
   @override
   Future<Either<Failure, List<Comment>>> getCommentsByQuest(String questId) async {
     try {
@@ -90,6 +143,10 @@ class CommunityRepositoryImpl implements CommunityRepository {
     }
   }
 
+  /// Deletes all comments associated with a quest
+  /// 
+  /// Removes comments using [CommentDao] filtered by quest ID.
+  /// Returns [Right] on success, [DatabaseFailure] on error.
   @override
   Future<Either<Failure, void>> deleteCommentsByQuest(String questId) async {
     try {
@@ -100,29 +157,46 @@ class CommunityRepositoryImpl implements CommunityRepository {
     }
   }
 
-  // XP投资功能实现
-  // Update the investXp method in community_repository_impl.dart
-@override
+  // ------------------------------
+  // XP Investment Implementation
+  // ------------------------------
+
+  /// Processes an XP investment in a quest
+  /// 
+  /// 1. Verifies user has sufficient XP
+  /// 2. Deducts XP from user's total
+  /// 3. Records the investment in the database
+  /// 
+  /// Returns [Right] with investment ID on success, appropriate [Failure] on error.
+  @override
   Future<Either<Failure, int>> investXp(XpInvestment investment) async {
     try {
-      // 1. 扣除投资者的XP
-      final userResult = await _userRepository.getUser(investment.investorId, _userProvider.state.user!.password);
+      // Fetch current user to verify XP balance
+      final userResult = await _userRepository.getUser(
+        investment.investorId, 
+        _userProvider.state.user!.password
+      );
+      
       if (userResult.isLeft()) {
         return Left(userResult.fold((l) => l, (r) => throw UnimplementedError()));
       }
 
       final user = userResult.fold((l) => throw UnimplementedError(), (r) => r);
+      
+      // Check for sufficient XP
       if (user.totalXp < investment.xpAmount) {
         return const Left(InsufficientXpFailure());
       }
 
+      // Deduct XP from user
       final updatedUser = user.copyWith(totalXp: user.totalXp - investment.xpAmount);
       final updateResult = await _userRepository.updateUser(updatedUser);
+      
       if (updateResult.isLeft()) {
         return Left(updateResult.fold((l) => l, (r) => throw UnimplementedError()));
       }
 
-      // 2. 记录XP投资
+      // Record the investment
       final id = await _xpInvestmentDao.insertXpInvestment(investment);
 
       return Right(id);
@@ -131,6 +205,10 @@ class CommunityRepositoryImpl implements CommunityRepository {
     }
   }
 
+  /// Retrieves all XP investments for a specific quest
+  /// 
+  /// Fetches investments using [XpInvestmentDao] filtered by quest ID.
+  /// Returns [Right] with list on success, [DatabaseFailure] on error.
   @override
   Future<Either<Failure, List<XpInvestment>>> getInvestmentsByQuest(String questId) async {
     try {
@@ -141,6 +219,10 @@ class CommunityRepositoryImpl implements CommunityRepository {
     }
   }
 
+  /// Calculates total XP invested in a specific quest
+  /// 
+  /// Sums investments using [XpInvestmentDao] filtered by quest ID.
+  /// Returns [Right] with total on success, [DatabaseFailure] on error.
   @override
   Future<Either<Failure, int>> getTotalXpInvestedByQuest(String questId) async {
     try {
@@ -150,5 +232,4 @@ class CommunityRepositoryImpl implements CommunityRepository {
       return Left(DatabaseFailure(message: e.toString()));
     }
   }
-
 }

@@ -71,6 +71,13 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>Fetches colleagues associated with a specific quest</p>
+<p>Updates state to loading, retrieves data via repository,
+and updates state with results or errors. Notifies listeners
+after state changes.</p>
+<p><code>questId</code>: The ID of the quest to fetch colleagues for</p>
+</section>
 
 
     
@@ -83,6 +90,7 @@
   final result = await _repository.getColleaguesByQuest(questId);
   result.fold(
     (failure) {
+      &#47;&#47; Update state on failure
       _state = _state.copyWith(
         status: CommunityStatus.error,
         errorMessage: failure.message,
@@ -90,6 +98,7 @@
       notifyListeners();
     },
     (colleagues) {
+      &#47;&#47; Update state on success
       _state = _state.copyWith(
         status: CommunityStatus.success,
         colleagues: colleagues,

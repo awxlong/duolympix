@@ -61,6 +61,12 @@
 </h1></div>
 
     
+<section class="desc markdown">
+  <p>Use case for processing quest completion</p>
+<p>Annotated with <code>@injectable</code> to enable dependency injection.
+Delegates the actual completion logic to <a href="../features_profile_data_repositories_user_repository/UserRepository-class.html">UserRepository</a>, abstracting
+data source details and ensuring business rules are enforced.</p>
+</section>
 
 
     <section>
@@ -93,7 +99,7 @@
           <span class="name"><a href="../features_profile_domain_usecases_complete_quest_usecase/CompleteQuestUseCase/CompleteQuestUseCase.html">CompleteQuestUseCase</a></span><span class="signature">(<span class="parameter" id="-param-_repository"><span class="type-annotation"><a href="../features_profile_data_repositories_user_repository/UserRepository-class.html">UserRepository</a></span> <span class="parameter-name">_repository</span></span>)</span>
         </dt>
         <dd>
-          
+          Constructor with injected repository
         </dd>
     </dl>
   </section>
@@ -143,7 +149,7 @@
 
 </dt>
 <dd>
-  
+  Executes the use case to mark a quest as completed
   
 
 </dd>

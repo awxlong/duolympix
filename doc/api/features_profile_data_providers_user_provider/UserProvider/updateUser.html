@@ -71,6 +71,12 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>Updates user profile data</p>
+<p>Updates state to loading, attempts to update user via repository,
+and reloads user data on success. Handles errors by updating state.</p>
+<p><code>user</code>: The updated user entity to persist</p>
+</section>
 
 
     
@@ -83,6 +89,7 @@
   final result = await _userRepository.updateUser(user);
   result.fold(
     (failure) {
+      &#47;&#47; Update state on failure
       _state = _state.copyWith(
         status: UserStatus.error,
         errorMessage: failure.message,
@@ -90,6 +97,7 @@
       notifyListeners();
     },
     (_) async {
+      &#47;&#47; Reload user data to confirm update
       await loadUser(user.username, user.password);
       notifyListeners();
     },

@@ -79,6 +79,12 @@
     </section>
 
     
+<section class="desc markdown">
+  <p>Creates a Quest instance with validation</p>
+<p>Ensures either duration parameters (target/min/max) or a target distance
+is provided. Automatically sets <code>targetDuration</code> to the first valid duration
+parameter (target → min → max) for consistent timer display.</p>
+</section>
 
 
     
@@ -96,11 +102,14 @@
   this.targetDistance,
   this.xpReward = 100,
   this.creatorId,
-  this.isPublic = true, &#47;&#47; default to private task
-  this.totalXpInvested = 0, &#47;&#47; default to 0
-}) : assert((minDuration != null || maxDuration != null) || (targetDistance != null),
-         &#39;Must specify either duration or distance&#39;),
-         targetDuration = targetDuration ?? minDuration ?? maxDuration;</code></pre>
+  this.isPublic = true,
+  this.totalXpInvested = 0,
+}) : assert(
+        (minDuration != null || maxDuration != null || targetDuration != null) ||
+        (targetDistance != null),
+        &#39;Must specify either duration parameters (target&#47;min&#47;max) or a target distance&#39;,
+      ),
+      targetDuration = targetDuration ?? minDuration ?? maxDuration;</code></pre>
 </section>
 
 

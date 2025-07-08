@@ -72,32 +72,42 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>Loads user data using credentials</p>
+<p>Updates state to loading, attempts to fetch user via use case,
+and updates state based on success/error. Notifies listeners
+after state changes.</p>
+<p><code>username</code>: User's username for authentication
+<code>password</code>: User's password for authentication</p>
+</section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; loadUser(String username, String password) async {
-_state = _state.copyWith(status: UserStatus.loading);
-notifyListeners();
+  _state = _state.copyWith(status: UserStatus.loading);
+  notifyListeners();
 
-final result = await _getUserUseCase(username, password);
-result.fold(
-  (failure) {
-    _state = _state.copyWith(
-      status: UserStatus.error,
-      errorMessage: failure.message,
-    );
-    notifyListeners();
-  },
-  (user) {
-    _state = _state.copyWith(
-      status: UserStatus.loaded,
-      user: user,
-    );
-    notifyListeners();
-  },
-);
+  final result = await _getUserUseCase(username, password);
+  result.fold(
+    (failure) {
+      &#47;&#47; Update state on failure
+      _state = _state.copyWith(
+        status: UserStatus.error,
+        errorMessage: failure.message,
+      );
+      notifyListeners();
+    },
+    (user) {
+      &#47;&#47; Update state on success
+      _state = _state.copyWith(
+        status: UserStatus.loaded,
+        user: user,
+      );
+      notifyListeners();
+    },
+  );
 }</code></pre>
 </section>
 

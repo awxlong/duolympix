@@ -61,6 +61,12 @@
 </h1></div>
 
     
+<section class="desc markdown">
+  <p>Implementation of <a href="../features_profile_domain_repositories_leaderboard_repository/LeaderboardRepository-class.html">LeaderboardRepository</a> for local database operations</p>
+<p>Annotated with <code>@Injectable</code> to enable dependency injection, registered as the
+concrete type for <a href="../features_profile_domain_repositories_leaderboard_repository/LeaderboardRepository-class.html">LeaderboardRepository</a>. Uses <a href="../global_data_database_app_database/AppDatabase-class.html">AppDatabase</a> to access user and
+quest history data for generating leaderboard rankings.</p>
+</section>
 
 
     <section>
@@ -99,7 +105,7 @@
           <span class="name"><a href="../features_profile_data_repositories_leaderboard_repository_impl/LeaderboardRepositoryImpl/LeaderboardRepositoryImpl.html">LeaderboardRepositoryImpl</a></span><span class="signature">(<span class="parameter" id="-param-_database"><span class="type-annotation"><a href="../global_data_database_app_database/AppDatabase-class.html">AppDatabase</a></span> <span class="parameter-name">_database</span></span>)</span>
         </dt>
         <dd>
-          
+          Constructor: Initializes with a database instance (injected via DI)
         </dd>
     </dl>
   </section>
@@ -149,7 +155,7 @@
 
 </dt>
 <dd>
-  
+  Retrieves top users based on ranking type and limit from local database
   <div class="features"><span class="feature">override</span></div>
 
 </dd>

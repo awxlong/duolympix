@@ -75,6 +75,22 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>Updates the leaderboard based on user XP</p>
+<p>Runs a database transaction to update rankings for all users.
+Orders users by total XP and assigns ranks accordingly.</p>
+<p>Returns:</p>
+<ul>
+<li><a href="https://pub.dev/documentation/dartz/0.10.1/dartz/Right-class.html">Right&lt;void&gt;</a> on successful update</li>
+<li><a href="https://pub.dev/documentation/dartz/0.10.1/dartz/Left-class.html">Left&lt;CacheFailure&gt;</a> on database error</li>
+</ul>
+<p>Future extensions:</p>
+<ul>
+<li>Implement incremental leaderboard updates</li>
+<li>Add support for different ranking categories</li>
+<li>Optimize for large user bases</li>
+</ul>
+</section>
 
 
     
@@ -82,40 +98,40 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
 Future&lt;Either&lt;Failure, void&gt;&gt; updateLeaderboard() async {
-try {
-  &#47;&#47; Get the actual Sqflite Database instance from Floor
-  final db = _database.database.database;
+  try {
+    &#47;&#47; Get the actual Sqflite Database instance from Floor
+    final db = _database.database.database;
 
-  &#47;&#47; Start transaction using the raw Database instance
-  return await db.transaction((txn) async {
-    &#47;&#47; Get all users ordered by XP descending
-    final users = await txn.query(
-      &#39;User&#39;,
-      orderBy: &#39;totalXp DESC&#39;,
-    );
-
-    &#47;&#47; Update leaderboard table with new rankings
-    for (int i = 0; i &lt; users.length; i++) {
-      final user = User.fromJson(users[i]);
-
-      &#47;&#47; Insert or update user&#39;s ranking
-      await txn.insert(
-        &#39;Leaderboard&#39;,
-        {
-          &#39;userId&#39;: user.id,
-          &#39;rank&#39;: i + 1,
-          &#39;score&#39;: user.totalXp,
-          &#39;updatedAt&#39;: DateTime.now().millisecondsSinceEpoch,
-        },
-        conflictAlgorithm: ConflictAlgorithm.replace,
+    &#47;&#47; Start transaction using the raw Database instance
+    return await db.transaction((txn) async {
+      &#47;&#47; Get all users ordered by XP descending
+      final users = await txn.query(
+        &#39;User&#39;,
+        orderBy: &#39;totalXp DESC&#39;,
       );
-    }
 
-    return const Right(null);
-  });
-} catch (e) {
-  return Left(CacheFailure(message: &#39;Failed to update leaderboard: $e&#39;));
-}
+      &#47;&#47; Update leaderboard table with new rankings
+      for (int i = 0; i &lt; users.length; i++) {
+        final user = User.fromJson(users[i]);
+
+        &#47;&#47; Insert or update user&#39;s ranking
+        await txn.insert(
+          &#39;Leaderboard&#39;,
+          {
+            &#39;userId&#39;: user.id,
+            &#39;rank&#39;: i + 1,
+            &#39;score&#39;: user.totalXp,
+            &#39;updatedAt&#39;: DateTime.now().millisecondsSinceEpoch,
+          },
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
+      }
+
+      return const Right(null);
+    });
+  } catch (e) {
+    return Left(CacheFailure(message: &#39;Failed to update leaderboard: $e&#39;));
+  }
 }</code></pre>
 </section>
 

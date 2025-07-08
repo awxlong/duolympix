@@ -70,31 +70,36 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>Attempts to complete the current active quest</p>
+<p>Validates completion criteria, saves to repository if successful,
+and resets quest tracking. Ensures UI updates properly during process.</p>
+</section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; completeQuest() async {
-try {
-  if (_activeQuest == null) return;
+  try {
+    if (_activeQuest == null) return;
 
-  final success = _validateCompletion();
+    final success = _validateCompletion();
 
-  if (success) {
-    await _repository.saveCompletedQuest(_activeQuest!);
-    _completedQuests.add(_activeQuest!);
-    notifyListeners(); &#47;&#47; Force update before reset
-    await Future.delayed(const Duration(milliseconds: 100));
+    if (success) {
+      await _repository.saveCompletedQuest(_activeQuest!);
+      _completedQuests.add(_activeQuest!);
+      notifyListeners(); &#47;&#47; Force update before reset
+      await Future.delayed(const Duration(milliseconds: 100)); &#47;&#47; Prevent UI flicker
+    }
+
+    _resetQuest();
+    notifyListeners();
+  } catch (e) {
+    _errorMessage = e.toString();
+    notifyListeners();
+    rethrow;
   }
-
-  _resetQuest();
-  notifyListeners();
-} catch (e) {
-  _errorMessage = e.toString();
-  notifyListeners();
-  rethrow;
-}
 }</code></pre>
 </section>
 

@@ -72,6 +72,23 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>Executes the use case to retrieve leaderboard entries</p>
+<p><code>type</code>: The ranking type (e.g., all-time, weekly)
+<code>limit</code>: The maximum number of entries to retrieve</p>
+<p>Returns:</p>
+<ul>
+<li><a href="https://pub.dev/documentation/dartz/0.10.1/dartz/Right-class.html">Right&lt;List&lt;LeaderboardEntry&gt;&gt;</a> containing leaderboard entries on success</li>
+<li><a href="https://pub.dev/documentation/dartz/0.10.1/dartz/Left-class.html">Left&lt;Failure&gt;</a> describing the error if retrieval fails (e.g., network issue)</li>
+</ul>
+<p>Future extensions:</p>
+<ul>
+<li>Add pagination support (offset parameter)</li>
+<li>Implement caching strategies for frequent requests</li>
+<li>Add filtering by categories (e.g., running, strength)</li>
+<li>Implement user-specific ranking retrieval</li>
+</ul>
+</section>
 
 
     

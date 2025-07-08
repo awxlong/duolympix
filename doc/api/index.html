@@ -51,7 +51,7 @@
   <div id="dartdoc-main-content" class="main-content">
       
 <section class="desc markdown">
-  <h1 id="project-zenith-olympia-olympai-olympx">Project Zenith (Olympia, OlympAI, OlympX)</h1>
+  <h1 id="duolympix">DuoLympiX</h1>
 <p>App for gamifying life</p>
 <h2 id="features">Features</h2>
 <h3 id="mental-health-chatbot">Mental health chatbot</h3>
@@ -126,42 +126,46 @@ samples, guidance on mobile development, and a full API reference.</p>
   <span class="name"><a href="features_community_data_models_colleague_relation/features_community_data_models_colleague_relation-library.html">features/community/data/models/colleague_relation</a></span> 
 
 </dt>
-<dd>
+<dd>Duolympix has a feature inspired by ‘达目标’ (yoobingo @ <a href="http://www.yoobingo.com/">http://www.yoobingo.com/</a>) where
+users can form colleague relationships to support/supervise each other in completing quests.
 </dd>
 
           <dt id="comment">
   <span class="name"><a href="features_community_data_models_comment/features_community_data_models_comment-library.html">features/community/data/models/comment</a></span> 
 
 </dt>
-<dd>
+<dd>Duolympix has a feature inspired by ‘达目标’ (yoobingo @ <a href="http://www.yoobingo.com/">http://www.yoobingo.com/</a>) where
+there's a public forum for users to discuss quest-related tips. Here, we implement a simple
+comment section.
 </dd>
 
           <dt id="xp_investment">
   <span class="name"><a href="features_community_data_models_xp_investment/features_community_data_models_xp_investment-library.html">features/community/data/models/xp_investment</a></span> 
 
 </dt>
-<dd>
+<dd>Duolympix has a feature inspired by ‘达目标’ (yoobingo @ <a href="http://www.yoobingo.com/">http://www.yoobingo.com/</a>) where
+users can use money (in our case XPs) to support each other in completing quests.
 </dd>
 
           <dt id="community_provider">
   <span class="name"><a href="features_community_data_presentation_providers_community_provider/features_community_data_presentation_providers_community_provider-library.html">features/community/data/presentation/providers/community_provider</a></span> 
 
 </dt>
-<dd>
+<dd>Community State Management
 </dd>
 
           <dt id="community_repository">
   <span class="name"><a href="features_community_data_repositories_community_repository/features_community_data_repositories_community_repository-library.html">features/community/data/repositories/community_repository</a></span> 
 
 </dt>
-<dd>
+<dd>Community Repository Interface
 </dd>
 
           <dt id="community_repository_impl">
   <span class="name"><a href="features_community_data_repositories_community_repository_impl/features_community_data_repositories_community_repository_impl-library.html">features/community/data/repositories/community_repository_impl</a></span> 
 
 </dt>
-<dd>
+<dd>Community Repository Implementation
 </dd>
 
           <dt id="chat_message">
@@ -171,18 +175,17 @@ samples, guidance on mobile development, and a full API reference.</p>
 <dd>
 </dd>
 
-          <dt id="chat_session">
-  <span class="name"><a href="features_mental_health_data_models_chat_session/features_mental_health_data_models_chat_session-library.html">features/mental_health/data/models/chat_session</a></span> 
-
-</dt>
-<dd>
-</dd>
-
           <dt id="chat_repository">
   <span class="name"><a href="features_mental_health_data_repositories_chat_repository/features_mental_health_data_repositories_chat_repository-library.html">features/mental_health/data/repositories/chat_repository</a></span> 
 
 </dt>
-<dd>
+<dd>Chat Repository - Interface to LLM for conversational capabilities. Currently, a quantized deepsee-r1-8b hosted
+with ollama is used:
+<code>ollama serve</code>
+<code>ollama run deepseek-r1:8b</code>
+Manages communication with a local LLM (Large Language Model) server
+for providing mental health support through CBT (Cognitive Behavioral Therapy)
+techniques. Handles message sending, streaming responses, and error handling.
 </dd>
 
           <dt id="chat_bubble">
@@ -203,7 +206,7 @@ samples, guidance on mobile development, and a full API reference.</p>
   <span class="name"><a href="features_mental_health_provider_chat_provider/features_mental_health_provider_chat_provider-library.html">features/mental_health/provider/chat_provider</a></span> 
 
 </dt>
-<dd>
+<dd>Chat Provider - State Management for Chat Sessions
 </dd>
 
           <dt id="leaderboard_mapper_remove">
@@ -217,7 +220,7 @@ samples, guidance on mobile development, and a full API reference.</p>
   <span class="name"><a href="features_profile_data_mappers_user_mapper/features_profile_data_mappers_user_mapper-library.html">features/profile/data/mappers/user_mapper</a></span> 
 
 </dt>
-<dd>
+<dd>Entity which converts between User model and UserEntity.
 </dd>
 
           <dt id="quest_history">
@@ -231,70 +234,70 @@ samples, guidance on mobile development, and a full API reference.</p>
   <span class="name"><a href="features_profile_data_providers_leaderboard_provider/features_profile_data_providers_leaderboard_provider-library.html">features/profile/data/providers/leaderboard_provider</a></span> 
 
 </dt>
-<dd>
+<dd>Leaderboard State Management
 </dd>
 
           <dt id="user_provider">
   <span class="name"><a href="features_profile_data_providers_user_provider/features_profile_data_providers_user_provider-library.html">features/profile/data/providers/user_provider</a></span> 
 
 </dt>
-<dd>
+<dd>User State Management and Provider
 </dd>
 
           <dt id="leaderboard_repository_impl">
   <span class="name"><a href="features_profile_data_repositories_leaderboard_repository_impl/features_profile_data_repositories_leaderboard_repository_impl-library.html">features/profile/data/repositories/leaderboard_repository_impl</a></span> 
 
 </dt>
-<dd>
+<dd>Leaderboard Repository Implementation
 </dd>
 
           <dt id="user_repository">
   <span class="name"><a href="features_profile_data_repositories_user_repository/features_profile_data_repositories_user_repository-library.html">features/profile/data/repositories/user_repository</a></span> 
 
 </dt>
-<dd>
+<dd>User Repository Interface
 </dd>
 
           <dt id="user_repository_impl">
   <span class="name"><a href="features_profile_data_repositories_user_repository_impl/features_profile_data_repositories_user_repository_impl-library.html">features/profile/data/repositories/user_repository_impl</a></span> 
 
 </dt>
-<dd>
+<dd>User Repository Implementation
 </dd>
 
           <dt id="user_entity">
   <span class="name"><a href="features_profile_domain_entities_user_entity/features_profile_domain_entities_user_entity-library.html">features/profile/domain/entities/user_entity</a></span> 
 
 </dt>
-<dd>
+<dd>User Entity - Domain Model for User Data
 </dd>
 
           <dt id="leaderboard_repository">
   <span class="name"><a href="features_profile_domain_repositories_leaderboard_repository/features_profile_domain_repositories_leaderboard_repository-library.html">features/profile/domain/repositories/leaderboard_repository</a></span> 
 
 </dt>
-<dd>
+<dd>Leaderboard Repository Interface
 </dd>
 
           <dt id="complete_quest_usecase">
   <span class="name"><a href="features_profile_domain_usecases_complete_quest_usecase/features_profile_domain_usecases_complete_quest_usecase-library.html">features/profile/domain/usecases/complete_quest_usecase</a></span> 
 
 </dt>
-<dd>
+<dd>Complete Quest Use Case
 </dd>
 
           <dt id="get_leaderboard_usecase">
   <span class="name"><a href="features_profile_domain_usecases_get_leaderboard_usecase/features_profile_domain_usecases_get_leaderboard_usecase-library.html">features/profile/domain/usecases/get_leaderboard_usecase</a></span> 
 
 </dt>
-<dd>
+<dd>Get Leaderboard Use Case
 </dd>
 
           <dt id="get_user_usecase">
   <span class="name"><a href="features_profile_domain_usecases_get_user_usecase/features_profile_domain_usecases_get_user_usecase-library.html">features/profile/domain/usecases/get_user_usecase</a></span> 
 
 </dt>
-<dd>
+<dd>Get User Use Case
 </dd>
 
           <dt id="leaderboard_screen">
@@ -329,35 +332,35 @@ samples, guidance on mobile development, and a full API reference.</p>
   <span class="name"><a href="features_quest_design_screen/features_quest_design_screen-library.html">features/quest_design_screen</a></span> 
 
 </dt>
-<dd>
+<dd>Quest Design Screen
 </dd>
 
           <dt id="quest_detail_screen">
   <span class="name"><a href="features_quest_detail_screen/features_quest_detail_screen-library.html">features/quest_detail_screen</a></span> 
 
 </dt>
-<dd>
+<dd>Quest Detail Screen
 </dd>
 
           <dt id="quest_list_screen">
   <span class="name"><a href="features_quest_list_screen/features_quest_list_screen-library.html">features/quest_list_screen</a></span> 
 
 </dt>
-<dd>
+<dd>Quest List Screen
 </dd>
 
           <dt id="quest_model">
   <span class="name"><a href="features_quests_data_models_quest_model/features_quests_data_models_quest_model-library.html">features/quests/data/models/quest_model</a></span> 
 
 </dt>
-<dd>
+<dd>Quest Model - Core Entity for User Challenges
 </dd>
 
           <dt id="local_quest_repository">
   <span class="name"><a href="features_quests_data_repositories_local_quest_repository/features_quests_data_repositories_local_quest_repository-library.html">features/quests/data/repositories/local_quest_repository</a></span> 
 
 </dt>
-<dd>
+<dd>Local Quest Repository Implementation
 </dd>
 
           <dt id="quest_repository">
@@ -392,7 +395,7 @@ samples, guidance on mobile development, and a full API reference.</p>
   <span class="name"><a href="features_quests_provider_quest_provider/features_quests_provider_quest_provider-library.html">features/quests/provider/quest_provider</a></span> 
 
 </dt>
-<dd>
+<dd>Quest Provider - State Management for Quest Operations
 </dd>
 
           <dt id="product_model">
@@ -406,7 +409,7 @@ samples, guidance on mobile development, and a full API reference.</p>
   <span class="name"><a href="features_shopping_data_repositories_local_product_repository/features_shopping_data_repositories_local_product_repository-library.html">features/shopping/data/repositories/local_product_repository</a></span> 
 
 </dt>
-<dd>
+<dd>Local Product Repository - In-Memory Storage for Shopping Items
 </dd>
 
           <dt id="product_repository">
@@ -420,7 +423,7 @@ samples, guidance on mobile development, and a full API reference.</p>
   <span class="name"><a href="features_shopping_presentation_screens_shopping_screen/features_shopping_presentation_screens_shopping_screen-library.html">features/shopping/presentation/screens/shopping_screen</a></span> 
 
 </dt>
-<dd>
+<dd>Shopping Screen
 </dd>
 
           <dt id="date_time_converter">
@@ -442,14 +445,17 @@ Database configuration using Floor Object Relation Mapping
   <span class="name"><a href="global_data_database_colleague_relation_dao/global_data_database_colleague_relation_dao-library.html">global_data/database/colleague_relation_dao</a></span> 
 
 </dt>
-<dd>
+<dd>Duolympix has a feature inspired by ‘达目标’ (yoobingo @ <a href="http://www.yoobingo.com/">http://www.yoobingo.com/</a>) where
+users can form colleague relationships to support/supervise each other in completing quests.
 </dd>
 
           <dt id="comment_dao">
   <span class="name"><a href="global_data_database_comment_dao/global_data_database_comment_dao-library.html">global_data/database/comment_dao</a></span> 
 
 </dt>
-<dd>
+<dd>Duolympix has a feature inspired by ‘达目标’ (yoobingo @ <a href="http://www.yoobingo.com/">http://www.yoobingo.com/</a>) where
+there's a public forum for users to discuss quest-related tips. Here, we implement a simple
+comment section.
 </dd>
 
           <dt id="leaderboard_dao">
@@ -477,7 +483,7 @@ Database configuration using Floor Object Relation Mapping
   <span class="name"><a href="global_data_database_xp_investment_dao/global_data_database_xp_investment_dao-library.html">global_data/database/xp_investment_dao</a></span> 
 
 </dt>
-<dd>
+<dd>Data Access Object (DAO) for managing XP investments
 </dd>
 
           <dt id="enums">
@@ -505,7 +511,7 @@ Database configuration using Floor Object Relation Mapping
   <span class="name"><a href="global_data_models_user/global_data_models_user-library.html">global_data/models/user</a></span> 
 
 </dt>
-<dd>
+<dd>User Database Entity
 </dd>
 
           <dt id="injection_container">
@@ -580,7 +586,6 @@ or properties rather than creating them internally, improving testability and ma
       <li><a href="features_community_data_repositories_community_repository/features_community_data_repositories_community_repository-library.html">features/community/data/repositories/community_repository</a></li>
       <li><a href="features_community_data_repositories_community_repository_impl/features_community_data_repositories_community_repository_impl-library.html">features/community/data/repositories/community_repository_impl</a></li>
       <li><a href="features_mental_health_data_models_chat_message/features_mental_health_data_models_chat_message-library.html">features/mental_health/data/models/chat_message</a></li>
-      <li><a href="features_mental_health_data_models_chat_session/features_mental_health_data_models_chat_session-library.html">features/mental_health/data/models/chat_session</a></li>
       <li><a href="features_mental_health_data_repositories_chat_repository/features_mental_health_data_repositories_chat_repository-library.html">features/mental_health/data/repositories/chat_repository</a></li>
       <li><a href="features_mental_health_presentation_widgets_chat_bubble/features_mental_health_presentation_widgets_chat_bubble-library.html">features/mental_health/presentation/widgets/chat_bubble</a></li>
       <li><a href="features_mental_health_presentation_widgets_typing_indicator/features_mental_health_presentation_widgets_typing_indicator-library.html">features/mental_health/presentation/widgets/typing_indicator</a></li>

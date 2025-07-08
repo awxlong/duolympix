@@ -71,28 +71,37 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>Marks a quest as completed for the current user</p>
+<p>Uses the complete quest use case, updates state based on results,
+and reloads user data to reflect changes. Notifies listeners
+throughout the process.</p>
+<p><code>quest</code>: The quest to mark as completed</p>
+</section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; completeQuest(Quest quest) async {
-if (_state.user == null) return;
+  if (_state.user == null) return; &#47;&#47; Exit if no user is loaded
 
-final result = await _completeQuestUseCase(quest, _state.user!.username);
-result.fold(
-  (failure) {
-    _state = _state.copyWith(
-      status: UserStatus.error,
-      errorMessage: failure.message,
-    );
-    notifyListeners();
-  },
-  (_) async {
-    await loadUser(_state.user!.username, _state.user!.password);
-    notifyListeners(); &#47;&#47; Notify listeners to update the UI
-  },
-);
+  final result = await _completeQuestUseCase(quest, _state.user!.username);
+  result.fold(
+    (failure) {
+      &#47;&#47; Update state on failure
+      _state = _state.copyWith(
+        status: UserStatus.error,
+        errorMessage: failure.message,
+      );
+      notifyListeners();
+    },
+    (_) async {
+      &#47;&#47; Reload user data to reflect updated stats
+      await loadUser(_state.user!.username, _state.user!.password);
+      notifyListeners();
+    },
+  );
 }</code></pre>
 </section>
 

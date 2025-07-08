@@ -71,15 +71,18 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>Retrieves completed quests for a specific user</p>
+<p><code>userId</code>: ID of the user to fetch completed quests for</p>
+<p>Note: Current implementation reuses existing method - future versions
+should add repository-level filtering by userId</p>
+</section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;List&lt;Quest&gt;&gt; getCompletedQuestsByUser(String userId) async {
-  &#47;&#47; Assuming the userId is used to filter completed quests in the repository
-  &#47;&#47; For simplicity, we reuse the existing getCompletedQuests method here
-  &#47;&#47; In a real - world scenario, you may need to implement filtering by userId in the repository
   return await _repository.getCompletedQuests();
 }</code></pre>
 </section>

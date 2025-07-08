@@ -76,13 +76,8 @@
     </section>
     
 <section class="desc markdown">
-  <p>Discards any resources used by the object. After this is called, the
-object is not in a usable state and should be discarded (calls to
-<a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/addListener.html">addListener</a> will throw after the object is disposed).</p>
-<p>This method should only be called by the object's owner.</p>
-<p>This method does not notify listeners, and clears the listener list once
-it is called. Consumers of this class must decide on whether to notify
-listeners or not immediately before disposal.</p>
+  <p>Cleans up resources when provider is disposed</p>
+<p>Override to add any necessary cleanup (e.g., canceling subscriptions)</p>
 </section>
 
 
@@ -91,7 +86,7 @@ listeners or not immediately before disposal.</p>
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
 void dispose() {
-  &#47;&#47; Clean up any resources if needed
+  &#47;&#47; Add cleanup logic here if needed (e.g., cancel pending requests)
   super.dispose();
 }</code></pre>
 </section>

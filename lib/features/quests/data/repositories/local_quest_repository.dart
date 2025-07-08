@@ -70,7 +70,7 @@ class LocalQuestRepository implements QuestRepository {
     ),
     const Quest(
       id: 'mental-health-5',
-      title: 'Mental Health Check-in',
+      title: 'Mental Health',
       type: QuestType.mentalHealth,
       icon: Icons.psychology,
       description: 'Chat about mental health for at least 5 minutes',

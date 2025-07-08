@@ -114,7 +114,8 @@ the dependency inversion principle to ensure loose coupling and testability amon
           create: (context) =&gt; LeaderboardRepositoryImpl(context.read&lt;AppDatabase&gt;()),
         ),
 
-        &#47;&#47; Register colleague relationship data access object
+        &#47;&#47; TODO: Implement a ColleagueRelations widget to manage colleague relationships
+        &#47;&#47; Register colleague relationship data access object inspired by ‘达目标’ (yoobingo @ http:&#47;&#47;www.yoobingo.com&#47;)
         Provider&lt;ColleagueRelationDao&gt;(
           create: (context) =&gt; context.read&lt;AppDatabase&gt;().colleagueRelationDao,
         ),

@@ -61,6 +61,13 @@
 </h1></div>
 
     
+<section class="desc markdown">
+  <p>Provider for managing community feature state and operations</p>
+<p>Extends ChangeNotifier to broadcast state changes to UI components.
+Uses <a href="../features_community_data_repositories_community_repository/CommunityRepository-class.html">CommunityRepository</a> to handle data operations and updates
+state accordingly. Supports colleague management, XP investments,
+and quest comments.</p>
+</section>
 
 
     <section>
@@ -95,7 +102,7 @@
           <span class="name"><a href="../features_community_data_presentation_providers_community_provider/CommunityProvider/CommunityProvider.html">CommunityProvider</a></span><span class="signature">(<span class="parameter" id="-param-_repository"><span class="type-annotation"><a href="../features_community_data_repositories_community_repository/CommunityRepository-class.html">CommunityRepository</a></span> <span class="parameter-name">_repository</span></span>)</span>
         </dt>
         <dd>
-          
+          Constructor with required repository dependency
         </dd>
     </dl>
   </section>
@@ -148,7 +155,7 @@
 
 </dt>
 <dd>
-  
+  Getter for the current state
   <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
@@ -169,7 +176,7 @@
 
 </dt>
 <dd>
-  
+  Adds a new colleague relationship to a quest
   
 
 </dd>
@@ -210,7 +217,7 @@ object is not in a usable state and should be discarded (calls to
 
 </dt>
 <dd>
-  
+  Fetches colleagues associated with a specific quest
   
 
 </dd>
@@ -223,7 +230,7 @@ object is not in a usable state and should be discarded (calls to
 
 </dt>
 <dd>
-  
+  Fetches comments for a specific quest
   
 
 </dd>
@@ -236,7 +243,7 @@ object is not in a usable state and should be discarded (calls to
 
 </dt>
 <dd>
-  
+  Fetches investments and total XP for a specific quest
   
 
 </dd>
@@ -249,7 +256,7 @@ object is not in a usable state and should be discarded (calls to
 
 </dt>
 <dd>
-  
+  Processes an XP investment in a quest
   
 
 </dd>
@@ -288,7 +295,7 @@ object is not in a usable state and should be discarded (calls to
 
 </dt>
 <dd>
-  
+  Posts a new comment to a quest
   
 
 </dd>

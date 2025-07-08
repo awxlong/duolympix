@@ -71,6 +71,13 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>Posts a new comment to a quest</p>
+<p>Updates state to loading, posts comment via repository,
+and updates state with results or errors. Optimistically updates
+the local list of comments on success.</p>
+<p><code>comment</code>: The comment to post</p>
+</section>
 
 
     
@@ -83,6 +90,7 @@
   final result = await _repository.postComment(comment);
   result.fold(
     (failure) {
+      &#47;&#47; Update state on failure
       _state = _state.copyWith(
         status: CommunityStatus.error,
         errorMessage: failure.message,
@@ -90,8 +98,9 @@
       notifyListeners();
     },
     (id) async {
+      &#47;&#47; Optimistically update local state
       if (_state.comments != null) {
-        _state.comments!.insert(0, comment);
+        _state.comments!.insert(0, comment); &#47;&#47; Add to top of list
       }
       _state = _state.copyWith(status: CommunityStatus.success);
       notifyListeners();

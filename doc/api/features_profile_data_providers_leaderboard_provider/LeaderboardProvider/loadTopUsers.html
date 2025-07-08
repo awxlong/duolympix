@@ -72,6 +72,14 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>Loads top users for the specified ranking type and limit</p>
+<p>Updates state to loading, fetches data using the use case,
+and updates state with results or errors. Uses addPostFrameCallback
+to ensure UI updates are processed after the build phase.</p>
+<p><code>type</code>: The ranking type (e.g., all-time, weekly)
+<code>limit</code>: Number of top users to fetch</p>
+</section>
 
 
     
@@ -84,7 +92,7 @@
     error: null,
   );
 
-  &#47;&#47; Use addPostFrameCallback to ensure notifyListeners is called after the build phase
+  &#47;&#47; Ensure UI updates are processed after the build phase
   WidgetsBinding.instance.addPostFrameCallback((_) {
     notifyListeners();
   });
@@ -92,6 +100,7 @@
   final result = await _getLeaderboardUseCase(type, limit);
   result.fold(
     (failure) {
+      &#47;&#47; Handle failure by updating state with error
       _state = _state.copyWith(
         isLoading: false,
         error: failure.message,
@@ -99,6 +108,7 @@
       notifyListeners();
     },
     (entries) {
+      &#47;&#47; Handle success by updating state with fetched data
       _state = _state.copyWith(
         isLoading: false,
         topUsers: entries,

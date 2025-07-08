@@ -1,4 +1,5 @@
 // lib/features/shopping/data/models/product_model.dart
+/// Entity representing a product in the shopping feature
 class Product {
   final String id;
   final String name;

@@ -62,6 +62,11 @@
 </h1></div>
 
     
+<section class="desc markdown">
+  <p>Abstract base class for user data operations</p>
+<p>Declares methods for retrieving, updating users, and managing quest completions.
+Uses the Either type from dartz to handle success/failure scenarios explicitly.</p>
+</section>
 
 
     <section>
@@ -92,7 +97,7 @@
           <span class="name"><a href="../features_profile_data_repositories_user_repository/UserRepository/UserRepository.html">UserRepository</a></span><span class="signature">(<span class="parameter" id="-param-database"><span class="type-annotation">dynamic</span> <span class="parameter-name">database</span></span>)</span>
         </dt>
         <dd>
-          
+          Constructor with database dependency
         </dd>
     </dl>
   </section>
@@ -142,7 +147,7 @@
 
 </dt>
 <dd>
-  
+  Marks a quest as completed for a user
   
 
 </dd>
@@ -155,7 +160,7 @@
 
 </dt>
 <dd>
-  
+  Retrieves a user by credentials
   
 
 </dd>
@@ -194,7 +199,7 @@
 
 </dt>
 <dd>
-  
+  Updates the user's position in the leaderboard
   
 
 </dd>
@@ -207,7 +212,7 @@
 
 </dt>
 <dd>
-  
+  Updates user data in the repository
   
 
 </dd>

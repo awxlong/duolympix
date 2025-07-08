@@ -67,28 +67,32 @@
     </section>
 
     
+<section class="desc markdown">
+  <p>Creates a User instance from JSON data</p>
+<p>Used for deserializing user data from database queries.</p>
+</section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">factory User.fromJson(Map&lt;String, dynamic&gt; json) {
-return User(
-  id: json[&#39;id&#39;],
-  username: json[&#39;username&#39;] as String, &#47;&#47; Ensure username is a String
-  email: json[&#39;email&#39;] as String? ?? &#39;&#39;,
-  age: json[&#39;age&#39;] as int? ?? 0,
-  gender: json[&#39;gender&#39;] as String? ?? &#39;&#39;,
-  weight: json[&#39;weight&#39;]?.toDouble(),
-  height: json[&#39;height&#39;]?.toDouble(),
-  profilePicture: json[&#39;profilePicture&#39;] as String? ?? &#39;&#39;,
-  totalXp: json[&#39;totalXp&#39;] as int? ?? 0,
-  level: json[&#39;level&#39;] as int? ?? 1,
-  streak: json[&#39;streak&#39;] as int? ?? 0,
-  totalQuestsCompleted: json[&#39;totalQuestsCompleted&#39;] as int? ?? 0,
-  lastActive: DateTime.fromMillisecondsSinceEpoch(json[&#39;INTEGER&#39;] as int),
-  password: json[&#39;password&#39;] as String? ?? &#39;&#39;,
-);
+  return User(
+    id: json[&#39;id&#39;],
+    username: json[&#39;username&#39;] as String,
+    email: json[&#39;email&#39;] as String? ?? &#39;&#39;,
+    age: json[&#39;age&#39;] as int? ?? 0,
+    gender: json[&#39;gender&#39;] as String? ?? &#39;&#39;,
+    weight: json[&#39;weight&#39;]?.toDouble(),
+    height: json[&#39;height&#39;]?.toDouble(),
+    profilePicture: json[&#39;profilePicture&#39;] as String? ?? &#39;&#39;,
+    totalXp: json[&#39;totalXp&#39;] as int? ?? 0,
+    level: json[&#39;level&#39;] as int? ?? 1,
+    streak: json[&#39;streak&#39;] as int? ?? 0,
+    totalQuestsCompleted: json[&#39;totalQuestsCompleted&#39;] as int? ?? 0,
+    lastActive: DateTime.fromMillisecondsSinceEpoch(json[&#39;INTEGER&#39;] as int),
+    password: json[&#39;password&#39;] as String? ?? &#39;&#39;,
+  );
 }</code></pre>
 </section>
 

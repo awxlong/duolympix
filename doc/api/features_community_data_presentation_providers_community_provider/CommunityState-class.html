@@ -61,6 +61,11 @@
 </h1></div>
 
     
+<section class="desc markdown">
+  <p>Model class representing the community feature state</p>
+<p>Holds data for colleagues, investments, comments, and operation status.
+Immutable to ensure predictable state changes.</p>
+</section>
 
 
 
@@ -73,14 +78,14 @@
           <span class="name"><a href="../features_community_data_presentation_providers_community_provider/CommunityState/CommunityState.html">CommunityState</a></span><span class="signature">({<span class="parameter" id="-param-status"><span>required</span> <span class="type-annotation"><a href="../features_community_data_presentation_providers_community_provider/CommunityStatus.html">CommunityStatus</a></span> <span class="parameter-name">status</span>, </span><span class="parameter" id="-param-colleagues"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../features_community_data_models_colleague_relation/ColleagueRelation-class.html">ColleagueRelation</a></span>&gt;</span>?</span> <span class="parameter-name">colleagues</span>, </span><span class="parameter" id="-param-comments"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../features_community_data_models_comment/Comment-class.html">Comment</a></span>&gt;</span>?</span> <span class="parameter-name">comments</span>, </span><span class="parameter" id="-param-investments"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../features_community_data_models_xp_investment/XpInvestment-class.html">XpInvestment</a></span>&gt;</span>?</span> <span class="parameter-name">investments</span>, </span><span class="parameter" id="-param-totalXpInvested"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">totalXpInvested</span> = <span class="default-value">0</span>, </span><span class="parameter" id="-param-errorMessage"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">errorMessage</span></span>})</span>
         </dt>
         <dd>
-          
+          Creates a CommunityState instance
             <div class="constructor-modifier features">const</div>
         </dd>
         <dt id="CommunityState.initial" class="callable">
           <span class="name"><a href="../features_community_data_presentation_providers_community_provider/CommunityState/CommunityState.initial.html">CommunityState.initial</a></span><span class="signature">()</span>
         </dt>
         <dd>
-          
+          Creates an initial CommunityState with default values
             <div class="constructor-modifier features">factory</div>
         </dd>
     </dl>
@@ -98,7 +103,7 @@
 
 </dt>
 <dd>
-  
+  List of colleagues associated with a quest
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -110,7 +115,7 @@
 
 </dt>
 <dd>
-  
+  List of comments on a quest
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -122,7 +127,7 @@
 
 </dt>
 <dd>
-  
+  Error message if an operation failed
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -146,7 +151,7 @@
 
 </dt>
 <dd>
-  
+  List of XP investments in a quest
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -170,7 +175,7 @@
 
 </dt>
 <dd>
-  
+  Current status of community operations
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -182,7 +187,7 @@
 
 </dt>
 <dd>
-  
+  Total XP invested in a quest
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -203,7 +208,7 @@
 
 </dt>
 <dd>
-  
+  Creates a copy of CommunityState with optional field updates
   
 
 </dd>

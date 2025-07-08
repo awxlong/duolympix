@@ -71,6 +71,12 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>Fetches comments for a specific quest</p>
+<p>Updates state to loading, retrieves comments via repository,
+and updates state with results or errors.</p>
+<p><code>questId</code>: The ID of the quest to fetch comments for</p>
+</section>
 
 
     
@@ -83,6 +89,7 @@
   final result = await _repository.getCommentsByQuest(questId);
   result.fold(
     (failure) {
+      &#47;&#47; Update state on failure
       _state = _state.copyWith(
         status: CommunityStatus.error,
         errorMessage: failure.message,
@@ -90,6 +97,7 @@
       notifyListeners();
     },
     (comments) {
+      &#47;&#47; Update state on success
       _state = _state.copyWith(
         status: CommunityStatus.success,
         comments: comments,

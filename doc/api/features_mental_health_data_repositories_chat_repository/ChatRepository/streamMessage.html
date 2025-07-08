@@ -71,6 +71,12 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>Sends a message to the LLM and streams responses in real-time</p>
+<p><code>message</code>: User's message to the therapist AI
+Returns: A stream of response chunks as they are generated
+Handles: Stream parsing, error handling, and line splitting</p>
+</section>
 
 
     
@@ -82,7 +88,8 @@
     ..body = jsonEncode({
       &#39;model&#39;: _model,
       &#39;messages&#39;: [
-        {&#39;role&#39;: &#39;user&#39;, &#39;content&#39;: message}],
+        {&#39;role&#39;: &#39;user&#39;, &#39;content&#39;: message}
+      ],
       &#39;stream&#39;: true,
     });
 

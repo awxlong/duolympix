@@ -61,6 +61,11 @@
 </h1></div>
 
     
+<section class="desc markdown">
+  <p>Database entity for user data</p>
+<p>Maps directly to the 'User' table in the SQLite database.
+Contains fields for user profile, progress tracking, and authentication.</p>
+</section>
 
 
     <section>
@@ -93,13 +98,13 @@
           <span class="name"><a href="../global_data_models_user/User/User.html">User</a></span><span class="signature">({<span class="parameter" id="-param-id"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">id</span>, </span><span class="parameter" id="-param-username"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">username</span>, </span><span class="parameter" id="-param-email"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">email</span>, </span><span class="parameter" id="-param-age"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">age</span>, </span><span class="parameter" id="-param-gender"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">gender</span>, </span><span class="parameter" id="-param-weight"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">weight</span>, </span><span class="parameter" id="-param-height"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">height</span>, </span><span class="parameter" id="-param-profilePicture"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">profilePicture</span>, </span><span class="parameter" id="-param-totalXp"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">totalXp</span> = <span class="default-value">0</span>, </span><span class="parameter" id="-param-level"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">level</span> = <span class="default-value">1</span>, </span><span class="parameter" id="-param-streak"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">streak</span> = <span class="default-value">0</span>, </span><span class="parameter" id="-param-totalQuestsCompleted"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">totalQuestsCompleted</span> = <span class="default-value">0</span>, </span><span class="parameter" id="-param-lastActive"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/DateTime-class.html">DateTime</a></span> <span class="parameter-name">lastActive</span>, </span><span class="parameter" id="-param-password"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">password</span></span>})</span>
         </dt>
         <dd>
-          
+          Creates a new User instance
         </dd>
         <dt id="User.fromJson" class="callable">
           <span class="name"><a href="../global_data_models_user/User/User.fromJson.html">User.fromJson</a></span><span class="signature">(<span class="parameter" id="fromJson-param-json"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span></span> <span class="parameter-name">json</span></span>)</span>
         </dt>
         <dd>
-          
+          Creates a User instance from JSON data
             <div class="constructor-modifier features">factory</div>
         </dd>
     </dl>
@@ -117,7 +122,7 @@
 
 </dt>
 <dd>
-  
+  User's age (optional)
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -129,7 +134,7 @@
 
 </dt>
 <dd>
-  
+  User's email address (optional)
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -141,7 +146,7 @@
 
 </dt>
 <dd>
-  
+  User's gender (optional)
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -165,7 +170,7 @@
 
 </dt>
 <dd>
-  
+  User's height in centimeters (optional)
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -177,7 +182,7 @@
 
 </dt>
 <dd>
-  
+  Auto-generated primary key for the user record
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -189,7 +194,8 @@
 
 </dt>
 <dd>
-  
+  Timestamp of the user's last activity
+Stored as milliseconds since epoch using <a href="../global_data_converters_date_time_converter/DateTimeConverter-class.html">DateTimeConverter</a>
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -201,7 +207,7 @@
 
 </dt>
 <dd>
-  
+  User's current level based on XP
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -213,7 +219,7 @@
 
 </dt>
 <dd>
-  
+  User's password (should be hashed in production)
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -225,7 +231,7 @@
 
 </dt>
 <dd>
-  
+  Path or URL to user's profile picture (optional)
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -249,7 +255,7 @@
 
 </dt>
 <dd>
-  
+  Current daily streak of completed quests
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -261,7 +267,7 @@
 
 </dt>
 <dd>
-  
+  Total number of quests completed
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -273,7 +279,7 @@
 
 </dt>
 <dd>
-  
+  Total accumulated XP points
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -285,7 +291,7 @@
 
 </dt>
 <dd>
-  
+  User's unique username (required)
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -297,7 +303,7 @@
 
 </dt>
 <dd>
-  
+  User's weight in kilograms (optional)
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -318,7 +324,7 @@
 
 </dt>
 <dd>
-  
+  Creates a copy of this User with optional field updates
   
 
 </dd>
@@ -344,7 +350,7 @@
 
 </dt>
 <dd>
-  
+  Handles product purchase business logic
   
 
 </dd>
@@ -357,7 +363,7 @@
 
 </dt>
 <dd>
-  
+  Converts the User instance to JSON data
   
 
 </dd>
