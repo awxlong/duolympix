@@ -13,7 +13,7 @@ class QuestDesignScreen extends StatefulWidget {
 class _QuestDesignScreenState extends State<QuestDesignScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  QuestType _selectedType = QuestType.running;
+  QuestType _selectedType = QuestType.distance;
   final TextEditingController _timeValueController = TextEditingController(text: '5');
   bool _isUpperBound = true;
   final TextEditingController _distanceController = TextEditingController();
@@ -49,7 +49,7 @@ class _QuestDesignScreenState extends State<QuestDesignScreen> {
                 );
               }).toList(),
             ),
-            if (_selectedType == QuestType.running)
+            if (_selectedType == QuestType.distance)
               TextField(
                 controller: _distanceController,
                 keyboardType: TextInputType.number,
@@ -108,7 +108,7 @@ class _QuestDesignScreenState extends State<QuestDesignScreen> {
     final minDuration = _isUpperBound ? null : duration;
     final maxDuration = _isUpperBound ? duration : null;
     final xpReward = _calculateXpReward(type, duration);
-    final distance = _selectedType == QuestType.running
+    final distance = _selectedType == QuestType.distance
        ? double.tryParse(_distanceController.text)
         : null;
 
@@ -131,7 +131,7 @@ class _QuestDesignScreenState extends State<QuestDesignScreen> {
   int _calculateXpReward(QuestType type, Duration duration) {
     int baseXp = 50;
     switch (type) {
-      case QuestType.running:
+      case QuestType.distance:
         baseXp += duration.inMinutes * 5;
         break;
       case QuestType.strength:
@@ -149,7 +149,7 @@ class _QuestDesignScreenState extends State<QuestDesignScreen> {
 
   IconData _getIconForType(QuestType type) {
     switch (type) {
-      case QuestType.running:
+      case QuestType.distance:
         return Icons.directions_run;
       case QuestType.strength:
         return Icons.fitness_center;

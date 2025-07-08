@@ -1,6 +1,7 @@
 import 'package:geolocator/geolocator.dart';
-import '../core/constants.dart';
+import 'package:solo_leveling/core/constants.dart';
 
+/// Service for handling location-related functionality
 class LocationService {
   Future<Position> getCurrentPosition() async {
     return await Geolocator.getCurrentPosition();

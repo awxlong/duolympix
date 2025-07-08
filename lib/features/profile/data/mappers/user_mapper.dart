@@ -1,7 +1,10 @@
+// lib/features/profile/data/mappers/user_mapper.dart
+/// Entity which converts between User model and UserEntity.
+library;
 import 'package:solo_leveling/features/profile/domain/entities/user_entity.dart';
 import 'package:solo_leveling/global_data/models/user.dart';
 
-
+/// Mapper class to convert between User and UserEntity
 class UserMapper {
   static UserEntity mapUserToEntity(User user) {
     return UserEntity(
@@ -21,7 +24,8 @@ class UserMapper {
       password: user.password,
     );
   }
-
+  
+  /// Converts a UserEntity to a User model
   static User mapEntityToUser(UserEntity entity) {
     return User(
       id: entity.id,

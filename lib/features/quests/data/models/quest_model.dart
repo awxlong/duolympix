@@ -3,7 +3,7 @@
 
 import 'package:flutter/material.dart';
 
-enum QuestType { running, strength, mentalHealth, custom }
+enum QuestType { distance, strength, mentalHealth, custom }
 
 class Quest {
   final String id;

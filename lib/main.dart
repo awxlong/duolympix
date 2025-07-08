@@ -69,7 +69,8 @@ void main() async {
           create: (context) => LeaderboardRepositoryImpl(context.read<AppDatabase>()),
         ),
 
-        // Register colleague relationship data access object
+        // TODO: Implement a ColleagueRelations widget to manage colleague relationships
+        // Register colleague relationship data access object inspired by ‘达目标’ (yoobingo @ http://www.yoobingo.com/)
         Provider<ColleagueRelationDao>(
           create: (context) => context.read<AppDatabase>().colleagueRelationDao,
         ),

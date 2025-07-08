@@ -444,7 +444,7 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
   }
 
   double _calculateProgress(Quest quest, QuestProvider provider, ChatProvider? chatProvider) {
-    if (quest.type == QuestType.running) {
+    if (quest.type == QuestType.distance) {
       final distanceProgress = provider.currentDistance / (quest.targetDistance?? 1);
       double timeProgress = 0;
 

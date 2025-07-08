@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../data/models/quest_model.dart';
+import 'package:solo_leveling/features/quests/data/models/quest_model.dart';
 
 class QuestProgress extends StatelessWidget {
   final Quest quest;
@@ -22,7 +22,7 @@ class QuestProgress extends StatelessWidget {
         const SizedBox(height: 8),
         // Update the Text widget:
         Text(
-          quest.type == QuestType.running
+          quest.type == QuestType.distance
               ? 'Distance: ${progress.toStringAsFixed(2)}/${quest.targetDistance} mi\n'
               : '',
         ),
