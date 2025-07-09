@@ -6,10 +6,10 @@
 /// and data layer, isolating business logic from data source implementation details (e.g., API, database).
 library;
 import 'package:dartz/dartz.dart';
-import 'package:solo_leveling/core/error/failure.dart';
-import 'package:solo_leveling/features/community/data/models/colleague_relation.dart';
-import 'package:solo_leveling/features/community/data/models/comment.dart';
-import 'package:solo_leveling/features/community/data/models/xp_investment.dart';
+import 'package:duolympix/core/error/failure.dart';
+import 'package:duolympix/features/community/data/models/colleague_relation.dart';
+import 'package:duolympix/features/community/data/models/comment.dart';
+import 'package:duolympix/features/community/data/models/xp_investment.dart';
 
 /// Abstract base class for community data operations
 /// 

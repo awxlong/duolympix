@@ -1,7 +1,7 @@
 
 
 // import 'package:injectable/injectable.dart';
-// import 'package:solo_leveling/global_data/models/leaderboard_entry.dart';
+// import 'package:duolympix/global_data/models/leaderboard_entry.dart';
 
 // @Injectable()
 // class LeaderboardMapper {

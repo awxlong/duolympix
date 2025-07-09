@@ -6,9 +6,9 @@
 /// a clean API for domain layer use cases to interact with user data.
 library;
 import 'package:dartz/dartz.dart';
-import 'package:solo_leveling/core/error/failure.dart';
-import 'package:solo_leveling/features/profile/domain/entities/user_entity.dart';
-import 'package:solo_leveling/features/quests/data/models/quest_model.dart';
+import 'package:duolympix/core/error/failure.dart';
+import 'package:duolympix/features/profile/domain/entities/user_entity.dart';
+import 'package:duolympix/features/quests/data/models/quest_model.dart';
 
 /// Abstract base class for user data operations
 /// 

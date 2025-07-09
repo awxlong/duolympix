@@ -7,9 +7,9 @@
 library;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:solo_leveling/features/profile/data/providers/user_provider.dart';
-import 'package:solo_leveling/features/shopping/data/models/product_model.dart';
-import 'package:solo_leveling/features/shopping/data/repositories/local_product_repository.dart';
+import 'package:duolympix/features/profile/data/providers/user_provider.dart';
+import 'package:duolympix/features/shopping/data/models/product_model.dart';
+import 'package:duolympix/features/shopping/data/repositories/local_product_repository.dart';
 
 /// Screen for browsing and purchasing products with XP
 /// 

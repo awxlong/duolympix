@@ -8,7 +8,7 @@
 /// generate SQL queries automatically.
 library;
 import 'package:floor/floor.dart';
-import 'package:solo_leveling/features/community/data/models/xp_investment.dart';
+import 'package:duolympix/features/community/data/models/xp_investment.dart';
 
 /// DAO for [XpInvestment] database operations
 /// 

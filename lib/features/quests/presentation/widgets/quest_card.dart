@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:solo_leveling/features/quests/data/models/quest_model.dart';
+import 'package:duolympix/features/quests/data/models/quest_model.dart';
 
 class QuestCard extends StatelessWidget {
   final Quest quest;

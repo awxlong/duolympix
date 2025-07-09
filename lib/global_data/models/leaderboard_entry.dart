@@ -1,6 +1,6 @@
 
 import 'package:floor/floor.dart';
-import 'package:solo_leveling/global_data/converters/date_time_converter.dart';
+import 'package:duolympix/global_data/converters/date_time_converter.dart';
 import 'enums.dart';
 
 @entity

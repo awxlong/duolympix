@@ -6,8 +6,8 @@
 /// earned from completing quests. Serves as a simple, local data source for 
 /// the shopping feature, with no persistent storage.
 library;
-import 'package:solo_leveling/features/shopping/data/models/product_model.dart';
-import 'package:solo_leveling/features/shopping/data/repositories/product_repository.dart';
+import 'package:duolympix/features/shopping/data/models/product_model.dart';
+import 'package:duolympix/features/shopping/data/repositories/product_repository.dart';
 
 /// Local in-memory implementation of [ProductRepository]
 /// 

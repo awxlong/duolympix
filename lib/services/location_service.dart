@@ -1,5 +1,5 @@
 import 'package:geolocator/geolocator.dart';
-import 'package:solo_leveling/core/constants.dart';
+import 'package:duolympix/core/constants.dart';
 
 /// Service for handling location-related functionality
 class LocationService {

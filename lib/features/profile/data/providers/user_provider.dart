@@ -7,11 +7,11 @@
 /// to manage state and notify UI components of changes.
 library;
 import 'package:flutter/material.dart';
-import 'package:solo_leveling/features/profile/data/repositories/user_repository.dart';
-import 'package:solo_leveling/features/profile/domain/entities/user_entity.dart';
-import 'package:solo_leveling/features/profile/domain/usecases/complete_quest_usecase.dart';
-import 'package:solo_leveling/features/profile/domain/usecases/get_user_usecase.dart';
-import 'package:solo_leveling/features/quests/data/models/quest_model.dart';
+import 'package:duolympix/features/profile/data/repositories/user_repository.dart';
+import 'package:duolympix/features/profile/domain/entities/user_entity.dart';
+import 'package:duolympix/features/profile/domain/usecases/complete_quest_usecase.dart';
+import 'package:duolympix/features/profile/domain/usecases/get_user_usecase.dart';
+import 'package:duolympix/features/quests/data/models/quest_model.dart';
 
 /// Enumerates possible states for user data loading/processing
 /// 

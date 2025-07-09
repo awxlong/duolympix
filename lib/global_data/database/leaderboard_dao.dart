@@ -1,6 +1,6 @@
 // lib/global_data/database/leaderboard_dao.dart
 import 'package:floor/floor.dart';
-import 'package:solo_leveling/global_data/models/enums.dart';
+import 'package:duolympix/global_data/models/enums.dart';
 
 import '../models/leaderboard_entry.dart';
 

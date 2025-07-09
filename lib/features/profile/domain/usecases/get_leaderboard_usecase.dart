@@ -7,10 +7,10 @@
 library;
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:solo_leveling/core/error/failure.dart';
-import 'package:solo_leveling/features/profile/domain/repositories/leaderboard_repository.dart';
-import 'package:solo_leveling/global_data/models/enums.dart';
-import 'package:solo_leveling/global_data/models/leaderboard_entry.dart';
+import 'package:duolympix/core/error/failure.dart';
+import 'package:duolympix/features/profile/domain/repositories/leaderboard_repository.dart';
+import 'package:duolympix/global_data/models/enums.dart';
+import 'package:duolympix/global_data/models/leaderboard_entry.dart';
 
 /// Use case for fetching leaderboard entries
 /// 

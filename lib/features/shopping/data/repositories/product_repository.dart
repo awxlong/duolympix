@@ -1,4 +1,4 @@
-import 'package:solo_leveling/features/shopping/data/models/product_model.dart';
+import 'package:duolympix/features/shopping/data/models/product_model.dart';
 
 abstract class ProductRepository {
   Future<List<Product>> getAvailableProducts();

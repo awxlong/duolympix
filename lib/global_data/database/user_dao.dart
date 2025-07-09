@@ -1,6 +1,6 @@
 // user_dao.dart
 import 'package:floor/floor.dart';
-import 'package:solo_leveling/global_data/models/user.dart';
+import 'package:duolympix/global_data/models/user.dart';
 // import '/features/profile/data/models/user.dart'; // lib/features/profile/data/models/user.dart
 
 @dao

@@ -49,8 +49,8 @@
 /// converts User to UserEntity and vice versa.
 library;
 import 'package:floor/floor.dart';
-import 'package:solo_leveling/features/shopping/data/models/product_model.dart';
-import 'package:solo_leveling/global_data/converters/date_time_converter.dart';
+import 'package:duolympix/features/shopping/data/models/product_model.dart';
+import 'package:duolympix/global_data/converters/date_time_converter.dart';
 
 /// Database entity for user data
 /// 

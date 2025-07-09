@@ -7,10 +7,10 @@
 library;
 import 'dart:async';
 import 'package:flutter/foundation.dart';
-import 'package:solo_leveling/features/mental_health/data/models/chat_message.dart';
-import 'package:solo_leveling/features/mental_health/data/repositories/chat_repository.dart';
-import 'package:solo_leveling/features/quests/data/models/quest_model.dart';
-import 'package:solo_leveling/features/quests/provider/quest_provider.dart';
+import 'package:duolympix/features/mental_health/data/models/chat_message.dart';
+import 'package:duolympix/features/mental_health/data/repositories/chat_repository.dart';
+import 'package:duolympix/features/quests/data/models/quest_model.dart';
+import 'package:duolympix/features/quests/provider/quest_provider.dart';
 
 /// State provider for mental health chat functionality
 /// 

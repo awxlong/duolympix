@@ -7,16 +7,16 @@
 library;
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:solo_leveling/core/error/failure.dart';
-import 'package:solo_leveling/features/community/data/models/colleague_relation.dart';
-import 'package:solo_leveling/features/community/data/models/comment.dart';
-import 'package:solo_leveling/features/community/data/models/xp_investment.dart';
-import 'package:solo_leveling/features/community/data/repositories/community_repository.dart';
-import 'package:solo_leveling/features/profile/data/providers/user_provider.dart';
-import 'package:solo_leveling/features/profile/data/repositories/user_repository.dart';
-import 'package:solo_leveling/global_data/database/colleague_relation_dao.dart';
-import 'package:solo_leveling/global_data/database/comment_dao.dart';
-import 'package:solo_leveling/global_data/database/xp_investment_dao.dart';
+import 'package:duolympix/core/error/failure.dart';
+import 'package:duolympix/features/community/data/models/colleague_relation.dart';
+import 'package:duolympix/features/community/data/models/comment.dart';
+import 'package:duolympix/features/community/data/models/xp_investment.dart';
+import 'package:duolympix/features/community/data/repositories/community_repository.dart';
+import 'package:duolympix/features/profile/data/providers/user_provider.dart';
+import 'package:duolympix/features/profile/data/repositories/user_repository.dart';
+import 'package:duolympix/global_data/database/colleague_relation_dao.dart';
+import 'package:duolympix/global_data/database/comment_dao.dart';
+import 'package:duolympix/global_data/database/xp_investment_dao.dart';
 
 /// Database-backed implementation of [CommunityRepository]
 /// 

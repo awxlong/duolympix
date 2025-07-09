@@ -10,10 +10,10 @@
 ///    - Add comment sorting (e.g., newest first, most liked)
 library;
 import 'package:flutter/material.dart';
-import 'package:solo_leveling/features/community/data/models/colleague_relation.dart';
-import 'package:solo_leveling/features/community/data/models/comment.dart';
-import 'package:solo_leveling/features/community/data/models/xp_investment.dart';
-import 'package:solo_leveling/features/community/data/repositories/community_repository.dart';
+import 'package:duolympix/features/community/data/models/colleague_relation.dart';
+import 'package:duolympix/features/community/data/models/comment.dart';
+import 'package:duolympix/features/community/data/models/xp_investment.dart';
+import 'package:duolympix/features/community/data/repositories/community_repository.dart';
 
 /// Enumerates possible states for community data operations
 /// 

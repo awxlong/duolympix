@@ -8,8 +8,8 @@
 /// typically be replaced with a persistent storage solution (e.g., database, API).
 library;
 import 'package:flutter/material.dart';
-import 'package:solo_leveling/features/quests/data/models/quest_model.dart';
-import 'package:solo_leveling/features/quests/data/repositories/quest_repository.dart';
+import 'package:duolympix/features/quests/data/models/quest_model.dart';
+import 'package:duolympix/features/quests/data/repositories/quest_repository.dart';
 
 /// Local in-memory implementation of [QuestRepository]
 /// 

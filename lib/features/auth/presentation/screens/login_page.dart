@@ -1,10 +1,10 @@
 // lib/features/auth/presentation/screens/login_page.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:solo_leveling/features/profile/data/providers/user_provider.dart';
-import 'package:solo_leveling/global_data/database/app_database.dart';
-import 'package:solo_leveling/global_data/models/user.dart';
-import 'package:solo_leveling/features/profile/data/mappers/user_mapper.dart';
+import 'package:duolympix/features/profile/data/providers/user_provider.dart';
+import 'package:duolympix/global_data/database/app_database.dart';
+import 'package:duolympix/global_data/models/user.dart';
+import 'package:duolympix/features/profile/data/mappers/user_mapper.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

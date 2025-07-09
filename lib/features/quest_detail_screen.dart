@@ -8,12 +8,12 @@
 library;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:solo_leveling/features/community/data/models/comment.dart';
-import 'package:solo_leveling/features/community/data/presentation/providers/community_provider.dart';
-import 'package:solo_leveling/features/mental_health/presentation/widgets/typing_indicator.dart';
-import 'package:solo_leveling/features/profile/data/mappers/user_mapper.dart';
-import 'package:solo_leveling/features/profile/data/providers/user_provider.dart';
-import 'package:solo_leveling/global_data/models/user.dart';
+import 'package:duolympix/features/community/data/models/comment.dart';
+import 'package:duolympix/features/community/data/presentation/providers/community_provider.dart';
+import 'package:duolympix/features/mental_health/presentation/widgets/typing_indicator.dart';
+import 'package:duolympix/features/profile/data/mappers/user_mapper.dart';
+import 'package:duolympix/features/profile/data/providers/user_provider.dart';
+import 'package:duolympix/global_data/models/user.dart';
 import 'mental_health/presentation/widgets/chat_bubble.dart';
 import 'mental_health/provider/chat_provider.dart';
 import 'quests/provider/quest_provider.dart';

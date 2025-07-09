@@ -8,10 +8,10 @@
 library;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:solo_leveling/features/profile/domain/repositories/leaderboard_repository.dart';
-import 'package:solo_leveling/features/profile/domain/usecases/get_leaderboard_usecase.dart';
-import 'package:solo_leveling/global_data/models/enums.dart';
-import 'package:solo_leveling/global_data/models/leaderboard_entry.dart';
+import 'package:duolympix/features/profile/domain/repositories/leaderboard_repository.dart';
+import 'package:duolympix/features/profile/domain/usecases/get_leaderboard_usecase.dart';
+import 'package:duolympix/global_data/models/enums.dart';
+import 'package:duolympix/global_data/models/leaderboard_entry.dart';
 
 /// Represents the state of the leaderboard UI
 /// 

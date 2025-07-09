@@ -7,11 +7,11 @@
 library;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:solo_leveling/features/auth/presentation/screens/login_page.dart';
-import 'package:solo_leveling/features/profile/presentation/screens/profile_screen.dart';
-import 'package:solo_leveling/features/quest_design_screen.dart';
-import 'package:solo_leveling/features/quest_detail_screen.dart';
-import 'package:solo_leveling/features/shopping/presentation/screens/shopping_screen.dart';
+import 'package:duolympix/features/auth/presentation/screens/login_page.dart';
+import 'package:duolympix/features/profile/presentation/screens/profile_screen.dart';
+import 'package:duolympix/features/quest_design_screen.dart';
+import 'package:duolympix/features/quest_detail_screen.dart';
+import 'package:duolympix/features/shopping/presentation/screens/shopping_screen.dart';
 import 'mental_health/provider/chat_provider.dart';
 import 'quests/data/models/quest_model.dart';
 import 'quests/provider/quest_provider.dart';
@@ -54,7 +54,7 @@ class _QuestListScreenState extends State<QuestListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Solo Leveling'),
+        title: const Text('DuoLympiX'),
         actions: [
           // Button to navigate to quest creation screen
           IconButton(

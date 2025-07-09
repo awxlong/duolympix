@@ -8,14 +8,14 @@
 library;
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:solo_leveling/core/error/failure.dart';
-import 'package:solo_leveling/features/profile/data/mappers/user_mapper.dart';
-import 'package:solo_leveling/features/profile/data/repositories/user_repository.dart';
-import 'package:solo_leveling/features/profile/domain/entities/user_entity.dart';
-import 'package:solo_leveling/features/quests/data/models/quest_model.dart';
-import 'package:solo_leveling/global_data/database/app_database.dart';
-import 'package:solo_leveling/global_data/models/quest_history.dart';
-import 'package:solo_leveling/global_data/models/user.dart';
+import 'package:duolympix/core/error/failure.dart';
+import 'package:duolympix/features/profile/data/mappers/user_mapper.dart';
+import 'package:duolympix/features/profile/data/repositories/user_repository.dart';
+import 'package:duolympix/features/profile/domain/entities/user_entity.dart';
+import 'package:duolympix/features/quests/data/models/quest_model.dart';
+import 'package:duolympix/global_data/database/app_database.dart';
+import 'package:duolympix/global_data/models/quest_history.dart';
+import 'package:duolympix/global_data/models/user.dart';
 import 'package:sqflite/sqflite.dart';
 
 /// Implementation of [UserRepository] using Floor database

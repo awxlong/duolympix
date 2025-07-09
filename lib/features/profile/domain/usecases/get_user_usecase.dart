@@ -7,9 +7,9 @@
 library;
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:solo_leveling/core/error/failure.dart';
-import 'package:solo_leveling/features/profile/data/repositories/user_repository.dart';
-import 'package:solo_leveling/features/profile/domain/entities/user_entity.dart';
+import 'package:duolympix/core/error/failure.dart';
+import 'package:duolympix/features/profile/data/repositories/user_repository.dart';
+import 'package:duolympix/features/profile/domain/entities/user_entity.dart';
 
 /// Use case for fetching a user by username and password
 /// 

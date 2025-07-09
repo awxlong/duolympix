@@ -11,7 +11,7 @@
 /// SQL queries automatically.
 library;
 import 'package:floor/floor.dart';
-import 'package:solo_leveling/features/community/data/models/colleague_relation.dart';
+import 'package:duolympix/features/community/data/models/colleague_relation.dart';
 
 /// DAO for [ColleagueRelation] database operations
 /// 

@@ -16,10 +16,10 @@ library;
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:solo_leveling/core/constants.dart';
-import 'package:solo_leveling/features/quests/data/models/quest_model.dart';
-import 'package:solo_leveling/features/quests/data/repositories/quest_repository.dart';
-import 'package:solo_leveling/services/location_service.dart';
+import 'package:duolympix/core/constants.dart';
+import 'package:duolympix/features/quests/data/models/quest_model.dart';
+import 'package:duolympix/features/quests/data/repositories/quest_repository.dart';
+import 'package:duolympix/services/location_service.dart';
 
 
 /// State provider for quest-related operations

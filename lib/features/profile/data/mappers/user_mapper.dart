@@ -1,8 +1,8 @@
 // lib/features/profile/data/mappers/user_mapper.dart
 /// Entity which converts between User model and UserEntity.
 library;
-import 'package:solo_leveling/features/profile/domain/entities/user_entity.dart';
-import 'package:solo_leveling/global_data/models/user.dart';
+import 'package:duolympix/features/profile/domain/entities/user_entity.dart';
+import 'package:duolympix/global_data/models/user.dart';
 
 /// Mapper class to convert between User and UserEntity
 class UserMapper {

@@ -2,11 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:solo_leveling/features/community/data/presentation/providers/community_provider.dart';
-import 'package:solo_leveling/features/profile/data/providers/user_provider.dart';
-import 'package:solo_leveling/features/quests/data/models/quest_model.dart';
-import 'package:solo_leveling/features/quests/provider/quest_provider.dart';
-import 'package:solo_leveling/features/community/data/models/xp_investment.dart';
+import 'package:duolympix/features/community/data/presentation/providers/community_provider.dart';
+import 'package:duolympix/features/profile/data/providers/user_provider.dart';
+import 'package:duolympix/features/quests/data/models/quest_model.dart';
+import 'package:duolympix/features/quests/provider/quest_provider.dart';
+import 'package:duolympix/features/community/data/models/xp_investment.dart';
 
 class UserQuestsScreen extends StatefulWidget {
   final String userId;

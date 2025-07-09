@@ -11,7 +11,7 @@
 /// to generate SQL queries automatically.
 library;
 import 'package:floor/floor.dart';
-import 'package:solo_leveling/features/community/data/models/comment.dart';
+import 'package:duolympix/features/community/data/models/comment.dart';
 
 /// DAO for [Comment] database operations
 /// 

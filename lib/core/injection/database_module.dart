@@ -1,6 +1,6 @@
 // lib/core/injection/database_module.dart
 import 'package:injectable/injectable.dart';
-import 'package:solo_leveling/global_data/database/app_database.dart';
+import 'package:duolympix/global_data/database/app_database.dart';
 
 @module
 abstract class DatabaseModule {
