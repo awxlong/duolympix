@@ -26,29 +26,33 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> _saveUser() async {
-    if (_formKey.currentState!.validate()) {
-      final user = User(
-        username: _usernameController.text,
-        lastActive: DateTime.now(),
-        password: _passwordController.text,
-      );
+  if (_formKey.currentState!.validate()) {
+    final user = User(
+      username: _usernameController.text,
+      lastActive: DateTime.now(),
+      password: _passwordController.text,
+    );
 
-      final userProvider = Provider.of<UserProvider>(context, listen: false);
-      final userEntity = UserMapper.mapUserToEntity(user);
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final userEntity = UserMapper.mapUserToEntity(user);
 
+    // Check if the user already exists
+    final database = await getDatabase();
+    final existingUser = await database.userDao.findUserByUsername(user.username);
+    if (existingUser == null) {
       // Insert the user into the database
-      final database = await getDatabase();
       await database.userDao.insertUser(user);
+    }
 
-      // Then load the user
-      await userProvider.loadUser(userEntity.username, userEntity.password);
+    await userProvider.loadUser(userEntity.username, userEntity.password);
 
-      // After saving the user, navigate to the next screen (e.g., quest list)
-      if (mounted) {
-        Navigator.of(context).pushReplacementNamed('/quests');
-      }
+    // After saving the user, navigate to the next screen (e.g., quest list)
+    if (mounted) {
+      Navigator.of(context).pushReplacementNamed('/quests');
     }
   }
+}
+
 
   @override
   Widget build(BuildContext context) {

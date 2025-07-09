@@ -36,9 +36,9 @@ class _QuestListScreenState extends State<QuestListScreen> {
   /// List of widget options corresponding to bottom navigation items
   static const List<Widget> _widgetOptions = <Widget>[
     QuestListContent(),
-    ProfileScreen(),
     ShoppingScreen(),
     LoginPage(),
+    ProfileScreen(),
   ];
 
   /// Handles bottom navigation item taps
@@ -78,17 +78,17 @@ class _QuestListScreenState extends State<QuestListScreen> {
             label: 'Quests',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.shopping_cart),
             label: 'Shopping',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.login),
             label: 'Login',
-          )
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
         ],
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
