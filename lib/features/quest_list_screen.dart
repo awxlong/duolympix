@@ -37,7 +37,7 @@ class _QuestListScreenState extends State<QuestListScreen> {
   static const List<Widget> _widgetOptions = <Widget>[
     QuestListContent(),
     ShoppingScreen(),
-    LoginPage(),
+    // LoginPage(),
     ProfileScreen(),
   ];
 
@@ -81,10 +81,10 @@ class _QuestListScreenState extends State<QuestListScreen> {
             icon: Icon(Icons.shopping_cart),
             label: 'Shopping',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.login),
-            label: 'Login',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.login),
+          //   label: 'Login',
+          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',

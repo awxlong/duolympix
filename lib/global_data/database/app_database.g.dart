@@ -110,7 +110,7 @@ class _$AppDatabase extends AppDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `QuestHistory` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `userId` INTEGER NOT NULL, `questId` TEXT NOT NULL, `INTEGER` INTEGER NOT NULL, `xpEarned` INTEGER NOT NULL, `durationInSeconds` INTEGER, `distance` REAL, `repetitions` INTEGER)');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `comments` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `questId` TEXT NOT NULL, `username` TEXT NOT NULL UNIQUE, `content` TEXT NOT NULL, `timestamp` INTEGER NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `comments` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `questId` TEXT NOT NULL, `username` TEXT NOT NULL, `content` TEXT NOT NULL, `timestamp` INTEGER NOT NULL)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `LeaderboardEntry` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `userId` TEXT NOT NULL, `rankingType` INTEGER NOT NULL, `score` INTEGER NOT NULL, `rank` INTEGER NOT NULL, `INTEGER` INTEGER NOT NULL, `isCurrentUser` INTEGER NOT NULL)');
         await database.execute(
