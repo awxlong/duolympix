@@ -198,40 +198,41 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
   /// Includes a timer, chat history with bubbles, typing indicator, message input,
   /// and completion button (enabled when session is complete).
   Widget _buildChatInterface(ChatProvider chatProvider, QuestProvider questProvider) {
-    return Column(
-      children: [
-        TimerDisplay(
-          duration: chatProvider.elapsedTime,
-          targetDuration: widget.quest.targetDuration,
+  return Column(
+    children: [
+      TimerDisplay(
+        duration: chatProvider.elapsedTime,
+        targetDuration: widget.quest.targetDuration,
+      ),
+      Expanded(
+        child: Stack(
+          children: [
+            ListView.builder(
+              reverse: true, // Show newest messages at the bottom
+              itemCount: chatProvider.messages.length,
+              itemBuilder: (context, index) {
+                final message = chatProvider.messages.reversed.toList()[index];
+                return ChatBubble(
+                  message: message.text,
+                  isUser: message.isUser,
+                  thinkingProcess: message.thinkingProcess,
+                );
+              },
+            ),
+            if (chatProvider.isLoading) _buildTypingIndicator(),
+          ],
         ),
-        Expanded(
-          child: Stack(
-            children: [
-              ListView.builder(
-                reverse: true, // Show newest messages at the bottom
-                itemCount: chatProvider.messages.length,
-                itemBuilder: (context, index) {
-                  final message = chatProvider.messages.reversed.toList()[index];
-                  return ChatBubble(
-                    message: message.text,
-                    isUser: message.isUser,
-                  );
-                },
-              ),
-              if (chatProvider.isLoading) _buildTypingIndicator(),
-            ],
-          ),
-        ),
-        _buildChatInput(chatProvider),
-        ElevatedButton(
-          onPressed: chatProvider.isSessionComplete 
-              ? () => _handleQuestCompletion(questProvider) 
-              : null,
-          child: const Text('Complete Quest'),
-        ),
-      ],
-    );
-  }
+      ),
+      _buildChatInput(chatProvider),
+      ElevatedButton(
+        onPressed: chatProvider.isSessionComplete 
+            ? () => _handleQuestCompletion(questProvider) 
+            : null,
+        child: const Text('Complete Quest'),
+      ),
+    ],
+  );
+}
 
   /// Displays a typing indicator while waiting for responses
   Widget _buildTypingIndicator() {

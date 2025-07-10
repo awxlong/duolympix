@@ -81,7 +81,7 @@ class _QuestDesignScreenState extends State<QuestDesignScreen> {
               TextField(
                 controller: _distanceController,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(labelText: 'Miles to run'),
+                decoration: const InputDecoration(labelText: 'Miles to complete'),
               ),
             // Time constraint type selection (upper or lower bound)
             Row(

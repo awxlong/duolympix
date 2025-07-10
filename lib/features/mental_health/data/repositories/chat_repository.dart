@@ -15,7 +15,7 @@ class ChatRepository {
   /// 
   /// Note: Use 'http://10.0.2.2:11434' for Android emulator
   ///       Use device's local IP (e.g., 'http://192.168.0.13:11434') for physical devices
-  static const String _baseUrl = 'http://192.168.0.13:11434'; // TODO: update for production
+  static const String _baseUrl = 'http://10.0.2.2:11434'; // TODO: update for production
   
   /// LLM model to use for generating responses
   final String _model = 'deepseek-r1:8b'; // TODO: update for production
@@ -40,9 +40,10 @@ class ChatRepository {
   /// Sends a message to the LLM and returns a single response
   /// 
   /// [message]: User's message to the therapist AI
-  /// Returns: The AI's response as a string
+  /// Returns: The AI's response as a string consisting of 'answer' and 'thought process' <- HARDCODED,
+  /// thus may not work for LLMs which don't have CoT as part of their response.
   /// Throws: Exception if request fails or response is invalid
-  Future<String> sendMessage(String message) async {
+  Future<Map<String, String>> sendMessage(String message) async {
     final response = await http.post(
       Uri.parse('$_baseUrl/api/chat'),
       headers: {'Content-Type': 'application/json'},
@@ -57,7 +58,21 @@ class ChatRepository {
     );
 
     if (response.statusCode == 200) {
-      return jsonDecode(response.body)['message']['content'];
+      final content = jsonDecode(response.body)['message']['content'];
+      final thinkStart = content.indexOf('<think>');
+      final thinkEnd = content.indexOf('</think>');
+      String thinkingProcess = '';
+      String answer = content;
+
+      if (thinkStart != -1 && thinkEnd != -1) {
+        thinkingProcess = content.substring(thinkStart + 7, thinkEnd).trim();
+        answer = content.replaceAll('<think>\n$thinkingProcess\n</think>', '').trim();
+      }
+
+      return {
+        'answer': answer,
+        'thinkingProcess': thinkingProcess,
+      };
     }
     throw Exception('Failed to get response: ${response.statusCode}');
   }

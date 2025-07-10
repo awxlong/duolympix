@@ -112,14 +112,15 @@ class ChatProvider with ChangeNotifier {
       _messages.add(ChatMessage(text: message, isUser: true));
       // Get response from repository (could be API, local bot, etc.)
       final response = await _repository.sendMessage(message);
+      final answer = response['answer']!;
+      final thinkingProcess = response['thinkingProcess']!;
       // Add bot response to history
-      _messages.add(ChatMessage(text: response, isUser: false));
+      _messages.add(ChatMessage(text: answer, isUser: false, thinkingProcess: thinkingProcess));
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
-
   /// Cleans up resources when provider is disposed
   /// 
   /// Cancels active timers to prevent memory leaks
