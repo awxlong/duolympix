@@ -37,13 +37,19 @@ class ChatRepository {
     Respond in a compassionate, non-judgmental tone. Keep responses under 3 sentences.
     """;
 
+  /// List to store the conversation history
+  List<Map<String, String>> _conversationHistory = [];
+
   /// Sends a message to the LLM and returns a single response
   /// 
   /// [message]: User's message to the therapist AI
   /// Returns: The AI's response as a string consisting of 'answer' and 'thought process' <- HARDCODED,
-  /// thus may not work for LLMs which don't have CoT as part of their response.
+  /// thus may not work for LLMs which don't have CoT as part of their response like deepseek-r1:8b
   /// Throws: Exception if request fails or response is invalid
   Future<Map<String, String>> sendMessage(String message) async {
+    // Add the user message to the conversation history
+    _conversationHistory.add({'role': 'user', 'content': message});
+
     final response = await http.post(
       Uri.parse('$_baseUrl/api/chat'),
       headers: {'Content-Type': 'application/json'},
@@ -51,7 +57,7 @@ class ChatRepository {
         'model': _model,
         'messages': [
           {'role': 'system', 'content': _systemPrompt},
-          {'role': 'user', 'content': message}
+          ..._conversationHistory
         ],
         'stream': false,
       }),
@@ -69,6 +75,9 @@ class ChatRepository {
         answer = content.replaceAll('<think>\n$thinkingProcess\n</think>', '').trim();
       }
 
+      // Add the AI's response to the conversation history
+      _conversationHistory.add({'role': 'assistant', 'content': answer});
+
       return {
         'answer': answer,
         'thinkingProcess': thinkingProcess,
@@ -83,12 +92,16 @@ class ChatRepository {
   /// Returns: A stream of response chunks as they are generated
   /// Handles: Stream parsing, error handling, and line splitting
   Stream<String> streamMessage(String message) async* {
+    // Add the user message to the conversation history
+    _conversationHistory.add({'role': 'user', 'content': message});
+
     final request = http.Request('POST', Uri.parse('$_baseUrl/api/chat'))
       ..headers['Content-Type'] = 'application/json'
       ..body = jsonEncode({
         'model': _model,
         'messages': [
-          {'role': 'user', 'content': message}
+          {'role': 'system', 'content': _systemPrompt},
+          ..._conversationHistory
         ],
         'stream': true,
       });
@@ -96,17 +109,23 @@ class ChatRepository {
     final response = await request.send();
     final stream = response.stream.transform(utf8.decoder);
 
+    String fullResponse = '';
     await for (final chunk in stream) {
       final lines = LineSplitter.split(chunk);
       for (final line in lines) {
         if (line.trim().isEmpty) continue;
         try {
           final json = jsonDecode(line);
-          yield json['message']['content'];
+          final content = json['message']['content'];
+          fullResponse += content;
+          yield content;
         } catch (e) {
           yield '[Error parsing response]';
         }
       }
     }
+
+    // Add the AI's full response to the conversation history
+    _conversationHistory.add({'role': 'assistant', 'content': fullResponse});
   }
 }

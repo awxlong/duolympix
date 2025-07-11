@@ -225,9 +225,7 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
       ),
       _buildChatInput(chatProvider),
       ElevatedButton(
-        onPressed: chatProvider.isSessionComplete 
-            ? () => _handleQuestCompletion(questProvider) 
-            : null,
+        onPressed: () => _handleQuestCompletion(questProvider),
         child: const Text('Complete Quest'),
       ),
     ],
