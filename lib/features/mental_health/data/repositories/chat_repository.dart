@@ -14,9 +14,7 @@ import 'package:http/http.dart' as http;
 class ChatRepository {
   /// Base URL for the local LLM server
   /// 
-  /// Note: Use 'http://10.0.2.2:11434' for Android emulator
-  ///       Use device's local IP (e.g., 'http://192.168.0.13:11434') for physical devices
-  static const String _baseUrl = 'http://192.168.0.13:11434'; // TODO: update for production
+  static const String _baseUrl = 'http://ip_address:11434'; // TODO: update for production
   
   /// LLM model to use for generating responses
   final String _model = 'deepseek-r1:8b'; // TODO: update for production
