@@ -27,9 +27,9 @@ class LocalQuestRepository implements QuestRepository {
       title: 'Speed Runner',
       type: QuestType.distance,
       icon: Icons.directions_run,
-      description: 'Run 1 mile in under 5 minutes',
+      description: 'Run 1 mile in under 10 minutes',
       targetDistance: 1.0,
-      maxDuration: Duration(minutes: 5),
+      maxDuration: Duration(minutes: 10),
       xpReward: 200,
     ),
     const Quest(
@@ -37,8 +37,8 @@ class LocalQuestRepository implements QuestRepository {
       title: 'Bike Commuter',
       type: QuestType.distance,
       icon: Icons.pedal_bike,
-      description: 'Bike 1 mile for at least 60 minutes',
-      minDuration: Duration(minutes: 60),
+      description: 'Bike 1 mile in under 45 minutes',
+      minDuration: Duration(minutes: 45),
       targetDistance: 1.0,
       xpReward: 250,
     ),
@@ -47,8 +47,8 @@ class LocalQuestRepository implements QuestRepository {
       title: 'Plank Master',
       type: QuestType.strength,
       icon: Icons.fitness_center_outlined,
-      description: 'Plank for at least 2 minutes',
-      minDuration: Duration(minutes: 2),
+      description: 'Plank for at least 1 minute',
+      minDuration: Duration(minutes: 1),
       xpReward: 250,
     ),
     const Quest(
@@ -73,8 +73,8 @@ class LocalQuestRepository implements QuestRepository {
       title: 'Power Training',
       type: QuestType.strength,
       icon: Icons.fitness_center,
-      description: 'Complete 50 pullups in 3 minutes',
-      maxDuration: Duration(minutes: 3),
+      description: 'Complete 50 pullups in under 10 minutes',
+      maxDuration: Duration(minutes: 10),
       xpReward: 120,
     ),
     const Quest(
@@ -93,6 +93,15 @@ class LocalQuestRepository implements QuestRepository {
     4. Provide evidence-based CBT techniques
     Respond in a compassionate, non-judgmental tone. Keep responses under 3 sentences.
     """,
+    ),
+    const Quest(
+      id: 'pushups-50',
+      title: 'Power Training',
+      type: QuestType.strength,
+      icon: Icons.back_hand,
+      description: 'Complete 50 pushups in under 10 minutes',
+      maxDuration: Duration(minutes: 10),
+      xpReward: 125,
     ),
   ];
 

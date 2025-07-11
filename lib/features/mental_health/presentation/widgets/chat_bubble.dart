@@ -39,7 +39,9 @@ class ChatBubble extends StatelessWidget {
                     builder: (context) {
                       return AlertDialog(
                         title: const Text('Thoughts'),
-                        content: Text(thinkingProcess),
+                        content: SingleChildScrollView(
+                          child: Text(thinkingProcess),
+                        ),
                         actions: [
                           TextButton(
                             onPressed: () {
