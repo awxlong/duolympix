@@ -28,7 +28,7 @@
 <header id="title">
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
-    <li><a href="../../index.html">solo_leveling</a></li>
+    <li><a href="../../index.html">duolympix</a></li>
     <li><a href="../../features_mental_health_provider_chat_provider/features_mental_health_provider_chat_provider-library.html">features&#47;mental_health&#47;provider&#47;chat_provider.dart</a></li>
     <li><a href="../../features_mental_health_provider_chat_provider/ChatProvider-class.html">ChatProvider</a></li>
     <li class="self-crumb">sendMessage method</li>
@@ -64,7 +64,8 @@
       
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
-<span class="name ">sendMessage</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="sendMessage-param-message"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">message</span></span></li>
+<span class="name ">sendMessage</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="sendMessage-param-message"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">message</span>, </span></li>
+<li><span class="parameter" id="sendMessage-param-quest"><span class="type-annotation"><a href="../../features_quests_data_models_quest_model/Quest-class.html">Quest</a></span> <span class="parameter-name">quest</span></span></li>
 </ol>)
 
       
@@ -82,7 +83,7 @@ and updates the UI. Handles loading state during processing.</p>
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; sendMessage(String message) async {
+  <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; sendMessage(String message, Quest quest) async {
   try {
     _isLoading = true;
     notifyListeners();
@@ -90,9 +91,11 @@ and updates the UI. Handles loading state during processing.</p>
     &#47;&#47; Add user message to history
     _messages.add(ChatMessage(text: message, isUser: true));
     &#47;&#47; Get response from repository (could be API, local bot, etc.)
-    final response = await _repository.sendMessage(message);
+    final response = await _repository.sendMessage(message, quest);
+    final answer = response[&#39;answer&#39;]!;
+    final thinkingProcess = response[&#39;thinkingProcess&#39;]!;
     &#47;&#47; Add bot response to history
-    _messages.add(ChatMessage(text: response, isUser: false));
+    _messages.add(ChatMessage(text: answer, isUser: false, thinkingProcess: thinkingProcess));
   } finally {
     _isLoading = false;
     notifyListeners();
@@ -112,7 +115,7 @@ and updates the UI. Handles loading state during processing.</p>
 </header>
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-    <li><a href="../../index.html">solo_leveling</a></li>
+    <li><a href="../../index.html">duolympix</a></li>
     <li><a href="../../features_mental_health_provider_chat_provider/features_mental_health_provider_chat_provider-library.html">chat_provider</a></li>
     <li><a href="../../features_mental_health_provider_chat_provider/ChatProvider-class.html">ChatProvider</a></li>
     <li class="self-crumb">sendMessage method</li>
@@ -130,7 +133,7 @@ and updates the UI. Handles loading state during processing.</p>
 
 <footer>
   <span class="no-break">
-    solo_leveling
+    duolympix
       1.0.0+1
   </span>
 

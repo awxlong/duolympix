@@ -28,7 +28,7 @@
 <header id="title">
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
-    <li><a href="../../index.html">solo_leveling</a></li>
+    <li><a href="../../index.html">duolympix</a></li>
     <li><a href="../../features_quests_data_models_quest_model/features_quests_data_models_quest_model-library.html">features&#47;quests&#47;data&#47;models&#47;quest_model.dart</a></li>
     <li><a href="../../features_quests_data_models_quest_model/Quest-class.html">Quest</a></li>
     <li class="self-crumb">Quest const constructor</li>
@@ -75,6 +75,7 @@
 <li><span class="parameter" id="-param-creatorId"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">creatorId</span>, </span></li>
 <li><span class="parameter" id="-param-isPublic"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">isPublic</span> = <span class="default-value">true</span>, </span></li>
 <li><span class="parameter" id="-param-totalXpInvested"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">totalXpInvested</span> = <span class="default-value">0</span>, </span></li>
+<li><span class="parameter" id="-param-prompt"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">prompt</span>, </span></li>
 </ol>})
     </section>
 
@@ -104,12 +105,14 @@ parameter (target → min → max) for consistent timer display.</p>
   this.creatorId,
   this.isPublic = true,
   this.totalXpInvested = 0,
+  String? prompt,
 }) : assert(
         (minDuration != null || maxDuration != null || targetDuration != null) ||
         (targetDistance != null),
         &#39;Must specify either duration parameters (target&#47;min&#47;max) or a target distance&#39;,
       ),
-      targetDuration = targetDuration ?? minDuration ?? maxDuration;</code></pre>
+      targetDuration = targetDuration ?? minDuration ?? maxDuration,
+      prompt = prompt ?? description;</code></pre>
 </section>
 
 
@@ -124,7 +127,7 @@ parameter (target → min → max) for consistent timer display.</p>
 </header>
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-    <li><a href="../../index.html">solo_leveling</a></li>
+    <li><a href="../../index.html">duolympix</a></li>
     <li><a href="../../features_quests_data_models_quest_model/features_quests_data_models_quest_model-library.html">quest_model</a></li>
     <li><a href="../../features_quests_data_models_quest_model/Quest-class.html">Quest</a></li>
     <li class="self-crumb">Quest const constructor</li>
@@ -142,7 +145,7 @@ parameter (target → min → max) for consistent timer display.</p>
 
 <footer>
   <span class="no-break">
-    solo_leveling
+    duolympix
       1.0.0+1
   </span>
 

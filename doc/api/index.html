@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="solo_leveling API docs, for the Dart programming language.">
-  <title>solo_leveling - Dart API docs</title>
+  <meta name="description" content="duolympix API docs, for the Dart programming language.">
+  <title>duolympix - Dart API docs</title>
 
 
   
@@ -28,9 +28,9 @@
 <header id="title">
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
-    <li class="self-crumb">solo_leveling package</li>
+    <li class="self-crumb">duolympix package</li>
   </ol>
-  <div class="self-name">solo_leveling</div>
+  <div class="self-name">duolympix</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -51,29 +51,61 @@
   <div id="dartdoc-main-content" class="main-content">
       
 <section class="desc markdown">
-  <h1 id="duolympix">DuoLympiX</h1>
-<p>App for gamifying life</p>
-<h2 id="features">Features</h2>
-<h3 id="mental-health-chatbot">Mental health chatbot</h3>
-<p>You need to download and install ollama and host it. For this app, we used a quantized deepseek-r1 prompt-engineered as a CBT therapist.</p>
-<pre class="language-dart"><code># Set _baseUrl in chat_repository.dart to your host's IP address
+  <img src="assets/images/app_logo.png" alt="DuoLympiX Logo" width="50" height="50">
+<h1 id="duolympix-app-for-gamifying-life">DuoLympiX: App for gamifying life</h1>
+<p>DuoLympiX is an app which supports the pursuit of a healthy lifestyle via gamifying the process of exercising physically and mentally.</p>
+<p>It is coded with Dart which supports iOS and Android cross-platform compilation. It has the following features:</p>
+<h2 id="1-user-authentification-complete-a-quest-via-customized-monitoring-and-socialize">1. User authentification. Complete a quest via customized monitoring and socialize</h2>
+<img src="assets/demo/1_distance_comments_small.gif" alt="Demo Part 1" width="50%">
+<p>Complete a quest, e.g. run a mile in under 10 minutes monitored via a distance tracker and timer, to earn XP and chat with others doing the same quest.</p>
+<h2 id="2-mental-health-quests-supported-via-conversations-with-an-llm">2. Mental health quests supported via conversations with an LLM</h2>
+<img src="assets/demo/2_mentalHealth_comment_thoughts_small.gif" alt="Demo Part 2" width="50%">
+<h3 id="details-about-chatbot">Details about chatbot</h3>
+<p>DuoLympiX currently uses quantized deepseek-r1 with custom prompt-engineering depending on the quest to hold conversations with the user. The chatbot is currently hosted locally via ollama (thus changes are needed if deployed on production). To try it yourself, you need to download and install ollama and host it with the following commands:</p>
+<pre class="language-dart"><code># Set _baseUrl in chat_repository.dart to your host's IP address, with default 11434 port
 export OLLAMA_HOST="0.0.0.0:11434" # enables Ollama to listen to all devices
 ollama serve
-ollama run deepseek-r1:8b # be sure to write the right URL for hosting it. 
+ollama run deepseek-r1:8b 
 </code></pre>
-<h3 id="community-support">Community support</h3>
-<h3 id="xp-investment">XP investment</h3>
-<p>Inspired by the <a href="http://www.yoobingo.com/">达目标 app</a></p>
-<h2 id="getting-started-with-flutter">Getting Started with Flutter</h2>
-<p>This project is a starting point for a Flutter application.</p>
-<p>A few resources to get you started if this is your first Flutter project:</p>
+<p>Since deepseek-r1 outputs its 'thought process' before giving an answer, our conversation interface enables reading the thoughts also.</p>
+<h2 id="3-community-posting">3. Community posting</h2>
+<img src="assets/demo/3_public_comment_small.gif" alt="Demo Part 3" width="50%">
+<p>Community-based features of the app are inspired by the <a href="http://www.yoobingo.com/">Yoobingo 达目标 app</a>. This includes posting comments in a public forum per quest to share tips, words of encouragement, discussions, among others.</p>
+<h2 id="4-user-profile-and-leaderboard">4. User profile and leaderboard</h2>
+<img src="assets/demo/4_profile_leaderboard_small.gif" alt="Demo Part 4" width="50%">
+<p>DuoLympiX has a database which stores user information such as XP earned, which can be compared within a leaderboard to track progress.</p>
+<h2 id="5-xp-investment-system">5. XP investment system</h2>
+<img src="assets/demo/5_yoobingo_invest_someone_small.gif" alt="Demo Part 5" width="50%">
+<p>Another community-based feature inspired by <a href="http://www.yoobingo.com/">Yoobingo 达目标</a> is the ability to invest your XP in friends to encourage each other to complete a quest. Investing XP deducts your own and increases the original XP value of a quest which one believes is best for a friend.</p>
+<h2 id="6-shopping-system">6. Shopping system</h2>
+<img src="assets/demo/6_buy_small.gif" alt="Demo Part 6" width="50%">
+<p>Earning XP enables a user to level up. In addition to that, XP can be exchanged for products which improve one's health. The <strong>future vision is that XP can be exchanged for tangible goods</strong> to further encourage completing physical and mental health quests which improve a person's health.</p>
+<h2 id="7-custom-design-quests">7. Custom-design quests</h2>
+<img src="assets/demo/7_custom_quest_small.gif" alt="Demo Part 7" width="50%">
+<p>DuoLympiX enables users to custom design quests. There at least $3$ different types of quests:</p>
 <ul>
-<li><a href="https://docs.flutter.dev/get-started/codelab">Lab: Write your first Flutter app</a></li>
-<li><a href="https://docs.flutter.dev/cookbook">Cookbook: Useful Flutter samples</a></li>
+<li>distance-based quests which enable distance tracking</li>
+<li>mental health quests which enable the user to custom prompt-engineer the LLM for a conversation</li>
+<li>strength-based quests which only has a timer</li>
 </ul>
-<p>For help getting started with Flutter development, view the
-<a href="https://docs.flutter.dev/">online documentation</a>, which offers tutorials,
-samples, guidance on mobile development, and a full API reference.</p>
+<h2 id="future-extensions">Future extensions</h2>
+<p>DuoLympiX has several extensions which can be implemented to further support the pursuit of a healthy lifestyle. For example,</p>
+<ul>
+<li>
+<p>Monitor biomarkers and connect with digital health devices, which both enable more diverse quests (e.g. do aerobic exercise for 10 minutes tracking cardiac activity) and more thorough monitoring of a user's health.</p>
+</li>
+<li>
+<p>As mentioned before, a future vision is to link the app to a real shop for purchasing tangible products which can advance a healthy lifestyle and can be delivered to you.</p>
+</li>
+</ul>
+<p>We are <strong>more than happy to welcome any contributions which can improve the app in any aspect</strong>. To do so, feel free to open a pull request. To run the app yourself, please:</p>
+<ol>
+<li><code>git clone https://github.com/awxlong/duolympix</code></li>
+<li>As mentioned before, install ollama and host the LLM with the appropriate IP address.</li>
+<li>Inside <code>lib/main.dart</code>, you can select a virtual device and run the app (<code>flutter pub get; flutter run</code>)</li>
+</ol>
+<h2 id="build-the-apk-for-android">Build the .apk for Android</h2>
+<p><code>flutter build apk --release</code></p>
 </section>
 
 
@@ -172,7 +204,7 @@ users can use money (in our case XPs) to support each other in completing quests
   <span class="name"><a href="features_mental_health_data_models_chat_message/features_mental_health_data_models_chat_message-library.html">features/mental_health/data/models/chat_message</a></span> 
 
 </dt>
-<dd>
+<dd>Entity representing a chat message in a conversation with a chatbot
 </dd>
 
           <dt id="chat_repository">
@@ -566,11 +598,11 @@ or properties rather than creating them internally, improving testability and ma
 </header>
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-    <li class="self-crumb">solo_leveling package</li>
+    <li class="self-crumb">duolympix package</li>
 </ol>
 
 
-    <h5 class="hidden-xs"><span class="package-name">solo_leveling</span> <span class="package-kind">package</span></h5>
+    <h5 class="hidden-xs"><span class="package-name">duolympix</span> <span class="package-kind">package</span></h5>
     <ol>
       <li class="section-title">Libraries</li>
       <li><a href="core_app_theme/core_app_theme-library.html">core/app_theme</a></li>
@@ -649,7 +681,7 @@ or properties rather than creating them internally, improving testability and ma
 
 <footer>
   <span class="no-break">
-    solo_leveling
+    duolympix
       1.0.0+1
   </span>
 

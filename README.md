@@ -71,6 +71,8 @@ We are **more than happy to welcome any contributions which can improve the app 
 2. As mentioned before, install ollama and host the LLM with the appropriate IP address.
 3. Inside `lib/main.dart`, you can select a virtual device and run the app (`flutter pub get; flutter run`)
 
+Feel free to read the app's documentation inside `doc/api` about classes, widgets and methods defined. 
+
 ## Build the .apk for Android
 
 `flutter build apk --release` 

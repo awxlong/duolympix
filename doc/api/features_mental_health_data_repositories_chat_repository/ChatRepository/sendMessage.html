@@ -28,7 +28,7 @@
 <header id="title">
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
-    <li><a href="../../index.html">solo_leveling</a></li>
+    <li><a href="../../index.html">duolympix</a></li>
     <li><a href="../../features_mental_health_data_repositories_chat_repository/features_mental_health_data_repositories_chat_repository-library.html">features&#47;mental_health&#47;data&#47;repositories&#47;chat_repository.dart</a></li>
     <li><a href="../../features_mental_health_data_repositories_chat_repository/ChatRepository-class.html">ChatRepository</a></li>
     <li class="self-crumb">sendMessage method</li>
@@ -63,8 +63,9 @@
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
-<span class="name ">sendMessage</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="sendMessage-param-message"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">message</span></span></li>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>&gt;</span></span>
+<span class="name ">sendMessage</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="sendMessage-param-message"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">message</span>, </span></li>
+<li><span class="parameter" id="sendMessage-param-quest"><span class="type-annotation"><a href="../../features_quests_data_models_quest_model/Quest-class.html">Quest</a></span> <span class="parameter-name">quest</span></span></li>
 </ol>)
 
       
@@ -74,7 +75,9 @@
 <section class="desc markdown">
   <p>Sends a message to the LLM and returns a single response</p>
 <p><code>message</code>: User's message to the therapist AI
-Returns: The AI's response as a string
+<code>quest</code>: The mental health quest associated with this chat session which contains the custom prompt
+Returns: The AI's response as a string consisting of 'answer' and 'thought process' &lt;- HARDCODED,
+thus may not work for LLMs which don't have CoT as part of their response like deepseek-r1:8b
 Throws: Exception if request fails or response is invalid</p>
 </section>
 
@@ -82,22 +85,42 @@ Throws: Exception if request fails or response is invalid</p>
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;String&gt; sendMessage(String message) async {
+  <pre class="language-dart"><code class="language-dart">Future&lt;Map&lt;String, String&gt;&gt; sendMessage(String message, Quest quest) async {
+  &#47;&#47; Add the user message to the conversation history
+  _conversationHistory.add({&#39;role&#39;: &#39;user&#39;, &#39;content&#39;: message});
+
   final response = await http.post(
     Uri.parse(&#39;$_baseUrl&#47;api&#47;chat&#39;),
     headers: {&#39;Content-Type&#39;: &#39;application&#47;json&#39;},
     body: jsonEncode({
       &#39;model&#39;: _model,
       &#39;messages&#39;: [
-        {&#39;role&#39;: &#39;system&#39;, &#39;content&#39;: _systemPrompt},
-        {&#39;role&#39;: &#39;user&#39;, &#39;content&#39;: message}
+        {&#39;role&#39;: &#39;system&#39;, &#39;content&#39;:quest.prompt ?? _defaultPrompt},
+        ..._conversationHistory
       ],
       &#39;stream&#39;: false,
     }),
   );
 
   if (response.statusCode == 200) {
-    return jsonDecode(response.body)[&#39;message&#39;][&#39;content&#39;];
+    final content = jsonDecode(response.body)[&#39;message&#39;][&#39;content&#39;];
+    final thinkStart = content.indexOf(&#39;&lt;think&gt;&#39;);
+    final thinkEnd = content.indexOf(&#39;&lt;&#47;think&gt;&#39;);
+    String thinkingProcess = &#39;&#39;;
+    String answer = content;
+
+    if (thinkStart != -1 &amp;&amp; thinkEnd != -1) {
+      thinkingProcess = content.substring(thinkStart + 7, thinkEnd).trim();
+      answer = content.replaceAll(&#39;&lt;think&gt;\n$thinkingProcess\n&lt;&#47;think&gt;&#39;, &#39;&#39;).trim();
+    }
+
+    &#47;&#47; Add the AI&#39;s response to the conversation history
+    _conversationHistory.add({&#39;role&#39;: &#39;assistant&#39;, &#39;content&#39;: answer});
+
+    return {
+      &#39;answer&#39;: answer,
+      &#39;thinkingProcess&#39;: thinkingProcess,
+    };
   }
   throw Exception(&#39;Failed to get response: ${response.statusCode}&#39;);
 }</code></pre>
@@ -115,7 +138,7 @@ Throws: Exception if request fails or response is invalid</p>
 </header>
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-    <li><a href="../../index.html">solo_leveling</a></li>
+    <li><a href="../../index.html">duolympix</a></li>
     <li><a href="../../features_mental_health_data_repositories_chat_repository/features_mental_health_data_repositories_chat_repository-library.html">chat_repository</a></li>
     <li><a href="../../features_mental_health_data_repositories_chat_repository/ChatRepository-class.html">ChatRepository</a></li>
     <li class="self-crumb">sendMessage method</li>
@@ -133,7 +156,7 @@ Throws: Exception if request fails or response is invalid</p>
 
 <footer>
   <span class="no-break">
-    solo_leveling
+    duolympix
       1.0.0+1
   </span>
 

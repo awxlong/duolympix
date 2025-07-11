@@ -28,7 +28,7 @@
 <header id="title">
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
-    <li><a href="../../index.html">solo_leveling</a></li>
+    <li><a href="../../index.html">duolympix</a></li>
     <li><a href="../../features_mental_health_presentation_widgets_chat_bubble/features_mental_health_presentation_widgets_chat_bubble-library.html">features&#47;mental_health&#47;presentation&#47;widgets&#47;chat_bubble.dart</a></li>
     <li><a href="../../features_mental_health_presentation_widgets_chat_bubble/ChatBubble-class.html">ChatBubble</a></li>
     <li class="self-crumb">build method</li>
@@ -120,14 +120,49 @@ and</li>
 Widget build(BuildContext context) {
   return Align(
     alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
-    child: Container(
-      margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: isUser ? const Color.fromARGB(255, 0, 140, 255) : const Color.fromARGB(255, 255, 0, 123),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Text(message),
+    child: Column(
+      crossAxisAlignment: isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: isUser ? const Color.fromARGB(255, 0, 140, 255) : const Color.fromARGB(255, 255, 0, 123),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Text(message),
+        ),
+        if (!isUser &amp;&amp; thinkingProcess.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: FloatingActionButton.extended(
+              heroTag: &#39;thoughts_${message.hashCode}&#39;, &#47;&#47; Provide a unique hero tag
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text(&#39;Thoughts&#39;),
+                      content: SingleChildScrollView(
+                        child: Text(thinkingProcess),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text(&#39;Close&#39;),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              label: const Text(&#39;Thoughts&#39;),
+              icon: const Icon(Icons.info),
+            ),
+          ),
+      ],
     ),
   );
 }</code></pre>
@@ -145,7 +180,7 @@ Widget build(BuildContext context) {
 </header>
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-    <li><a href="../../index.html">solo_leveling</a></li>
+    <li><a href="../../index.html">duolympix</a></li>
     <li><a href="../../features_mental_health_presentation_widgets_chat_bubble/features_mental_health_presentation_widgets_chat_bubble-library.html">chat_bubble</a></li>
     <li><a href="../../features_mental_health_presentation_widgets_chat_bubble/ChatBubble-class.html">ChatBubble</a></li>
     <li class="self-crumb">build method</li>
@@ -163,7 +198,7 @@ Widget build(BuildContext context) {
 
 <footer>
   <span class="no-break">
-    solo_leveling
+    duolympix
       1.0.0+1
   </span>
 
