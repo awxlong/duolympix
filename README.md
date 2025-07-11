@@ -24,6 +24,8 @@ export OLLAMA_HOST="0.0.0.0:11434" # enables Ollama to listen to all devices
 ollama serve
 ollama run deepseek-r1:8b 
 ```
+
+Since deepseek-r1 outputs its 'thought process' before giving an answer, our conversation interface enables reading the thoughts also. 
 ## 3. Community posting
 <img src="assets/demo/3_public_comment_small.gif" alt="Demo Part 3" width="50%" />
 
