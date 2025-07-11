@@ -8,6 +8,7 @@
 /// techniques. Handles message sending, streaming responses, and error handling.
 library;
 import 'dart:convert';
+import 'package:duolympix/features/quests/data/models/quest_model.dart';
 import 'package:http/http.dart' as http;
 
 class ChatRepository {
@@ -28,7 +29,7 @@ class ChatRepository {
   /// - Asking clarifying questions
   /// - Using evidence-based CBT techniques
   /// - Maintaining a compassionate, non-judgmental tone
-  static const String _systemPrompt = """
+  static const String _defaultPrompt = """
     You are a therapist trained in Cognitive Behavioral Therapy (CBT). Your goal is to:
     1. Help identify negative thought patterns
     2. Guide reframing into positive ones
@@ -43,10 +44,11 @@ class ChatRepository {
   /// Sends a message to the LLM and returns a single response
   /// 
   /// [message]: User's message to the therapist AI
+  /// [quest]: The mental health quest associated with this chat session which contains the custom prompt
   /// Returns: The AI's response as a string consisting of 'answer' and 'thought process' <- HARDCODED,
   /// thus may not work for LLMs which don't have CoT as part of their response like deepseek-r1:8b
   /// Throws: Exception if request fails or response is invalid
-  Future<Map<String, String>> sendMessage(String message) async {
+  Future<Map<String, String>> sendMessage(String message, Quest quest) async {
     // Add the user message to the conversation history
     _conversationHistory.add({'role': 'user', 'content': message});
 
@@ -56,7 +58,7 @@ class ChatRepository {
       body: jsonEncode({
         'model': _model,
         'messages': [
-          {'role': 'system', 'content': _systemPrompt},
+          {'role': 'system', 'content':quest.prompt ?? _defaultPrompt},
           ..._conversationHistory
         ],
         'stream': false,
@@ -89,9 +91,10 @@ class ChatRepository {
   /// Sends a message to the LLM and streams responses in real-time
   /// 
   /// [message]: User's message to the therapist AI
+  /// [quest]: The mental health quest associated with this chat session
   /// Returns: A stream of response chunks as they are generated
   /// Handles: Stream parsing, error handling, and line splitting
-  Stream<String> streamMessage(String message) async* {
+  Stream<String> streamMessage(String message, Quest quest) async* {
     // Add the user message to the conversation history
     _conversationHistory.add({'role': 'user', 'content': message});
 
@@ -100,7 +103,7 @@ class ChatRepository {
       ..body = jsonEncode({
         'model': _model,
         'messages': [
-          {'role': 'system', 'content': _systemPrompt},
+          {'role': 'system', 'content': quest.prompt ?? _defaultPrompt},
           ..._conversationHistory
         ],
         'stream': true,

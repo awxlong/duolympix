@@ -27,7 +27,7 @@ class Quest {
   /// Display name of the quest
   final String title;
   
-  /// Detailed description of the quest (e.g., instructions, tips)
+  /// Detailed description of the quest (e.g., instructions, tips. For chatbot quests, this is the initial prompt engineering the chatbot)
   final String description;
   
   /// Classification of the quest (see [QuestType])
@@ -60,6 +60,9 @@ class Quest {
   /// Total XP invested in this quest by other users (community support)
   final int totalXpInvested;
 
+  /// Prompt for mental health quests, used to initialize the chatbot session
+  final String? prompt;
+
   /// Creates a Quest instance with validation
   /// 
   /// Ensures either duration parameters (target/min/max) or a target distance
@@ -79,12 +82,15 @@ class Quest {
     this.creatorId,
     this.isPublic = true,
     this.totalXpInvested = 0,
+    String? prompt,
   }) : assert(
           (minDuration != null || maxDuration != null || targetDuration != null) || 
           (targetDistance != null),
           'Must specify either duration parameters (target/min/max) or a target distance',
         ),
-        targetDuration = targetDuration ?? minDuration ?? maxDuration;
+        targetDuration = targetDuration ?? minDuration ?? maxDuration,
+        prompt = prompt ?? description;
+        
 
   /// Checks if the quest is time-based (uses duration parameters)
   bool get isTimeBased => targetDuration != null;
@@ -126,6 +132,7 @@ class Quest {
     String? creatorId,
     bool? isPublic,
     int? totalXpInvested,
+    String? prompt,
   }) {
     return Quest(
       id: id ?? this.id,
@@ -141,6 +148,7 @@ class Quest {
       creatorId: creatorId ?? this.creatorId,
       isPublic: isPublic ?? this.isPublic,
       totalXpInvested: totalXpInvested ?? this.totalXpInvested,
+      prompt: prompt ?? this.prompt,
     );
   }
 }

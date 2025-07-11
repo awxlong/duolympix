@@ -39,6 +39,7 @@ class LocalQuestRepository implements QuestRepository {
       icon: Icons.pedal_bike,
       description: 'Bike 1 mile for at least 60 minutes',
       minDuration: Duration(minutes: 60),
+      targetDistance: 1.0,
       xpReward: 250,
     ),
     const Quest(
@@ -55,9 +56,17 @@ class LocalQuestRepository implements QuestRepository {
       title: 'Guided Meditation',
       type: QuestType.mentalHealth,
       icon: Icons.psychology_alt_outlined,
-      description: 'Meditate for 5 minutes guided by the Chatbot',
+      description: 'Meditate for 5 minutes guided by a Chatbot',
       maxDuration: Duration(minutes: 5),
       xpReward: 100,
+      prompt: """
+    You are a calm and friendly meditation instructor guiding a relaxing meditation session.  
+    Create a 5-minute guided meditation focused on deep relaxation, stress relief, and mindfulness.  
+    Use a soothing and gentle tone throughout.  
+    Include clear step-by-step instructions for breathing, body awareness, and mental focus.  
+    Add brief pauses for reflection and gentle reminders to stay present.  
+    Avoid complex jargon and keep the language simple and accessible.  
+    End the meditation with positive affirmations and a smooth transition back to awareness. """
     ),
     const Quest(
       id: 'pullups-50',
@@ -76,6 +85,14 @@ class LocalQuestRepository implements QuestRepository {
       description: 'Chat about mental health for at least 5 minutes',
       minDuration: Duration(minutes: 5),
       xpReward: 120,
+      prompt: """
+    You are a therapist trained in Cognitive Behavioral Therapy (CBT). Your goal is to:
+    1. Help identify negative thought patterns
+    2. Guide reframing into positive ones
+    3. Ask clarifying questions when needed
+    4. Provide evidence-based CBT techniques
+    Respond in a compassionate, non-judgmental tone. Keep responses under 3 sentences.
+    """,
     ),
   ];
 

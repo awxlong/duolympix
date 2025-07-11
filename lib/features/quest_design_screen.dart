@@ -42,6 +42,9 @@ class _QuestDesignScreenState extends State<QuestDesignScreen> {
   /// Controller for the distance input field (for distance-based quests)
   final TextEditingController _distanceController = TextEditingController();
 
+  /// Controller for the prompt input field (for mental health quests)
+  final TextEditingController _promptController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,6 +85,12 @@ class _QuestDesignScreenState extends State<QuestDesignScreen> {
                 controller: _distanceController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(labelText: 'Miles to complete'),
+              ),
+            // Prompt input (only shown for mental health quests)
+            if (_selectedType == QuestType.mentalHealth)
+              TextField(
+                controller: _promptController,
+                decoration: const InputDecoration(labelText: 'LLM Prompt'),
               ),
             // Time constraint type selection (upper or lower bound)
             Row(
@@ -146,6 +155,9 @@ class _QuestDesignScreenState extends State<QuestDesignScreen> {
     final distance = _selectedType == QuestType.distance
        ? double.tryParse(_distanceController.text)
         : null;
+    final prompt = _selectedType == QuestType.mentalHealth
+       ? _promptController.text
+        : null;
 
     final newQuest = Quest(
       id: id,
@@ -157,6 +169,7 @@ class _QuestDesignScreenState extends State<QuestDesignScreen> {
       targetDistance: distance,
       icon: _getIconForType(type),
       xpReward: xpReward,
+      prompt: prompt,
     );
 
     questProvider.addNewQuest(newQuest);

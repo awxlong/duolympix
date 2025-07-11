@@ -103,7 +103,7 @@ class ChatProvider with ChangeNotifier {
   /// and updates the UI. Handles loading state during processing.
   /// 
   /// [message]: The text message sent by the user
-  Future<void> sendMessage(String message) async {
+  Future<void> sendMessage(String message, Quest quest) async {
     try {
       _isLoading = true;
       notifyListeners();
@@ -111,7 +111,7 @@ class ChatProvider with ChangeNotifier {
       // Add user message to history
       _messages.add(ChatMessage(text: message, isUser: true));
       // Get response from repository (could be API, local bot, etc.)
-      final response = await _repository.sendMessage(message);
+      final response = await _repository.sendMessage(message, quest);
       final answer = response['answer']!;
       final thinkingProcess = response['thinkingProcess']!;
       // Add bot response to history

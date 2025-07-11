@@ -252,12 +252,12 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
                 hintText: 'Type your message...',
                 border: OutlineInputBorder(),
               ),
-              onSubmitted: (value) => _sendMessage(value, _messageController, provider),
+              onSubmitted: (value) => _sendMessage(value, _messageController, provider, widget.quest),
             ),
           ),
           IconButton(
             icon: const Icon(Icons.send),
-            onPressed: () => _sendMessage(_messageController.text, _messageController, provider),
+            onPressed: () => _sendMessage(_messageController.text, _messageController, provider, widget.quest),
           ),
         ],
       ),
@@ -267,10 +267,10 @@ class _QuestDetailScreenState extends State<QuestDetailScreen> {
   /// Handles sending a message in mental health chat
   /// 
   /// Clears the input field after sending and ignores empty messages.
-  void _sendMessage(String text, TextEditingController controller, ChatProvider provider) {
+  void _sendMessage(String text, TextEditingController controller, ChatProvider provider, Quest quest) {
     if (text.trim().isEmpty) return;
     controller.clear();
-    provider.sendMessage(text);
+    provider.sendMessage(text, quest);
   }
 
   /// Calculates quest progress based on type and parameters

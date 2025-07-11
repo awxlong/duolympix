@@ -9,14 +9,17 @@ class QuestCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        leading: Icon(quest.icon),
-        title: Text(quest.title),
-        subtitle: Text(quest.description),
-        trailing: IconButton(
-          icon: const Icon(Icons.play_arrow),
-          onPressed: onStart,
+    return InkWell(
+      onTap: onStart,
+      child: Card(
+        child: ListTile(
+          leading: Icon(quest.icon),
+          title: Text(quest.title),
+          subtitle: Text(quest.description),
+          trailing: IconButton(
+            icon: const Icon(Icons.play_arrow),
+            onPressed: onStart,
+          ),
         ),
       ),
     );

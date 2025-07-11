@@ -32,6 +32,7 @@ class ChatBubble extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: FloatingActionButton.extended(
+                heroTag: 'thoughts_${message.hashCode}', // Provide a unique hero tag
                 onPressed: () {
                   showDialog(
                     context: context,
